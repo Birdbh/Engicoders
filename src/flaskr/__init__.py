@@ -15,7 +15,7 @@ def create_app(test_config=None):
 
     app.config.from_pyfile('config.py', silent=True)
 
-    #ensure the instance folder exists (Based on Turoial directions)
+    #ensure the instance folder exists (Based on Tutorial directions)
     try:
         os.makedirs(app.instance_path)
     except OSError:
