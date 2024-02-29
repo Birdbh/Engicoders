@@ -1,7 +1,7 @@
 import pytest
-from src.sensors.sensor import Sensor
+from src.sensors.sensor import *
 
-def test_sensor():
+def test_create_sensor():
     sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": 1, "2": 2, "3" : 3},)
     print(sensor.value)
     assert sensor.id == 1
@@ -11,4 +11,23 @@ def test_sensor():
     assert sensor.value == 72
     assert str(sensor) == "Sensor: ID:1, NAME:Temperature Sensor, DESCRIPTION:Measures Temperature, DATA-TYPE:Temperature, VALUES: 72"
 
-test_sensor()
+def test_update_sensor():
+    sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", 72)
+    sensor.set_name("Humidity Sensor")
+    sensor.set_description("Measures Humidity")
+    sensor.set_type("Humidity")
+    sensor.set_value(50)
+    assert sensor.id == 1
+    assert sensor.name == "Humidity Sensor"
+    assert sensor.description == "Measures Humidity"
+    assert sensor.type == "Humidity"
+    assert sensor.value == 50
+    assert str(sensor) == "Sensor: ID:1, NAME:Humidity Sensor, DESCRIPTION:Measures Humidity, DATA-TYPE:Humidity, VALUES: 50"
+
+def test_forecast_sensor():
+    sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", 72)
+    sensor.set_forecast_values({ "1": 73, "2": 74, "3" : 75})
+    assert sensor.get_forecast_values() == { "1": 73, "2": 74, "3" : 75}
+    assert sensor.get_forecast_values()["1"] == 73
+    assert sensor.get_forecast_values()["2"] == 74
+    assert sensor.get_forecast_values()["3"] == 75
