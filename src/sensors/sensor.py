@@ -1,5 +1,5 @@
 class Sensor:
-    def __init__(self, id, name, description, type, location, value):
+    def __init__(self, id, name, description, type, value):
         self.id = id
         self.name = name
         self.description = description
