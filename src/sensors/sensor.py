@@ -7,6 +7,8 @@ class Sensor:
         self.value = value
         self.forcasted_values = {}
 
+    #jesmes
+
     def __str__(self):
         return f"Sensor: ID:{self.id}, NAME:{self.name}, DESCRIPTION:{self.description}, DATA-TYPE:{self.type}, VALUES: {self.value}"
     
