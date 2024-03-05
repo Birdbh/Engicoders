@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="">
+    <title>{% block title %}{% endblock %} Engicoders</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2023 by <a href="">Engicoders</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>
