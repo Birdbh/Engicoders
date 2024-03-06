@@ -5,15 +5,39 @@ from datetime import datetime, timedelta
 #https://www.mathworks.com/help/thingspeak/readdata.html#mw_25e0bdab-cafa-48d4-84f5-5fce55aa281b
 
 class DataGeneration:
-    def __init__(self, channel, time_increment):
-        self.channel = channel
+    def __init__(self, channel_id, time_increment, field_number, start_date):
+        self.channel_id = channel_id
         self.time_increment = time_increment
+        self.field_number = field_number
+        self.start_date = start_date
+
+    def __str__(self):
+        return f"DataGeneration: CHANNEL_ID:{self.channel_id}, TIME_INCREMENT:{self.time_increment}, FIELD_NUMBER:{self.field_number}, START_DATE:{self.start_date}"
+
+    def set_channel_id(self, channel_id):
+        self.channel_id = channel_id
+
+    def get_channel_id(self):
+        return self.channel_id
     
-    def request_data(self):
+    def set_time_increment(self, time_increment):
+        self.time_increment = time_increment
 
+    def get_time_increment(self):
+        return self.time_increment
+    
+    def set_field_number(self, field_number):
+        self.field_number = field_number
 
+    def get_field_number(self):
+        return self.field_number
+    
+    def set_start_date(self, start_date):
+        self.start_date = start_date
 
-print(requests.get('https://api.thingspeak.com/channels/9/feeds.json').json())
+    def get_start_date(self):
+        return self.start_date
+
 
 #common request https://api.thingspeak.com/channels/{channel_id}/fields/{field_number}.json?start={YYYY-MM-DD%20HH:NN:SS.}&average={increment}
 '''
