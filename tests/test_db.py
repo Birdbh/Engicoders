@@ -1,6 +1,8 @@
 import sqlite3
 import pytest
-from src.flaskr.db import get_db
+import sys
+sys.path.append("src")
+from flaskr.db import get_db
 
 def test_get_and_close_db(app):
     with app.app_context():
