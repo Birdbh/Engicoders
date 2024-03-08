@@ -35,7 +35,7 @@ class DataGeneration:
     def set_start_date(self, start_date):
         self.start_date = start_date
 
-    def get_start_date(self):
+    def get_start_date(self): 
         return self.start_date
 
 
