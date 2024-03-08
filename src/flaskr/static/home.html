@@ -1,0 +1,21 @@
+<!-- In this home.html template:
+
+{% extends "base.html" %} indicates that this template extends the base.html template.
+The other blocks (title, header, content, footer) are overridden with specific content for the home page.
+You can create similar child templates for other pages on your website, each extending the base.html template and providing content specific to that page.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% block header %}Welcome to My Website{% endblock %}
+
+{% block content %}
+<h2>Welcome to the Home Page</h2>
+<p>This is the home page content.</p>
+{% endblock %}
+
+{% block footer %}
+&copy; 2022 My Website
+{% endblock %}
