@@ -97,14 +97,4 @@ class DataGeneration:
 
         return time_series
 
-
-data_generation = DataGeneration(1, 5, 1, "2021-01-01 00:00:00")
-
-print(data_generation.start_date)
-
-# data = DataGeneration(9, 20, 1, "2023-03-01 00:00:00")
-# jsons = data.fetch_thingspeak_data()
-# print(data.parse_json(jsons))
-
-
 #common request https://api.thingspeak.com/channels/{channel_id}/fields/{field_number}.json?start={YYYY-MM-DD%20HH:NN:SS.}&average={increment}
