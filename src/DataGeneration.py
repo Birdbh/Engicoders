@@ -89,9 +89,6 @@ class DataGeneration:
             parsed_json[datetime.strptime(entry['created_at'], '%Y-%m-%dT%H:%M:%SZ')] = entry[f'field{self.field_number}']
 
         return parsed_json
-    
-    #def cleanse_data():
-
 
 
 data = DataGeneration(9, 20, 1, "2023-03-01 00:00:00")
