@@ -1,6 +1,8 @@
 import requests
 from datetime import datetime, timedelta
 import requests
+import json
+
 
 #Documentation
 #https://www.mathworks.com/help/thingspeak/readdata.html#mw_25e0bdab-cafa-48d4-84f5-5fce55aa281b
@@ -79,10 +81,31 @@ class DataGeneration:
             return response.json()  # Return the parsed JSON response
         else:
             raise Exception("Thinkspeak request status code not equal to 200, verify channel & field id")  # Or handle errors as appropriate for your application
+        
+    def parse_json(self, json_data):
+        """
+            Parses a JSON string to a Python dictionary.
+
+            Parameters:
+            - json_string: str, a JSON-formatted string.
+
+            Returns:
+            - A Python dictionary representing the parsed JSON.
+        """
+        try:
+            parsed_dict = json.loads(json_data)
+            return parsed_dict
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}")
+            return None
+    
+    #def cleanse_data():
+
 
 
 data = DataGeneration(9, 20, 1, "2023-03-01 00:00:00")
-print(data.fetch_thingspeak_data())
+jsons = data.fetch_thingspeak_data()
+print(data.parse_json(jsons))
 
 
 #common request https://api.thingspeak.com/channels/{channel_id}/fields/{field_number}.json?start={YYYY-MM-DD%20HH:NN:SS.}&average={increment}
