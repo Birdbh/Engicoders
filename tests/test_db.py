@@ -2,7 +2,7 @@ import sqlite3
 import pytest
 import sys
 sys.path.append("src")
-from flaskr.db import get_db
+from flaskr.db import get_db, init_db
 
 
 def test_get_and_close_db(app):
@@ -12,10 +12,10 @@ def test_get_and_close_db(app):
 
 
    with pytest.raises(sqlite3.ProgrammingError) as e:
-       db.execute('SELECT 1')
+       db.execute("SELECT 1")
 
 
-   assert 'closed' in str(e.value)
+   assert "closed" in str(e.value)
 
 
 #tests that get_db gets the right db
@@ -30,7 +30,7 @@ def test_init_db_command(runner, monkeypatch):
        Recorder.called = True
   
    monkeypatch.setattr('src.flaskr.db.init_db', fake_init_db)
-   result = runner.invoke(args=['init-db'])
+   result = runner.invoke(arg = ['init-db'])
    assert 'initialized' in result.output
    assert Recorder.called
 
