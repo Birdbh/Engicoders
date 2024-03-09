@@ -83,21 +83,12 @@ class DataGeneration:
             raise Exception("Thinkspeak request status code not equal to 200, verify channel & field id")  # Or handle errors as appropriate for your application
         
     def parse_json(self, json_data):
-        """
-            Parses a JSON string to a Python dictionary.
+        
+        parsed_json = {}
+        for entry in json_data['feeds']:
+            parsed_json[datetime.strptime(entry['created_at'], '%Y-%m-%dT%H:%M:%SZ')] = entry[f'field{self.field_number}']
 
-            Parameters:
-            - json_string: str, a JSON-formatted string.
-
-            Returns:
-            - A Python dictionary representing the parsed JSON.
-        """
-        try:
-            parsed_dict = json.loads(json_data)
-            return parsed_dict
-        except json.JSONDecodeError as e:
-            print(f"Error parsing JSON: {e}")
-            return None
+        return parsed_json
     
     #def cleanse_data():
 
