@@ -89,6 +89,13 @@ class DataGeneration:
             parsed_json[datetime.strptime(entry['created_at'], '%Y-%m-%dT%H:%M:%SZ')] = entry[f'field{self.field_number}']
 
         return parsed_json
+    
+    def get_time_series(self):
+
+        raw_data = self.fetch_thingspeak_data()
+        time_series = self.parse_json(raw_data)
+
+        return time_series
 
 
 data = DataGeneration(9, 20, 1, "2023-03-01 00:00:00")
