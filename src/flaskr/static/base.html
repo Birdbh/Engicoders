@@ -1,0 +1,38 @@
+<!--In this base.html template:
+
+{% block title %}Title{% endblock %} defines a block named title for the title of the page. This block can be overridden in child templates.
+{% block header %}Header{% endblock %} defines a block named header for the header of the page.
+{% block content %}Main content goes here.{% endblock %} defines a block named content for the main content of the page.
+{% block footer %}Footer{% endblock %} defines a block named footer for the footer of the page.
+
+Now, you can create child templates that extend this base.html template and override the blocks with specific content.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title{% endblock %}</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>{% block header %}Header{% endblock %}</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <p>Main content goes here.</p>
+        {% endblock %}
+    </main>
+    <footer>
+        <p>{% block footer %}Footer{% endblock %}</p>
+    </footer>
+</body>
+</html>
