@@ -15,7 +15,7 @@ def get_db():
 def close_db(e=None):
    db = g.pop("db", None)
    if db is not None:
-       db.close
+       db.close()
 
 
 def init_db():
@@ -24,7 +24,7 @@ def init_db():
        db.executescript(f.read().decode("utf8"))
 
 
-@click.command("init-db")
+@click.command('init-db')
 def init_db_command():
    init_db()
    click.echo("initialized the database")
