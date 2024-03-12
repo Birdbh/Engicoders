@@ -1,9 +1,11 @@
+import sys
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from flask import Flask, render_template
-import src.flaskr.register as register
+sys.path.append("src")
+import flaskr.register as register
 
 
 app = Flask(__name__,template_folder='templates')
