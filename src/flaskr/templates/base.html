@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title{% endblock %} - IoT Web Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="top-header">
+        <h1>{% block header %}Header{% endblock %}</h1>
+        <nav class="topnav">
+            <a >Home</a>
+            <a href="{{ url_for('auth.login') }}">Log In</a>
+            <a>Register</a>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <p>Main content goes here.</p>
+        {% endblock %}
+    </main>
+    <footer>
+        <div class="footer">
+            <p>COSC 310 IoT Web Application 2024</p>
+        </div>
+    </footer>
+</body>
+</html>
