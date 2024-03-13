@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from sklearn import linear_model as lm
 import numpy as np
 import datetime as dt
@@ -34,10 +35,26 @@ class DataPrediction:
             return lm.RandomForestRegressor()
         elif model_name == 'svm':
             return lm.SVR()
+=======
+import sklearn as sk
+
+class DataPrediction:
+    def __init__(self, sensor):
+        self.sensor = sensor
+    
+    def select_model(self, model_name):
+        if model_name == 'linear_regression':
+            self.model = sk.LinearRegression()
+        elif model_name == 'random_forest':
+            self.model = sk.RandomForestRegressor()
+        elif model_name == 'svm':
+            self.model = sk.SVR()
+>>>>>>> 0ad22b0 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
         else:
             raise ValueError("Invalid model name. Please choose from 'linear_regression', 'random_forest', or 'svm'.")
 
     def predict(self):
+<<<<<<< HEAD
         number_past_entries = len(self.X)
         number_of_future_entries = len(self.X_future)
 
@@ -111,3 +128,6 @@ plt.xticks(rotation=45)  # Rotate dates for better readability
 plt.tight_layout()  # Adjust layout to make room for the rotated date labels
 
 plt.show() 
+=======
+        return self.model.predict(self.data)
+>>>>>>> 0ad22b0 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
