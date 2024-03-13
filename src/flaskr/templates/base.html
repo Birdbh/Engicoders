@@ -8,13 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
+    <header class="top-header">
         <h1>{% block header %}Header{% endblock %}</h1>
-        <nav>
-            <ul>
-                <li><a >Home Out</a>
-                <li><a href="{{ url_for('auth.login') }}">Log In</a>
-                <li><a >Register</a>
+        <nav class="topnav">
+            <a >Home</a>
+            <a href="{{ url_for('auth.login') }}">Log In</a>
+            <a>Register</a>
             </ul>
         </nav>
     </header>
@@ -24,7 +23,9 @@
         {% endblock %}
     </main>
     <footer>
-        <p>{% block footer %}Footer{% endblock %}</p>
+        <div class="footer">
+            <p>COSC 310 IoT Web Application 2024</p>
+        </div>
     </footer>
 </body>
 </html>
