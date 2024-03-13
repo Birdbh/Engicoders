@@ -1,21 +1,19 @@
-<!-- In this home.html template:
+{% extends 'base.html' %}
 
-{% extends "base.html" %} indicates that this template extends the base.html template.
-The other blocks (title, header, content, footer) are overridden with specific content for the home page.
-You can create similar child templates for other pages on your website, each extending the base.html template and providing content specific to that page.
--->
-
-{% extends "base.html" %}
-
-{% block title %}Home - My Website{% endblock %}
-
-{% block header %}Welcome to My Website{% endblock %}
-
-{% block content %}
-<h2>Welcome to the Home Page</h2>
-<p>This is the home page content.</p>
+{% block header %}
+  <h1>{% block title %}Home{% endblock %}</h1>
 {% endblock %}
 
-{% block footer %}
-&copy; 2022 My Website
+{% block content %}
+  <form method="post">
+    <label for="channel_id">Channel ID</label>
+    <input name="channel_id" id="channel_id" required>
+    <label for="field_id">Field ID</label>
+    <input name="field_id" id="field_id" required>
+    <label for="start_date">Start Date</label>
+    <input name="start_date" id="start_date" required>
+    <label for="time_increment">Time Increment</label>
+    <input name="time_increment" id="time_increment" required>
+    <button type="submit">Get Data</button>
+  </form>
 {% endblock %}
