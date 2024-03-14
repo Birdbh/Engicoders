@@ -41,22 +41,26 @@ import numpy as np
 import datetime as dt
 
 class DataPrediction:
-    def __init__(self, sensor, prediction_timeframe):
+    def __init__(self, sensor, prediction_timeframe,model_name):
         self.prediction_timeframe = prediction_timeframe
         self.X = sensor.value.keys()
         self.Y = sensor.value.values()
         self.X_future = None
         self.forcasted_values = sensor.forcasted_values
-        self.model = None
+        self.model = self.select_model(model_name)
 
-    def select_model(self, model_name):
+    def select_model(model_name):
         if model_name == 'linear_regression':
-            self.model = sk.LinearRegression()
+            return sk.LinearRegression()
         elif model_name == 'random_forest':
-            self.model = sk.RandomForestRegressor()
+            return sk.RandomForestRegressor()
         elif model_name == 'svm':
+<<<<<<< HEAD
             self.model = sk.SVR()
 >>>>>>> 0ad22b0 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
+=======
+            return sk.SVR()
+>>>>>>> 959ddc5 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
         else:
             raise ValueError("Invalid model name. Please choose from 'linear_regression', 'random_forest', or 'svm'.")
 
