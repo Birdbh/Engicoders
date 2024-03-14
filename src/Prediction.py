@@ -91,6 +91,7 @@ class DataPrediction:
         prediction_times = [i for i in range(number_past_entries, number_past_entries + number_of_future_entries)]
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.forcasted_values = self.model.predict(np.array(prediction_times).reshape(-1,1))
 
     def train_model(self):
@@ -181,6 +182,13 @@ plt.show()
 <<<<<<< HEAD
 >>>>>>> 1d851bf (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
 =======
+=======
+        self.forcasted_values = self.model.predict(prediction_times)
+
+    def train_model(self):
+        train_times = [i for i in range(len(self.X))]
+        self.model.fit(train_times, np.array(self.Y).reshape(-1,1))
+>>>>>>> 5f4f279 (Correcting Data Type errors)
 
     def set_prediction_timeframe(self):
 
@@ -205,15 +213,14 @@ time_series = DataGeneration(9, 10, 1, '2024-03-13 00:00:00').get_time_series()
 
 sensor = Sensor(1, 'Temperature Sensor', 'A sensor that measures temperature', 'float', time_series)
 
-# print(sensor.value.keys())
 predict = DataPrediction(sensor, dt.datetime(2024, 3, 17, 0, 0, 0), 'linear_regression')
 
-# predict.set_prediction_timeframe()
-# predict.train_model()
-# predict.predict()
-# predict.convert_prediction_to_dict()
+predict.set_prediction_timeframe()
+predict.train_model()
+predict.predict()
+predict.convert_prediction_to_dict()
 
-# print(predict.forcasted_values)
+print(predict.forcasted_values)
 
 
 >>>>>>> 3eec899 (updated work with time modes, but still runing into problems with prediction)
