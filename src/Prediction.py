@@ -92,6 +92,7 @@ class DataPrediction:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.forcasted_values = self.model.predict(np.array(prediction_times).reshape(-1,1))
 
     def train_model(self):
@@ -189,6 +190,23 @@ plt.show()
         train_times = [i for i in range(len(self.X))]
         self.model.fit(train_times, np.array(self.Y).reshape(-1,1))
 >>>>>>> 5f4f279 (Correcting Data Type errors)
+=======
+        self.forcasted_values = self.model.predict(np.array(prediction_times).reshape(-1,1))
+
+    def train_model(self):
+        train_times = np.array([i for i in range(len(self.X))]).reshape(-1,1)
+
+        x = np.nan_to_num(train_times, copy=True, nan=0.0, posinf=0.0, neginf=0.0).astype(np.float)
+        print(x)
+        y = np.nan_to_num(np.array(self.Y).reshape(-1,1), copy=True, nan=0.0, posinf=0.0, neginf=0.0)
+        print(y)
+
+        for i in range(0,len(y)):
+            if y[i] == None:
+                y[i] = (y[i-1].astype(np.float)+y[i+1].astype(np.float))/2
+
+        self.model.fit(x.reshape(-1,1), y.reshape(-1,1))
+>>>>>>> bad68f4 (It is working but needs to be cleaned up)
 
     def set_prediction_timeframe(self):
 
@@ -209,7 +227,7 @@ plt.show()
 >>>>>>> b363158 (Added code to control prediction making)
 =======
 
-time_series = DataGeneration(9, 10, 1, '2024-03-13 00:00:00').get_time_series()
+time_series = DataGeneration(9, 30, 1, '2024-03-13 00:00:00').get_time_series()
 
 sensor = Sensor(1, 'Temperature Sensor', 'A sensor that measures temperature', 'float', time_series)
 
