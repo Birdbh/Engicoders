@@ -197,9 +197,8 @@ plt.show()
         train_times = np.array([i for i in range(len(self.X))]).reshape(-1,1)
 
         x = np.nan_to_num(train_times, copy=True, nan=0.0, posinf=0.0, neginf=0.0).astype(np.float)
-        print(x)
+
         y = np.nan_to_num(np.array(self.Y).reshape(-1,1), copy=True, nan=0.0, posinf=0.0, neginf=0.0)
-        print(y)
 
         for i in range(0,len(y)):
             if y[i] == None:
