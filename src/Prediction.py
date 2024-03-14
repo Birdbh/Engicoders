@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from sklearn import linear_model as lm
 import numpy as np
 import datetime as dt
@@ -37,6 +38,9 @@ class DataPrediction:
             return lm.SVR()
 =======
 import sklearn as sk
+=======
+from sklearn import linear_model as lm
+>>>>>>> 84670e0 (change of sklearn to linear_models)
 import numpy as np
 import datetime as dt
 from DataGeneration import DataGeneration
@@ -57,16 +61,20 @@ class DataPrediction:
 
     def select_model(self, model_name):
         if model_name == 'linear_regression':
-            return sk.linear_model.LinearRegression()
+            return lm.LinearRegression()
         elif model_name == 'random_forest':
-            return sk.RandomForestRegressor()
+            return lm.RandomForestRegressor()
         elif model_name == 'svm':
+<<<<<<< HEAD
 <<<<<<< HEAD
             self.model = sk.SVR()
 >>>>>>> 0ad22b0 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
 =======
             return sk.SVR()
 >>>>>>> 959ddc5 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
+=======
+            return lm.SVR()
+>>>>>>> 84670e0 (change of sklearn to linear_models)
         else:
             raise ValueError("Invalid model name. Please choose from 'linear_regression', 'random_forest', or 'svm'.")
 
