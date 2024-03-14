@@ -33,11 +33,21 @@ class DataPrediction:
 
         prediction_times = [i for i in range(number_past_entries, number_past_entries + number_of_future_entries)]
 
-        self.forcasted_values = self.model.predict(prediction_times)
+        self.forcasted_values = self.model.predict(np.array(prediction_times).reshape(-1,1))
 
     def train_model(self):
-        train_times = [i for i in range(len(self.X))]
-        self.model.fit(train_times, np.array(self.Y).reshape(-1,1))
+        train_times = np.array([i for i in range(len(self.X))]).reshape(-1,1)
+
+        x = np.nan_to_num(train_times, copy=True, nan=0.0, posinf=0.0, neginf=0.0).astype(np.float)
+        print(x)
+        y = np.nan_to_num(np.array(self.Y).reshape(-1,1), copy=True, nan=0.0, posinf=0.0, neginf=0.0)
+        print(y)
+
+        for i in range(0,len(y)):
+            if y[i] == None:
+                y[i] = (y[i-1].astype(np.float)+y[i+1].astype(np.float))/2
+
+        self.model.fit(x.reshape(-1,1), y.reshape(-1,1))
 
     def set_prediction_timeframe(self):
 
@@ -55,7 +65,7 @@ class DataPrediction:
         self.forcasted_values = dict(zip(self.X_future, self.forcasted_values))
 
 
-time_series = DataGeneration(9, 10, 1, '2024-03-13 00:00:00').get_time_series()
+time_series = DataGeneration(9, 30, 1, '2024-03-13 00:00:00').get_time_series()
 
 sensor = Sensor(1, 'Temperature Sensor', 'A sensor that measures temperature', 'float', time_series)
 
