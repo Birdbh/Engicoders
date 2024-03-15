@@ -53,7 +53,6 @@ class cleanser:
     
     def replace_missing_values(self):
         data = list(self.sensor.get_value().values())
-        
         if data[0] == None:
                 data[0] = 0
             
@@ -70,6 +69,25 @@ class cleanser:
 
         return data
 
+sys.path.append("src")
 
+from DataGeneration import DataGeneration
+from sensor import Sensor
+
+time_series = DataGeneration(9, 30, 1, '2024-03-13 00:00:00').get_time_series()
+
+sensor = Sensor(1, 'Temperature Sensor', 'A sensor that measures temperature', 'float', time_series)
+
+cleansed = cleanser(sensor, 1)
+
+data = cleansed.replace_missing_values()
+
+for key, new_value in zip(cleansed.sensor.value.keys(), data):
+    cleansed.sensor.value[key] = new_value
+
+data = cleansed.set_data_types_to_float()
+
+for key, new_value in zip(cleansed.sensor.value.keys(), data):
+    cleansed.sensor.value[key] = new_value
 
 
