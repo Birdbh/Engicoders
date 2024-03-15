@@ -95,6 +95,10 @@ class DataGeneration:
         raw_data = self.fetch_thingspeak_data()
         time_series = self.parse_json(raw_data)
 
-        return time_series
+        date_series = list(time_series.keys())
+        value_series = list(time_series.values())
+
+        return date_series, value_series
 
 #common request https://api.thingspeak.com/channels/{channel_id}/fields/{field_number}.json?start={YYYY-MM-DD%20HH:NN:SS.}&average={increment}
+
