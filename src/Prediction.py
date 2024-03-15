@@ -3,6 +3,8 @@ import numpy as np
 import datetime as dt
 from DataGeneration import DataGeneration
 from sensors.sensor import Sensor
+import matplotlib.pyplot as plt
+
 
 class DataPrediction:
     def __init__(self, sensor, prediction_end_date, model_name):
@@ -75,6 +77,29 @@ predict.train_model()
 predict.predict()
 predict.convert_prediction_to_dict()
 
-print(predict.forcasted_values)
+dates1 = list(sensor.value.keys())
+dates2 = list(predict.forcasted_values.keys())
 
+values1 = list(sensor.value.values())
 
+for i in range(0,len(values1)):
+    if values1[i] == None:
+        values1[i] = (float(values1[i-1])+float(values1[i+1]))/2
+
+values2 = list(predict.forcasted_values.values())
+             
+
+plt.figure(figsize=(10, 5))  # Adjust the figure size as needed
+plt.plot(dates1, values1, label='Dataset 1')  # Plot the first dataset
+plt.plot(dates2, values2, label='Dataset 2', linestyle='--')  # Plot the second dataset with a different style
+
+# Formatting the plot
+plt.xlabel('Date')  # Set x-axis label
+plt.ylabel('Value')  # Set y-axis label
+plt.title('Comparison of Two Datasets')  # Set title
+plt.legend()  # Show legend to differentiate the datasets
+plt.grid(True)  # Show grid for better readability
+plt.xticks(rotation=45)  # Rotate dates for better readability
+plt.tight_layout()  # Adjust layout to make room for the rotated date labels
+
+plt.show() 
