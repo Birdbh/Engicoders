@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 <<<<<<< HEAD
 <<<<<<< HEAD
 from statsmodels.tsa.arima.model import ARIMA
+<<<<<<< HEAD
 =======
 from statsmodels.tsa.arima.model import ARIMA
 
@@ -18,12 +19,16 @@ from statsmodels.tsa.arima.model import ARIMA
 #The class will calculate the prediction intervals and the prediction start date from the sensor object values
 #
 >>>>>>> 78356ba (Massive Problems, need to update the Cleanser on a seperate pull request to resolve)
+=======
+import pandas as pd
+from pmdarima import auto_arima
+from sensors.Cleanser import cleanser
+>>>>>>> 37a95f8 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
 
 
 #Create a class that will predict future values of a sensor
 #The class will take in a sensor object and a prediction end date
 #The class will calculate the prediction intervals and the prediction start date from the sensor object values
-#
 
 
 class DataPrediction:
@@ -35,9 +40,11 @@ class DataPrediction:
         self.prediction_end_date = prediction_end_date
 
         self.Y = list(sensor.value.values())
+
         self.X_future = None
         self.forcasted_values = sensor.forcasted_values
 
+<<<<<<< HEAD
         self.model = self.select_model(model_name)
 
     def select_model(self, model_name):
@@ -221,7 +228,11 @@ plt.show()
 
         self.model.fit(x.reshape(-1,1), y.reshape(-1,1))
 >>>>>>> bad68f4 (It is working but needs to be cleaned up)
+=======
+        self.model = None
+>>>>>>> 37a95f8 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
 
+    
     def set_prediction_timeframe(self):
 
         current_date = self.prediction_start_date
@@ -234,6 +245,7 @@ plt.show()
 
         self.X_future = future_dates
 
+<<<<<<< HEAD
     def convert_prediction_to_dict(self):
         self.forcasted_values = dict(zip(self.X_future, self.forcasted_values))
 
@@ -244,41 +256,34 @@ plt.show()
 time_series = DataGeneration(9, 30, 1, '2024-03-13 00:00:00').get_time_series()
 
 sensor = Sensor(1, 'Temperature Sensor', 'A sensor that measures temperature', 'float', time_series)
+=======
+    def predict(self):
+>>>>>>> 37a95f8 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
 
-predict = DataPrediction(sensor, dt.datetime(2024, 3, 17, 0, 0, 0), 'linear_regression')
+        predictions = self.model.forecast(steps=len(self.X_future))
 
-predict.set_prediction_timeframe()
-predict.train_model()
-predict.predict()
-predict.convert_prediction_to_dict()
+        self.forcasted_values = predictions.to_list()
 
-dates1 = list(sensor.value.keys())
-dates2 = list(predict.forcasted_values.keys())
+    def train_model(self):
 
-values1 = list(sensor.value.values())
+        df = pd.DataFrame(data=self.Y, index=self.X, columns=['Value'])
 
-for i in range(0,len(values1)):
-    if values1[i] == None:
-        values1[i] = (float(values1[i-1])+float(values1[i+1]))/2
+        auto_arima_model = auto_arima(df, seasonal=False, stepwise=True, suppress_warnings=True, error_action="ignore", max_order=None, trace=True)
 
-values2 = list(predict.forcasted_values.values())
-             
+        best_order = auto_arima_model.order
 
-plt.figure(figsize=(10, 5))  # Adjust the figure size as needed
-plt.plot(dates1, values1, label='Dataset 1')  # Plot the first dataset
-plt.plot(dates2, values2, label='Dataset 2', linestyle='--')  # Plot the second dataset with a different style
+        model = ARIMA(df, order=best_order)
+        fitted_model = model.fit()
 
-# Formatting the plot
-plt.xlabel('Date')  # Set x-axis label
-plt.ylabel('Value')  # Set y-axis label
-plt.title('Comparison of Two Datasets')  # Set title
-plt.legend()  # Show legend to differentiate the datasets
-plt.grid(True)  # Show grid for better readability
-plt.xticks(rotation=45)  # Rotate dates for better readability
-plt.tight_layout()  # Adjust layout to make room for the rotated date labels
+        self.model = fitted_model
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 3eec899 (updated work with time modes, but still runing into problems with prediction)
 =======
 plt.show() 
 >>>>>>> 88d4f03 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
+=======
+    def convert_prediction_to_dict(self):
+        self.forcasted_values = dict(zip(self.X_future, self.forcasted_values))
+>>>>>>> 37a95f8 (Create Prediction class that will take a sensor object and fill the prediction field based on a set of possible prediction algorithms.)
