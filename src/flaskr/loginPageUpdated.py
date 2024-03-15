@@ -17,7 +17,7 @@ def login():
     password = request.form['password']
     
     if username in users and users[username] == password:
-        return f'Welcome, {username}!'
+        return f'Welcome!'
     else:
         return 'Invalid username or password. <a href="/">Try again</a>.'
 
@@ -34,7 +34,7 @@ def register():
         return 'Username already exists. <a href="/signup">Try again</a>.'
     else:
         users[username] = password
-        return f'Account created for {username}. <a href="/">Login</a>.'
+        return f'Account created for you. <a href="/">Login</a>.'
 
 if __name__ == '__main__':
     app.run()
