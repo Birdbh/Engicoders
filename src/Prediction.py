@@ -7,7 +7,17 @@ from DataGeneration import DataGeneration
 from sensors.sensor import Sensor
 import matplotlib.pyplot as plt
 <<<<<<< HEAD
+<<<<<<< HEAD
 from statsmodels.tsa.arima.model import ARIMA
+=======
+from statsmodels.tsa.arima.model import ARIMA
+
+
+#Create a class that will predict future values of a sensor
+#The class will take in a sensor object and a prediction end date
+#The class will calculate the prediction intervals and the prediction start date from the sensor object values
+#
+>>>>>>> 78356ba (Massive Problems, need to update the Cleanser on a seperate pull request to resolve)
 
 
 #Create a class that will predict future values of a sensor
@@ -52,6 +62,7 @@ from sensors.sensor import Sensor
 
 class DataPrediction:
     def __init__(self, sensor, prediction_end_date, model_name):
+        
         self.X = list(sensor.value.keys())
         self.prediction_intervals = self.X[-1] - self.X[-2]
         self.prediction_start_date = self.X[-1] + self.prediction_intervals
