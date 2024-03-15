@@ -31,9 +31,6 @@ class cleanser:
         dev = (sum/(n-1))**0.5
         return dev
 
-
-
-
     def remove_outlier(self):
         dev = self.deviations
         mean = self.get_mean()
