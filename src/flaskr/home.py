@@ -1,7 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
-from sensors import Sensor
+import sys
+sys.path.append("src")
+from sensors.sensor import Sensor
 from DataGeneration import DataGeneration
+
 
 bp = Blueprint('home', __name__, url_prefix='/home')
 
@@ -32,7 +36,6 @@ def home():
             sensor = Sensor(id=None, name=f"Sensor {field_number}", description="Fetched from ThingSpeak", type="ThingSpeak Data", value=value)
             sensors.append(sensor)
 
-        # I found this on StockOverflow to Format Data for fetching might be wrong
         labels = [timestamp.strftime('%Y-%m-%d %H:%M:%S') for timestamp in time_series_data.keys()]
         values = [value for value in time_series_data.values()]
 
@@ -41,4 +44,3 @@ def home():
     else:
         
         return render_template('home.html')
-
