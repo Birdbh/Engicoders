@@ -4,34 +4,35 @@ import sys
 sys.path.append("src")
 
 from sensors.sensor import Sensor
+import datetime as dt
+
+
 
 def test_create_sensor():
-    sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": 1, "2": 2, "3" : 3},)
-    print(sensor.value)
-    assert sensor.id == 1
+    sensor = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], [1, 2, 3])
     assert sensor.name == "Temperature Sensor"
     assert sensor.description == "Measures Temperature"
-    assert sensor.type == "Temperature"
-    assert sensor.value == {'1': 1, '2': 2, '3': 3}
-    assert str(sensor) == "Sensor: ID:1, NAME:Temperature Sensor, DESCRIPTION:Measures Temperature, DATA-TYPE:Temperature, VALUES: {'1': 1, '2': 2, '3': 3}"
+    assert sensor.value == [1,2,3]
+    assert str(sensor) == "NAME:Temperature Sensor, DESCRIPTION:Measures Temperature, DATE-RANGE:[datetime.datetime(2020, 1, 1, 0, 0), datetime.datetime(2020, 1, 2, 0, 0), datetime.datetime(2020, 1, 3, 0, 0)], VALUES:[1, 2, 3]"
 
 def test_update_sensor():
-    sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", 72)
+    sensor = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], [1, 2, 3])
     sensor.set_name("Humidity Sensor")
     sensor.set_description("Measures Humidity")
-    sensor.set_type("Humidity")
-    sensor.set_value(50)
-    assert sensor.id == 1
+
+    with pytest.raises(Exception) as e:
+        sensor.set_value([50])
+
+    assert str(e.value) == "The length of the new value must be equal to the length of the date range"
+
     assert sensor.name == "Humidity Sensor"
     assert sensor.description == "Measures Humidity"
-    assert sensor.type == "Humidity"
-    assert sensor.value == 50
-    assert str(sensor) == "Sensor: ID:1, NAME:Humidity Sensor, DESCRIPTION:Measures Humidity, DATA-TYPE:Humidity, VALUES: 50"
+    assert sensor.value == [1,2,3]
+    assert str(sensor) == "NAME:Humidity Sensor, DESCRIPTION:Measures Humidity, DATE-RANGE:[datetime.datetime(2020, 1, 1, 0, 0), datetime.datetime(2020, 1, 2, 0, 0), datetime.datetime(2020, 1, 3, 0, 0)], VALUES:[1, 2, 3]"
 
 def test_forecast_sensor():
-    sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", 72)
-    sensor.set_forecast_values({ "1": 73, "2": 74, "3" : 75})
-    assert sensor.get_forecast_values() == { "1": 73, "2": 74, "3" : 75}
-    assert sensor.get_forecast_values()["1"] == 73
-    assert sensor.get_forecast_values()["2"] == 74
-    assert sensor.get_forecast_values()["3"] == 75
+    sensor = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], [1, 2, 3])
+    sensor.set_forecast_values([2,4,6])
+    sensor.set_forecast_date_range([dt.datetime(2020, 1, 4), dt.datetime(2020, 1, 5), dt.datetime(2020, 1, 6)])
+    assert sensor.get_forecast_values() == [2,4,6]
+    assert sensor.get_forecast_date_range() == [dt.datetime(2020, 1, 4), dt.datetime(2020, 1, 5), dt.datetime(2020, 1, 6)]
