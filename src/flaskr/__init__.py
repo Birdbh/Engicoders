@@ -28,5 +28,3 @@ def create_app(test_config=None):
     app.app_context().push()
     return app
         
-
-    
