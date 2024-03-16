@@ -55,7 +55,7 @@ class cleanser:
         return data
     
     def replace_missing_values(self):
-        data = list(self.sensor.get_value().values())
+        data = self.sensor.get_value()
         
         if data[0] == None:
                 data[0] = 0
@@ -64,13 +64,16 @@ class cleanser:
             if data[i] == None:
                 data[i] = (data[i-1])
 
+        self.sensor.set_value(data)
+
         return data
 
     def set_data_types_to_float(self):
-        data = list(self.sensor.get_value().values())
+        data = self.sensor.get_value()
         for i in range(len(data)):
             data[i] = float(data[i])
 
+        self.sensor.set_value(data)
         return data
 
 

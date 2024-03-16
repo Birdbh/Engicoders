@@ -4,7 +4,8 @@ import sys
 sys.path.append("src")
 from sensors.sensor import Sensor
 from sensors.Cleanser import cleanser
-import sensors.Cleanser
+import datetime as dt  
+
 
 sensor = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": 1, "2": 2, "3" : 3, "4": 10},)
 sensor2 =Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": 1, "2": 2, "3" : 3, "4": 20, "5": 1, "6": 2, "7": 2},)
@@ -13,6 +14,10 @@ sensor4 =Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", 
 sensor5 =Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": None, "2": 2, "3" : None, "4": 10},)
 sensor6 = Sensor(1, "Temperature Sensor", "Measures Temperature", "Temperature", { "1": "1", "2": "2", "3" : "3", "4": "10"},)
 
+#This is what a sensor should look like in the updated format
+sensor7 = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], [None, 3, None])
+
+sensor8 = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], ["47", 3, "1"])
 
 
 def test_create_cleanser():
@@ -45,9 +50,9 @@ def test_remove_low_and_high_outlier():
     assert cleaner.remove_outlier() == { "1": 50, "2": 55, "4": 60}
 
 def test_replace_missing_values():
-    cleaner = cleanser(sensor5, 1)
-    assert cleaner.replace_missing_values() == [0, 2, 2, 10]
+    cleaner = cleanser(sensor7, 1)
+    assert cleaner.replace_missing_values() == [0, 3, 3]
 
 def test_set_data_types_to_float():
-    cleaner = cleanser(sensor6, 1)
-    assert cleaner.set_data_types_to_float() == [1, 2, 3, 10]
+    cleaner = cleanser(sensor8, 1)
+    assert cleaner.set_data_types_to_float() == [47, 3, 1]
