@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 
-from . import auth, db, home
+from . import auth, db
 
 def create_app(test_config=None):
     # create and configure the app
@@ -22,7 +22,7 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(auth.bp)
-    # app.register_blueprint(home.bp, url_prefix='/home')
+    
     
     db.init_app(app)
     app.app_context().push()
