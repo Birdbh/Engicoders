@@ -37,13 +37,19 @@ class cleanser:
         high = mean + dev*sdev
         low = mean - dev*sdev
         data = self.sensor.get_value()
-        for i in range(len(data)):
+        length = len(data)
+        i=0
+        while i<length:
             if data[i] > high:
                 data.pop(i)
+                length = length - 1
+                i=i+1
             elif data[i] < low:
                 data.pop(i)
+                length = length -1
+                i=i+1
             else:
-                pass
+                i=i+1
         return data
     
     def replace_missing_values(self):
