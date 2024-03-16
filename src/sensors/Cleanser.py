@@ -11,11 +11,9 @@ class cleanser:
     def get_mean(self):
         data = self.sensor.get_value()
         length = len(data)
-        i = 1
         tot = 0
-        while i<= length:
-            tot = tot + data[str(i)]
-            i = i +1
+        for i in range(len(data)):
+            tot = tot + data[i]
         mean = tot / length
         return mean
     
@@ -23,11 +21,9 @@ class cleanser:
         mean = self.get_mean()
         data = self.sensor.get_value()
         n  = len(data)
-        i =1
         sum =0
-        while i<= n:
-            sum = sum+(data[str(i)]-mean)**2
-            i = i+1
+        for i in range(len(data)):
+            sum = sum+(data[i]-mean)**2
         dev = (sum/(n-1))**0.5
         return dev
 
@@ -41,17 +37,13 @@ class cleanser:
         high = mean + dev*sdev
         low = mean - dev*sdev
         data = self.sensor.get_value()
-        n = len(data)
-        i = 1
-        while i<=n:
-            if data[str(i)] > high:
-                data.pop(str(i))
-                i = i+1
-            elif data[str(i)] < low:
-                data.pop(str(i))
-                i = i+1
+        for i in range(len(data)):
+            if data[i] > high:
+                data.pop(i)
+            elif data[i] < low:
+                data.pop(i)
             else:
-                i = i+1
+                pass
         return data
     
     def replace_missing_values(self):
