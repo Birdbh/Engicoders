@@ -1,6 +1,7 @@
 import logging
 import socketio
 
+
 class Alarm:
     def __init__(self, sensor, threshold, importance):
         self.sensor = sensor

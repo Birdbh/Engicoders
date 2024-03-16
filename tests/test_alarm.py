@@ -4,6 +4,7 @@ import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
 
+
 @pytest.fixture
 def mock_sensor():
     sensor = MagicMock()
