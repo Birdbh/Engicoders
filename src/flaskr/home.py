@@ -38,7 +38,7 @@ def home():
         values = [value for value in time_series_data.values()]
 
         
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.home'), labels=labels, values=values)
     else:
         
         return render_template('main/home.html')
