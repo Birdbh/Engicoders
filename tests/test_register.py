@@ -7,26 +7,24 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from flask import Flask, render_template
 sys.path.append("src")
 import flaskr.register as register
+
 import flaskr.db as dbClass
 
 
 
-# app = Flask(__name__,template_folder='templates')
-# app.config['SECRET_KEY'] = SECRET_KEY='test_change_later'
-# @app.route('/')
-
-# def index(): 
-#     form = register.RegistrationForm()
-#     return render_template('register.html', form = form)
 
 def test_register(app):
-    with app.app_context:
-        register.RegistrationForm.register("Username", "Test", "Test")
+    with app.app_context():
+        register.RegistrationForm.register(register.RegistrationForm, "TestUser", "Test", "Test")
         db = dbClass.get_db()
-        assert db.execute("SELECT username from user") == "Username"
+        assert db.execute("SELECT username from user").fetchone()['username'] == "TestUser"
+        assert db.execute("SELECT password from user where username = 'TestUser'").fetchone()['password'] == "Test"
+        assert not (db.execute("SELECT password from user where username = 'TestUser'").fetchone()['password'] == "test")
 
+def test_validate_password():
+    assert register.RegistrationForm.validate_password(register.RegistrationForm, "Test", "Test")
+    assert not (register.RegistrationForm.validate_password(register.RegistrationForm, "Test", "test"))
 
-
-
-# if __name__ == '__main__': 
-#     app.run() 
+def test_validate_username():
+    assert register.RegistrationForm.validate_username(register.RegistrationForm, "Test")
+    assert not (register.RegistrationForm.validate_username(register.RegistrationForm, ""))

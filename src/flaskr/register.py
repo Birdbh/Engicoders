@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from flask import Flask, render_template
-from db import get_db
+from flaskr.db import get_db
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -26,3 +26,4 @@ class RegistrationForm(FlaskForm):
         db = get_db()
         if(self.validate_username(self, username) and (self.validate_password(self, password, password2))):
             db.execute("INSERT INTO user (Username, Password) values (?,?)", (self.username, self.password))
+            db.commit()
