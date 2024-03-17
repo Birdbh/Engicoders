@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="channel_id">Channel ID</label>
+    <input name="channel_id" id="channel_id" required>
+    <label for="field_id">Field ID</label>
+    <input name="field_id" id="field_id" required>
+    <label for="start_date">Start Date</label>
+    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS">
+    <label for="time_increment">Time Increment</label>
+    <input name="time_increment" id="time_increment" required>
+    <button type="submit">Get Data</button>
+  </form>
+{% endblock %}
