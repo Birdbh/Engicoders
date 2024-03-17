@@ -27,3 +27,4 @@ class RegistrationForm(FlaskForm):
         if(self.validate_username(self, username) and (self.validate_password(self, password, password2))):
             db.execute("INSERT INTO user (Username, Password) values (?,?)", (self.username, self.password))
             db.commit()
+

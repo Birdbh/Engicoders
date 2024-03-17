@@ -1,10 +1,8 @@
-<!-- 
-{% extends "base.html" %} -->
-<!doctype html>
+<!-- {% extends "base.html" %}  -->
 <html>
 {% block content %}
     <h1>Register</h1>
-    <form action="register.py" method="post">
+    <form action="../register.py" method="post">
         {{ form.hidden_tag() }}
 
         <table style="display: inline;">
@@ -40,5 +38,4 @@
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
-</html> 
-
+</html>
