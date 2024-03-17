@@ -16,17 +16,17 @@ from sensors.Cleanser import cleanser
 
 
 class DataPrediction:
-    def __init__(self, sensor, prediction_end_date, model_name):
+    def __init__(self, sensor, prediction_end_date):
         
-        self.X = list(sensor.value.keys())
+        self.X = sensor.get_date_range()
         self.prediction_intervals = self.X[-1] - self.X[-2]
         self.prediction_start_date = self.X[-1] + self.prediction_intervals
         self.prediction_end_date = prediction_end_date
 
-        self.Y = list(sensor.value.values())
+        self.Y = sensor.get_value()
 
         self.X_future = None
-        self.forcasted_values = sensor.forcasted_values
+        self.forcasted_values = None
 
         self.model = None
 
@@ -58,9 +58,7 @@ class DataPrediction:
         best_order = auto_arima_model.order
 
         model = ARIMA(df, order=best_order)
+
         fitted_model = model.fit()
 
         self.model = fitted_model
-
-    def convert_prediction_to_dict(self):
-        self.forcasted_values = dict(zip(self.X_future, self.forcasted_values))
