@@ -22,11 +22,13 @@ def create_app(test_config=None):
         pass
 
     app.register_blueprint(auth.bp)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> e009db7d6c3cdd44c2a50072fbc9b5e9c4463641
     
     db.init_app(app)
     app.app_context().push()
     return app
         
-
-    
