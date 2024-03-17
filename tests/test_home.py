@@ -2,28 +2,12 @@ import pytest
 from flask import template_rendered
 from contextlib import contextmanager
 from unittest.mock import patch
-
 import sys
+
 sys.path.append("src")
 
-from flaskr import create_app
+from flaskr import create_app  # Adjust this to your Flask app creation method
 from flaskr.home import home
-
-@patch('DataGeneration')
-def test_home_post(mock_data_gen, client):
-    mock_data_gen_instance = mock_data_gen.return_value
-    mock_data_gen_instance.get_time_series.return_value = {
-    }
-
-    post_data = {
-        'channel_id': '123',
-        'time_increment': '10',
-        'field_number': '2',
-        'start_date': '2021-01-01 00:00:00'
-    }
-    response = client.post('/home/', data=post_data, follow_redirects=True)
-    assert response.status_code == 200
-
 
 @pytest.fixture
 def app():
@@ -54,8 +38,11 @@ def test_home_get(client):
         template, context = templates[0]
         assert template.name == "home.html"
 
-def test_home_post(client):
-    # Example POST data, adjust based on actual form data
+@patch('src.DataGeneration')
+def test_home_post_success(mock_data_gen, client):
+    mock_data_gen_instance = mock_data_gen.return_value
+    mock_data_gen_instance.get_time_series.return_value = {}
+
     post_data = {
         'channel_id': '123',
         'time_increment': '10',
@@ -63,6 +50,19 @@ def test_home_post(client):
         'start_date': '2021-01-01 00:00:00'
     }
     response = client.post('/home/', data=post_data, follow_redirects=True)
-    assert response.status_code == 200  # Assuming redirection to a view that returns 200
-    # Further assertions can be made depending on the expected outcome
+    assert response.status_code == 200
 
+@patch('src.DataGeneration')
+def test_home_post_error(mock_data_gen, client):
+    mock_data_gen_instance = mock_data_gen.return_value
+    mock_data_gen_instance.get_time_series.side_effect = Exception("Error fetching data")
+
+    post_data = {
+        'channel_id': '123',
+        'time_increment': '10',
+        'field_number': '2',
+        'start_date': '2021-01-01 00:00:00'
+    }
+    response = client.post('/home/', data=post_data)
+    assert response.status_code == 500
+    assert "Error fetching data from ThingSpeak" in response.data.decode()
