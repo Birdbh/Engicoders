@@ -85,8 +85,4 @@ def test_log_message(mock_logging_info, alarm):
 # Test disconnect method
 def test_disconnect(alarm):
     alarm.disconnect()
-<<<<<<< HEAD
     alarm.sio.disconnect.assert_called()
-=======
-    alarm.sio.disconnect.assert_called()
->>>>>>> e009db7d6c3cdd44c2a50072fbc9b5e9c4463641
