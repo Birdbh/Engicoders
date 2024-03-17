@@ -34,7 +34,8 @@ def home():
         # Create Sensor objects from the fetched data 
         sensors = []
         for timestamp, value in time_series_data.items():
-            sensor = Sensor(id=None, name=f"Sensor {field_number}", description="Fetched from ThingSpeak", type="ThingSpeak Data", value=value)
+            data_range = [timestamp.date().isoformat(),timestamp.date()]
+            sensor = Sensor(name=f"Sensor {field_number}", description="Fetched from ThingSpeak", data_range=data_range, value=[value])
             sensors.append(sensor)
 
         labels = [timestamp.strftime('%Y-%m-%d %H:%M:%S') for timestamp in time_series_data.keys()]
