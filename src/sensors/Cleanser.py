@@ -27,9 +27,6 @@ class cleanser:
         dev = (sum/(n-1))**0.5
         return dev
 
-
-
-
     def remove_outlier(self):
         dev = self.deviations
         mean = self.get_mean()
@@ -37,20 +34,66 @@ class cleanser:
         high = mean + dev*sdev
         low = mean - dev*sdev
         data = self.sensor.get_value()
-        length = len(data)
-        i=0
-        while i<length:
+        for i in range(len(data)):
             if data[i] > high:
-                data.pop(i)
-                length = length - 1
-                i=i+1
+                if i == 0:
+                    data[i] = 0
+                else:
+                    data[i] = data[i-1]
             elif data[i] < low:
-                data.pop(i)
-                length = length -1
-                i=i+1
+                if i == 0:
+                    data[i] = 0
+                else:
+                    data[i] = data[i-1]
             else:
-                i=i+1
+                pass
         return data
+
+    def get_max(self):
+        data = self.sensor.get_value()
+        n=0
+        for i in range(len(data)):
+            if data[i]>=n:
+                n=data[i]
+            else:
+                pass
+        return n
+    
+    def get_min(self):
+        data = self.sensor.get_value()
+        n=self.get_max()
+        for i in range(len(data)):
+            if data[i]<=n:
+                n=data[i]
+            else:
+                pass
+        return n
+
+    def remove_max(self):
+        data = self.sensor.get_value()
+        max = self.get_max()
+        for i in range(len(data)):
+            if data[i] == max and i==0:
+                data[i] = 0
+            elif data[i] == max:
+                data[i] = data[i-1]
+            else:
+                pass
+        return data
+    
+    def remove_min(self):
+        data = self.sensor.get_value()
+        min = self.get_min()
+        for i in range(len(data)):
+            if data[i] == min and i==0:
+                data[i] = 0
+            elif data[i] == min:
+                data[i] = data[i-1]
+            else:
+                pass
+        return data
+                
+
     
     def replace_missing_values(self):
         data = self.sensor.get_value()
