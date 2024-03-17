@@ -9,13 +9,14 @@ from DataGeneration import DataGeneration
 
 bp = Blueprint('home', __name__, url_prefix='/home')
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/home', methods=('GET', 'POST'))
 def home():
+
     if request.method == 'POST':
         
-        channel_id = request.form.get('channel_id')
-        time_increment = request.form.get('time_increment')
-        field_number = request.form.get('field_number')
+        channel_id = int(request.form.get('channel_id'))
+        time_increment =  int(request.form.get('time_increment'))
+        field_number =  int(request.form.get('field_id'))
         start_date = request.form.get('start_date')
 
         # Create DataGeneration
@@ -40,7 +41,7 @@ def home():
         values = [value for value in time_series_data.values()]
 
         
-        return redirect(url_for('home.home'))
+        return redirect(url_for('main.home'), labels=labels, values=values)
     else:
         
         return render_template('home.html')

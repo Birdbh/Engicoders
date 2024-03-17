@@ -25,6 +25,7 @@ def create_app(test_config=None):
     app.register_blueprint(home.bp)
     
     db.init_app(app)
+
     app.app_context().push()
     return app
         
