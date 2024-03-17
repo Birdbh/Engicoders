@@ -41,6 +41,7 @@ class DataPrediction:
             current_date += self.prediction_intervals
             future_dates.append(current_date)
 
+        print(future_dates)
         self.X_future = future_dates
 
     def predict(self):
@@ -62,3 +63,35 @@ class DataPrediction:
         fitted_model = model.fit()
 
         self.model = fitted_model
+
+data = DataGeneration(9, 30, 1, dt.datetime(2023, 3, 15))
+
+X, Y = data.get_time_series()
+
+sensor = Sensor("Temperature Sensor", "Measures Temperature", X, Y)
+
+cleanse = cleanser(sensor, 2)
+
+cleanse.replace_missing_values()
+cleanse.set_data_types_to_float()
+      
+predict = DataPrediction(sensor, dt.datetime(2023, 4, 17))
+
+predict.set_prediction_timeframe()
+# predict.train_model()
+# predict.predict()
+
+# sensor.set_forecast_values(predict.forcasted_values)
+# sensor.set_forecast_date_range(predict.X_future)
+
+# print(sensor.get_forecast_values())
+# print(sensor.get_forecast_date_range())
+
+# plt.figure(figsize=(10, 5))
+# plt.plot(sensor.get_date_range(), sensor.get_value(), label='Actual Values')
+# plt.plot(sensor.get_forecast_date_range(), sensor.get_forecast_values(), label='Forecasted Values', linestyle='--')
+# plt.xlabel('Date')
+# plt.ylabel('Value')
+# plt.legend()
+# plt.show()
+

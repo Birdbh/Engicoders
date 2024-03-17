@@ -26,7 +26,7 @@ class Sensor:
 
     def set_value(self, new_value):
 
-        if len(new_value) is not len(self.date_range):
+        if len(new_value) != len(self.date_range):
             raise ValueError("The length of the new value must be equal to the length of the date range")
 
         self.value = new_value
@@ -36,7 +36,7 @@ class Sensor:
 
     def set_date_range(self, new_date_range):
 
-        if len(new_date_range) is not len(self.value):
+        if len(new_date_range) != len(self.value):
             raise ValueError("The length of the new date range must be equal to the length of the values")
 
         self.date_range = new_date_range
