@@ -1,15 +1,8 @@
 from sklearn import linear_model as lm
-import numpy as np
-import datetime as dt
-from DataGeneration import DataGeneration
-from sensors.sensor import Sensor
-import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pandas as pd
 from pmdarima import auto_arima
-from sensors.Cleanser import cleanser
-
 
 #Create a class that will predict future values of a sensor
 #The class will take in a sensor object and a prediction end date
