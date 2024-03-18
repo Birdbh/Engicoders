@@ -1,5 +1,5 @@
 
-from flask import render_template, redirect
+from flask import render_template, redirect, flash
 from flaskr import app
 from flaskr.register import RegistrationForm
 
@@ -14,5 +14,6 @@ def register():
     if form.validate_on_submit():
         if form.register(form.username.data, form.password.data, form.password2.data):
             return redirect('/')
+        
     return render_template('auth/register.html', title='Register', form=form)
 
