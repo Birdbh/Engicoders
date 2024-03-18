@@ -6,8 +6,8 @@ import sys
 
 sys.path.append("src")
 
-from flaskr import create_app  # Adjust this to your Flask app creation method
-from flaskr.home import home
+# Replace 'your_application' with the actual name of your Python file that creates the Flask app
+from flaskr import create_app  
 
 @pytest.fixture
 def app():
@@ -32,13 +32,13 @@ def captured_templates(app):
 
 def test_home_get(client):
     with captured_templates(app) as templates:
-        response = client.get('flaskr/home/')
+        response = client.get('/home')
         assert response.status_code == 200
         assert len(templates) == 1
         template, context = templates[0]
         assert template.name == "home.html"
 
-
+@patch('flaskr.DataGeneration')
 def test_home_post_success(mock_data_gen, client):
     mock_data_gen_instance = mock_data_gen.return_value
     mock_data_gen_instance.get_time_series.return_value = {}
@@ -47,12 +47,12 @@ def test_home_post_success(mock_data_gen, client):
         'channel_id': '123',
         'time_increment': '10',
         'field_number': '2',
-        'start_date': '2021-01-01 00:00:00'
+        'start_date': '2021-01-01'
     }
-    response = client.post('flaskr/home/', data=post_data, follow_redirects=True)
-    assert response.status_code == 200
+    response = client.post('/home', data=post_data, follow_redirects=True)
+    assert response.status_code == 302  # or 200 if you are not redirecting to another endpoint
 
-
+@patch('flaskr.DataGeneration')
 def test_home_post_error(mock_data_gen, client):
     mock_data_gen_instance = mock_data_gen.return_value
     mock_data_gen_instance.get_time_series.side_effect = Exception("Error fetching data")
@@ -61,8 +61,8 @@ def test_home_post_error(mock_data_gen, client):
         'channel_id': '123',
         'time_increment': '10',
         'field_number': '2',
-        'start_date': '2021-01-01 00:00:00'
+        'start_date': '2021-01-01'
     }
-    response = client.post('flaskr/home/', data=post_data)
+    response = client.post('/home', data=post_data)
     assert response.status_code == 500
     assert "Error fetching data from ThingSpeak" in response.data.decode()
