@@ -1,27 +1,27 @@
-<!--{% extends 'base.html' %}-->
+{% extends 'base.html' %}
 
-<!--{% block header %}-->
-  <h1><!--{% block title %}-->Data Algorithm History<!--{% endblock %}--></h1>
-  <!--{% if g.user %}-->
+{% block header %}
+  <h1>{% block title %}Data Algorithm History{% endblock %}</h1>
+  {% if g.user %}
     <a class="action" href="{{ url_for('datasetInput.create') }}">New</a>
-  <!--{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-  {% for post in posts %}-->
+  {% for post in posts %}
     <article class="post">
       <header>
         <div>
           <h1>{{ DataSet['title'] }}</h1>
           <div class="about">Date: {{ date['dateinput'] }} Time: {{ time['timeinput'].strftime('%Y-%m-%d') }}</div>
         </div>
-       <!-- {% if g.user['id'] == post['author_id'] %}
+       {% if g.user['id'] == post['author_id'] %}
           <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-        {% endif %}-->
+        {% endif %}
       </header>
       <p class="body">{{ post['dataSet'] }}</p>
     </article>
-    <!-- Here is where a loop is run to post all the data set history attempts.
-    {% if not loop.last %}-->
+    <!-- Here is where a loop is run to post all the data set history attempts.-->
+    {% if not loop.last %}
       <hr>
     COSC 310 PROJECT
