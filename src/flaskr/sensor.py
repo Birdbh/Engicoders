@@ -1,20 +1,16 @@
 class Sensor:
-    def __init__(self, id, name, description, type, value):
-        self.id = id
+    def __init__(self, name, description, date_range, value):
         self.name = name
         self.description = description
-        self.type = type
+
+        self.date_range = date_range
         self.value = value
-        self.forcasted_values = {}
+        
+        self.forcasted_values = []
+        self.forcasted_date_range = []
 
     def __str__(self):
-        return f"Sensor: ID:{self.id}, NAME:{self.name}, DESCRIPTION:{self.description}, DATA-TYPE:{self.type}, VALUES: {self.value}"
-    
-    def set_id(self, new_id):
-        self.id = new_id
-
-    def get_id(self):
-        return self.id
+        return f"NAME:{self.name}, DESCRIPTION:{self.description}, DATE-RANGE:{self.date_range}, VALUES:{self.value}"
     
     def set_name(self, new_name):
         self.name = new_name
@@ -27,24 +23,38 @@ class Sensor:
     
     def get_description(self):
         return self.description
-    
-    def set_type(self, new_type):
-        self.type = new_type
-
-    def get_type(self):
-        return self.type
 
     def set_value(self, new_value):
+
+        if len(new_value) is not len(self.date_range):
+            raise ValueError("The length of the new value must be equal to the length of the date range")
+
         self.value = new_value
 
     def get_value(self):
         return self.value
+
+    def set_date_range(self, new_date_range):
+
+        if len(new_date_range) is not len(self.value):
+            raise ValueError("The length of the new date range must be equal to the length of the values")
+
+        self.date_range = new_date_range
+
+    def get_date_range(self):
+        return self.date_range
 
     def set_forecast_values(self, forcasted_values):
         self.forcasted_values = forcasted_values
 
     def get_forecast_values(self):
         return self.forcasted_values
+    
+    def set_forecast_date_range(self, forcasted_date_range):
+        self.forcasted_date_range = forcasted_date_range
+    
+    def get_forecast_date_range(self):
+        return self.forcasted_date_range
     
 
 
