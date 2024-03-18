@@ -9,20 +9,20 @@ sys.path.append("src")
 from flaskr import create_app
 from flaskr.home import home
 
-@patch('DataGeneration')
+@patch('DataGeneration.DataGeneration')
 def test_home_post(mock_data_gen, client):
     mock_data_gen_instance = mock_data_gen.return_value
     mock_data_gen_instance.get_time_series.return_value = {
     }
 
     post_data = {
-        'channel_id': '123',
-        'time_increment': '10',
+        'channel_id': '9',
+        'time_increment': '30',
         'field_number': '2',
         'start_date': '2021-01-01 00:00:00'
     }
     response = client.post('/home/', data=post_data, follow_redirects=True)
-    assert response.status_code == 200
+    assert response.status_code == 200 # Assuming redirection to a view that returns 404
 
 
 @pytest.fixture
