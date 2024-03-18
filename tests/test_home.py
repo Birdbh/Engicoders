@@ -38,7 +38,7 @@ def test_home_get(client):
         template, context = templates[0]
         assert template.name == "home.html"
 
-@patch('src.DataGeneration')
+@patch('DataGeneration')
 def test_home_post_success(mock_data_gen, client):
     mock_data_gen_instance = mock_data_gen.return_value
     mock_data_gen_instance.get_time_series.return_value = {}
@@ -52,7 +52,7 @@ def test_home_post_success(mock_data_gen, client):
     response = client.post('/home/', data=post_data, follow_redirects=True)
     assert response.status_code == 200
 
-@patch('src.DataGeneration')
+@patch('DataGeneration')
 def test_home_post_error(mock_data_gen, client):
     mock_data_gen_instance = mock_data_gen.return_value
     mock_data_gen_instance.get_time_series.side_effect = Exception("Error fetching data")
