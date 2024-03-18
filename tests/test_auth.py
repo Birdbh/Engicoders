@@ -3,7 +3,7 @@ from flask import session
 
 def test_login(client, auth):
     # test that viewing the page renders without template errors
-    assert client.get('/auth/login').status_code == 200
+    assert client.get('/login').status_code == 200
     # test that successful login redirects to the index page -> This would be a good test but we dont have full data functionality yet
     # response = auth.login()
     # assert response.headers['Location'] == "/"
