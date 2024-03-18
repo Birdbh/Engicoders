@@ -4,3 +4,6 @@ py -m pip install statsmodels
 py -m pip install pandas
 py -m pip install scikit-learn
 py -m pip install pmdarima
+py -m pip install flask
+py -m pip intsall WTForms==3.1.2
+py -m pip install Flask-WTF==1.2.1
