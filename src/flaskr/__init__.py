@@ -1,10 +1,11 @@
 import os
 from flask import Flask
 
-from . import auth, db
+
 app = Flask(__name__, instance_relative_config=True)
 
 from flaskr import routing
+from . import auth, db
 
 def create_app(test_config=None):
     # create and configure the app
