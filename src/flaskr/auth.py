@@ -6,9 +6,10 @@ from flask import (
 from werkzeug.security import check_password_hash, generate_password_hash
 
 #Blueprint based on Flask Doc for the authorization page which wll include the login and registration systems
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+from flaskr import app
 
-@bp.route('/login', methods=('GET', 'POST'))
+
+@app.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
         username = request.form['username']
