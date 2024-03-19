@@ -3,11 +3,19 @@ from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 import sys
 sys.path.append("src")
+<<<<<<< HEAD
 from sensors.sensor.sensor import Sensor
 from DataGeneration import DataGeneration
 
 
 bp = Blueprint('main', __name__, url_prefix='/main')
+=======
+from sensors.sensor import Sensor
+from DataGeneration import DataGeneration
+
+
+bp = Blueprint('home', __name__, url_prefix='/home')
+>>>>>>> 953815836f67dd1b84de2b74fe4d00b3db00c15f
 
 @bp.route('/home', methods=('GET', 'POST'))
 def home():
@@ -45,4 +53,8 @@ def home():
         return redirect(url_for('main.home'), labels=labels, values=values)
     else:
         
+<<<<<<< HEAD
         return render_template('main/home.html')
+=======
+        return render_template('home.html')
+>>>>>>> 953815836f67dd1b84de2b74fe4d00b3db00c15f
