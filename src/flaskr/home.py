@@ -23,7 +23,6 @@ def home():
         try:
             data_gen = DataGeneration(channel_id, time_increment, field_number, start_date)
         except ValueError as e:
-            
             return f"Error processing input data: {e}", 400
 
         # Fetch and process data

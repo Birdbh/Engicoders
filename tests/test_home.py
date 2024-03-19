@@ -3,10 +3,8 @@ from flask import template_rendered
 from contextlib import contextmanager
 from unittest.mock import patch
 import sys
-<<<<<<< HEAD
 
-sys.path.append("src")
-=======
+
 sys.path.append("src")
 
 from flaskr import create_app
@@ -26,7 +24,7 @@ def test_home_post(mock_data_gen, client):
     }
     response = client.post('/home/', data=post_data, follow_redirects=True)
     assert response.status_code == 200 # Assuming redirection to a view that returns 404
->>>>>>> b2f6283af53ccdd4c746c430bc7a3b1a46b1515d
+
 
 # Replace 'your_application' with the actual name of your Python file that creates the Flask app
 from flaskr import create_app  
