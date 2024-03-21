@@ -4,14 +4,20 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pandas as pd
 from pmdarima import auto_arima
 
+import sys 
+sys.path.append("src")
+
+from sensors.DecoratorPattern import SensorDataDecorator
+
 #Create a class that will predict future values of a sensor
 #The class will take in a sensor object and a prediction end date
 #The class will calculate the prediction intervals and the prediction start date from the sensor object values
 
 
-class DataPrediction:
+class DataPrediction(SensorDataDecorator):
     def __init__(self, sensor, prediction_end_date):
         
+        super().__init__(sensor)
         self.X = sensor.get_date_range()
         self.prediction_intervals = self.X[-1] - self.X[-2]
         self.prediction_start_date = self.X[-1] + self.prediction_intervals
@@ -57,4 +63,15 @@ class DataPrediction:
         fitted_model = model.fit()
 
         self.model = fitted_model
+
+    def process_data(self):
+        super().process_data()
+        X = self.sensor.get_date_range()
+        Y = self.sensor.get_value()
+        self.set_prediction_timeframe()
+        self.train_model()
+        self.predict()
+        X_future = self.X_future
+        Y_future = self.forcasted_values
+        return X, Y, X_future, Y_future
 

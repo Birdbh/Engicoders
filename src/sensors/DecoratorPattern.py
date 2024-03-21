@@ -4,8 +4,13 @@ class SensorDataProcessor:
         pass
 
 class SensorDataDecorator(SensorDataProcessor):
-    def __init__(self, sensor_data_processor):
-        self._sensor_data_processor = sensor_data_processor
+    def __init__(self, sensor):
+        self.sensor = sensor
+
+    def __getattr__(self, name):
+        "Delegate attribute access to the decorated sensor object"
+        return getattr(self.sensor, name)
 
     def process_data(self):
-        self._sensor_data_processor.process_data()
+        self.sensor.process_data()
+
