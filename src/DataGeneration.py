@@ -3,11 +3,6 @@ from datetime import datetime, timedelta
 import requests
 import json
 
-import sys 
-sys.path.append("src")
-
-from sensors import sensor, Prediction, Cleanser
-
 #Documentation
 #https://www.mathworks.com/help/thingspeak/readdata.html#mw_25e0bdab-cafa-48d4-84f5-5fce55aa281b
 
