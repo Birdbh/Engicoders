@@ -38,6 +38,6 @@ jobs:
       run: |
         pytest
         pip install pytest-cov
-        pytest --cov=myproj tests/
+        pytest --cov=src tests/
       
       
