@@ -1,0 +1,10 @@
+python-engineio==4.9.0
+python-socketio==5.11.1
+statsmodels
+pandas
+scikit-learn
+pmdarima
+flask
+WTForms==3.1.2
+Flask-WTF==1.2.1
+requests
