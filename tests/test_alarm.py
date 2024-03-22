@@ -39,11 +39,12 @@ def test_check_sensor_without_trigger(alarm, mock_sensor):
     assert not alarm.is_alarm_active()
 
 def test_check_sensor_with_trigger(alarm, mock_sensor):
-    mock_sensor.get_value.return_value = 12  # Above the threshold and deadband
+    mock_sensor.get_value.return_value = 12  # Above the threshold
     alarm.set_alarm()
-    alarm.check_sensor()
-    # We expect the alarm to have been triggered and the on_trigger callback to be called.
-    alarm.on_trigger.assert_called_once()
+    with patch('sensors.alarm.time.time', return_value=time.time() + alarm.delay + 1):
+        alarm.check_sensor()
+        # We expect the alarm to have been triggered and the on_trigger callback to be called.
+        alarm.on_trigger.assert_called_once()
 
 def test_check_sensor_with_delay(alarm, mock_sensor):
     mock_sensor.get_value.return_value = 12  # Above the threshold
