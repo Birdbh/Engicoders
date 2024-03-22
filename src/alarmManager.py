@@ -35,7 +35,6 @@ class AlarmManager:
             alarm.check_sensor()
 
     def handle_alarm_trigger(self, sensor):
-        """Handle an alarm trigger by sending a message through Socket.IO."""
         message = f"Alarm triggered for {sensor.get_name()} with current value: {sensor.get_value()}."
         self.sio.emit('alarm_triggered', {'message': message})
 

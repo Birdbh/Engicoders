@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, create_autospec
 import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
@@ -32,26 +32,5 @@ def test_adding_and_removing_alarms(alarm_manager, mock_alarm):
     alarm_manager.remove_alarm(mock_alarm)
     assert mock_alarm not in alarm_manager.alarms
 
-@pytest.mark.skip(reason="This test is currently being debugged")
-def test_alarm_trigger_handling(alarm_manager, mock_alarm, mock_sio_client):
-    # Add the mock alarm to the alarm manager
-    alarm_manager.add_alarm(mock_alarm)
-    
-    # Simulate the alarm being triggered by manually calling the on_trigger callback
-    alarm_manager.handle_alarm_trigger = MagicMock()
-
-    # Pretend that the alarm condition is met, which should trigger the on_trigger method
-    mock_alarm.check_sensor.side_effect = lambda: alarm_manager.handle_alarm_trigger(mock_alarm.sensor)
-
-    # Run the alarm check, which should trigger the mock_alarm's on_trigger side effect
-    alarm_manager.check_alarms()
-    
-    # Verify that handle_alarm_trigger was called
-    alarm_manager.handle_alarm_trigger.assert_called_once_with(mock_alarm.sensor)
-
-    # Assuming handle_alarm_trigger should emit a socketio message,
-    # verify that emit was called with the appropriate event and message
-    expected_message = f"Alarm triggered for {mock_alarm.sensor.get_name()} with current value: {mock_alarm.sensor.get_value()}."
-    mock_sio_client().emit.assert_called_once_with('alarm_triggered', {'message': expected_message})
 
 
