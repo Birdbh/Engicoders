@@ -38,26 +38,27 @@ def test_check_sensor_without_trigger(alarm, mock_sensor):
     alarm.check_sensor()
     assert not alarm.is_alarm_active()
 
-def test_check_sensor_with_trigger(alarm, mock_sensor):
+def test_check_sensor_with_trigger(alarm, mock_sensor, mock_on_trigger):
     mock_sensor.get_value.return_value = 12  # Above the threshold
-    alarm.set_alarm()
-    with patch('sensors.alarm.time.time', return_value=time.time() + alarm.delay + 1):
-        alarm.check_sensor()
-        # We expect the alarm to have been triggered and the on_trigger callback to be called.
-        alarm.on_trigger.assert_called_once()
-
-def test_check_sensor_with_delay(alarm, mock_sensor):
-    mock_sensor.get_value.return_value = 12  # Above the threshold
-    # Set a delay on the alarm to test delay functionality
-    alarm.delay = 5  # Delay of 5 seconds for the sake of the test
     alarm.set_alarm()
     alarm.check_sensor()
-    # Initially, the alarm should not be triggered because the delay has not passed
-    assert not alarm.is_alarm_active()
+    # The alarm should be triggered immediately since there is no delay
+    mock_on_trigger.assert_called_once()
 
+def test_check_sensor_with_delay(alarm, mock_sensor, mock_on_trigger):
+    mock_sensor.get_value.return_value = 12  # Above the threshold
+    alarm.delay = 5  # Delay of 5 seconds for the sake of the test
+    alarm.set_alarm()
+    # Simulate time before the delay has passed
+    with patch('sensors.alarm.time.time', return_value=time.time()):
+        alarm.check_sensor()
+        # Initially, the alarm should not be triggered because the delay has not passed
+        assert not alarm.is_alarm_active()
+        mock_on_trigger.assert_not_called()
+    
     # Fast-forward time to simulate the delay passing
-    with patch('sensors.alarm.time.time', return_value=time.time() + 10):
+    with patch('sensors.alarm.time.time', return_value=time.time() + alarm.delay + 1):
         alarm.check_sensor()
         # Now the alarm should be triggered
         assert alarm.is_alarm_active()
-        alarm.on_trigger.assert_called_once()
+        mock_on_trigger.assert_called_once()
