@@ -1,4 +1,9 @@
-class Sensor:
+import sys 
+sys.path.append("src")
+
+from sensors.DecoratorPattern import SensorDataProcessor
+
+class Sensor(SensorDataProcessor):
     def __init__(self, name, description, date_range, value):
         self.name = name
         self.description = description
@@ -56,6 +61,9 @@ class Sensor:
     def get_forecast_date_range(self):
         return self.forcasted_date_range
     
-
+    def process_data(self):
+        X = self.get_date_range()
+        Y = self.get_value()
+        return X, Y
 
     
