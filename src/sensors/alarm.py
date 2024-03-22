@@ -1,3 +1,5 @@
+import time
+
 class Alarm:
     def __init__(self, sensor, threshold, deadband=0, delay=0, on_trigger=None):
         self.sensor = sensor
@@ -7,7 +9,6 @@ class Alarm:
         self.is_set = False
         self.alarm_triggered = False
         self.trigger_time = None
-        # Callback function to be called when alarm is triggered
         self.on_trigger = on_trigger
 
     def set_alarm(self):
@@ -22,21 +23,20 @@ class Alarm:
 
     def check_sensor(self):
         if not self.is_set:
-            return  # Alarm is not set, do nothing
-
+            return
+    
         current_value = self.sensor.get_value()
-        # Check if current value exceeds the threshold adjusted for the deadband
+    
         if current_value > self.threshold + self.deadband:
             if not self.alarm_triggered:
-                # If the alarm has not been triggered yet, start the timer
+                # Start the delay timer if it's not started yet
                 if self.trigger_time is None:
                     self.trigger_time = time.time()
-                # Check if the delay has passed since the alarm condition was met
-                elif time.time() - self.trigger_time >= self.delay:
+                # If there's no delay, or the delay has passed, trigger the alarm
+                if self.delay == 0 or time.time() - self.trigger_time >= self.delay:
                     self.trigger_alarm()
         else:
-            # If the current value is below the threshold or within the deadband, reset the alarm
-            self.alarm_triggered = False
+            # Reset the trigger time if value falls below threshold or within deadband
             self.trigger_time = None
 
     def trigger_alarm(self):
