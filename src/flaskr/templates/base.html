@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Title{% endblock %} - IoT Web Application</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
     <header class="top-header">
-        <h1>{% block header %}Header{% endblock %}</h1>
+        <h1>{% block header %}Manufacturing Line Capacity Prediction{% endblock %}</h1>
         <nav class="topnav">
-            <a >Home</a>
-            <a href="{{ url_for('auth.login') }}">Log In</a>
-            <a>Register</a>
+
+            <a href="/login">Log In</a>
+            <a href="/">Home</a>
+            <a href="/register">Register</a>
             </ul>
         </nav>
     </header>
     <main>
         {% block content %}
-        <p>Main content goes here.</p>
+        <p>This is a machine learning program.
+            The purpose of this web application is to use a machine learning algorithm to predict manufacturing line's capacity requirements.
+            This is based on using existing data sets for free members, and adding custom data sets for premium members.
+        </p>
         {% endblock %}
     </main>
     <footer>
