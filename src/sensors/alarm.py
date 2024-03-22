@@ -33,13 +33,10 @@ class Alarm:
                     # If the alarm has been triggered and the delay has passed, activate the alarm
                     elif time.time() - self.trigger_time >= self.delay:
                         self.trigger_alarm()
-            else:
-                # If the value is back in range, clear the alarm and reset the timer
-                self.clear_alarm()
 
     def trigger_alarm(self):
         self.alarm_triggered = True
-        # Instead of emitting directly, we now call the callback
+        # Call the on_trigger callback
         if self.on_trigger:
             self.on_trigger(self.sensor)
 
