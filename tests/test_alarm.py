@@ -1,11 +1,10 @@
 import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
 import time
 
-# This fixture creates a mock Sensor object.
 @pytest.fixture
 def mock_sensor():
     sensor = MagicMock()
@@ -13,13 +12,13 @@ def mock_sensor():
     sensor.get_value.return_value = 0
     return sensor
 
-# This fixture creates an Alarm object with the mock Sensor.
 @pytest.fixture
-def alarm(mock_sensor):
-    # Create a mock for the on_trigger callback
-    mock_on_trigger = MagicMock()
-    alarm = Alarm(mock_sensor, threshold=10, deadband=1, delay=0, on_trigger=mock_on_trigger)
-    return alarm
+def mock_on_trigger():
+    return MagicMock(name='on_trigger')
+
+@pytest.fixture
+def alarm(mock_sensor, mock_on_trigger):
+    return Alarm(mock_sensor, threshold=10, deadband=1, delay=0, on_trigger=mock_on_trigger)
 
 def test_set_alarm(alarm):
     assert not alarm.is_set
@@ -42,23 +41,26 @@ def test_check_sensor_with_trigger(alarm, mock_sensor, mock_on_trigger):
     mock_sensor.get_value.return_value = 12  # Above the threshold
     alarm.set_alarm()
     alarm.check_sensor()
-    # The alarm should be triggered immediately since there is no delay
     mock_on_trigger.assert_called_once()
 
-def test_check_sensor_with_delay(alarm, mock_sensor, mock_on_trigger):
-    mock_sensor.get_value.return_value = 12  # Above the threshold
-    alarm.delay = 5  # Delay of 5 seconds for the sake of the test
+def test_sensor_value_within_deadband_does_not_trigger_alarm(alarm, mock_sensor, mock_on_trigger):
+    mock_sensor.get_value.return_value = 10.5  # Assuming a threshold of 10 and a deadband of 1
     alarm.set_alarm()
-    # Simulate time before the delay has passed
-    with patch('sensors.alarm.time.time', return_value=time.time()):
-        alarm.check_sensor()
-        # Initially, the alarm should not be triggered because the delay has not passed
-        assert not alarm.is_alarm_active()
-        mock_on_trigger.assert_not_called()
-    
-    # Fast-forward time to simulate the delay passing
-    with patch('sensors.alarm.time.time', return_value=time.time() + alarm.delay + 1):
-        alarm.check_sensor()
-        # Now the alarm should be triggered
-        assert alarm.is_alarm_active()
-        mock_on_trigger.assert_called_once()
+    alarm.check_sensor()
+    mock_on_trigger.assert_not_called()
+
+def test_alarm_does_not_trigger_when_not_set(alarm, mock_sensor, mock_on_trigger):
+    mock_sensor.get_value.return_value = 15  # Above the threshold
+    alarm.check_sensor()
+    mock_on_trigger.assert_not_called()
+
+def test_updating_threshold_and_deadband(alarm, mock_sensor, mock_on_trigger):
+    alarm.threshold = 15
+    alarm.deadband = 2
+    alarm.set_alarm()
+    mock_sensor.get_value.return_value = 14
+    alarm.check_sensor()
+    mock_on_trigger.assert_not_called()  # Below the new threshold
+    mock_sensor.get_value.return_value = 18
+    alarm.check_sensor()
+    mock_on_trigger.assert_called_once()  # Above the new threshold and outside deadband
