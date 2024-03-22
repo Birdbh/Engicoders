@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import requests
 import json
 
+
 #Documentation
 #https://www.mathworks.com/help/thingspeak/readdata.html#mw_25e0bdab-cafa-48d4-84f5-5fce55aa281b
 
@@ -100,3 +101,4 @@ class DataGeneration:
         return date_series, value_series
 
 #common request https://api.thingspeak.com/channels/{channel_id}/fields/{field_number}.json?start={YYYY-MM-DD%20HH:NN:SS.}&average={increment}
+

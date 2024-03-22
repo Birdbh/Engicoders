@@ -1,12 +1,12 @@
 import sys 
 sys.path.append("src")
 
-from sensors.DecoratorPattern import SensorDataDecorator
+import sensors.sensor
 
-class cleanser(SensorDataDecorator):
+class cleanser:
     def __init__(self, sensor, deviations):
-        super().__init__(sensor)
         self.deviations = deviations
+        self.sensor  = sensor
 
     def get_mean(self):
         data = self.sensor.get_value()
@@ -116,15 +116,7 @@ class cleanser(SensorDataDecorator):
 
         self.sensor.set_value(data)
         return data
-    
-    def process_data(self):
-        super().process_data()
-        self.replace_missing_values()
-        self.set_data_types_to_float()
-        self.remove_outlier()
-        X = self.sensor.get_date_range()
-        Y = self.sensor.get_value()
-        return X, Y
+
 
 
 
