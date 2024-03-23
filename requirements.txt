@@ -8,3 +8,4 @@ flask
 WTForms==3.1.2
 Flask-WTF==1.2.1
 requests
+flask_login
