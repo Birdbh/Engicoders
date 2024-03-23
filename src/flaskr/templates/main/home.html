@@ -18,28 +18,4 @@
   </form>
   {% endblock %}
 
-  {% block content %}
-  Filter Method Options:
-<!-- Box with dropdown list -->
-<div class="box">
-  <select class="dropdown-list">
-    <option value="option1" class="dropdown-option">Clear Outliers</option>
-    <option value="option2" class="dropdown-option">Smooth</option>
-    <option value="option3" class="dropdown-option">Both</option>
-  </select>
-</div>
-<br>
-{% endblock %}
-
-{% block content %}
-Upload Data:
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload">
-</form>
-
-</body>
-</html>
-
-  COSC 310 PROJECT
-  {% endblock %}
+  
