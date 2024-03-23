@@ -30,6 +30,13 @@ class User(UserMixin):
         self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])
 
 class SuperUser(User): 
+    premium_features = True
+
     def set_password():
         #implemetation of password hashing
-    def 
+
+    def get_password():
+        #implement hashing of password
+        
+    def get_payment():
+        #implement payment dw
