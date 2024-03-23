@@ -1,46 +1,41 @@
-from flask import Blueprint, render_template, request, redirect, url_for
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 import sys
 sys.path.append("src")
-from sensors.sensor import Sensor
+from sensors.sensor import Sensor  # Adjust the import path as needed
 from DataGeneration import DataGeneration
 
 
-bp = Blueprint('home', __name__, url_prefix='/home')
+from flaskr import app
 
-@bp.route('/', methods=('GET', 'POST'))
+
+app = Flask(__name__)  # Only if the Flask app instance is defined in this file
+
+@app.route('/home', methods=['GET', 'POST'])  # Adjust the route as needed
 def home():
     if request.method == 'POST':
-        
+        # Extract form data
         channel_id = request.form.get('channel_id')
-        time_increment = request.form.get('time_increment')
-        field_number = request.form.get('field_number')
+        field_id = request.form.get('field_id')
         start_date = request.form.get('start_date')
+        time_increment = request.form.get('time_increment')
 
-        # Create DataGeneration
+        # Initialize DataGeneration with form data
         try:
-            data_gen = DataGeneration(channel_id, time_increment, field_number, start_date)
-        except ValueError as e:
-            return f"Error processing input data: {e}", 400
-
-        # Fetch and process data
-        try:
-            time_series_data = data_gen.get_time_series()
+            data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
+            date_series, value_series = data_gen.get_time_series()
         except Exception as e:
-            return f"Error fetching data from ThingSpeak: {e}", 500
+            # Consider using Flask's flash messages to show errors on the web page
+            return f"Error while generating data: {e}", 400
 
-        # Create Sensor objects from the fetched data 
-        sensors = []
-        for timestamp, value in time_series_data.items():
-            sensor = Sensor(id=None, name=f"Sensor {field_number}", description="Fetched from ThingSpeak", type="ThingSpeak Data", value=value)
-            sensors.append(sensor)
+        # Assuming Sensor class can be initialized directly with the fetched data
+        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", data={'dates': date_series, 'values': value_series})
 
-        labels = [timestamp.strftime('%Y-%m-%d %H:%M:%S') for timestamp in time_series_data.keys()]
-        values = [value for value in time_series_data.values()]
+        # Pass data to the template for rendering
+        return render_template('home.html', labels=date_series, values=value_series)
 
-        
-        return redirect(url_for('home.home'))
-    else:
-        
-        return render_template('home.html')
+    # For GET requests, just render the template
+    return render_template('home.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)  # Consider removing debug=True for production
