@@ -38,8 +38,8 @@ class SuperUser(User):
     premium_features = True
     hasher = sha256()
 
-    def __init__(self, username="", userid="", password=""):
-        super().__init__(username=username)
+    def __init__(self, username="", userid="", password="", payment=""):
+        super().__init__(username=username, userid=userid, password=password)
         self.upgrade()
     def upgrade(self):
         self.hash_password()
