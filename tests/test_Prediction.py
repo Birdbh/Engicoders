@@ -4,7 +4,7 @@ import datetime as dt
 import sys
 sys.path.append("src")
 
-from Prediction import DataPrediction
+from sensors.Prediction import DataPrediction
 from sensors.sensor import Sensor
 
 sensor = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3)], [47, 3, 1])
