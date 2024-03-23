@@ -1,18 +1,21 @@
 from flask_login import UserMixin
 import flaskr.db as db
+from hashlib import sha256
 
 class User(UserMixin):
     database = None
     username = ""
     userid = ""
+    password = ""
     is_authenticated = False
     is_active = False
     is_anonymous = False
 
-    def __init__(self, username="", userid=""): 
+    def __init__(self, username="", userid="", password=""): 
         self.database = db.get_db()
         self.set_username(username)
         self.set_userid(userid)
+        self.password = password
         
         
 
@@ -33,15 +36,26 @@ class User(UserMixin):
 
 class SuperUser(User): 
     premium_features = True
+    hasher = sha256()
 
-    def __init__(self): 
+    def __init__(self, username="", userid="", password=""):
+        super().__init__(username=username)
+        self.upgrade()
+    def upgrade(self):
+        self.hash_password()
+
+    def hash_password(self):
+        password = self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password']
+        print(password)
+        self.hasher.update(str.encode(password))
+        self.password = self.hasher.hexdigest()
+        self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
+    
+    def get_password(self):
+        return self.password
         
-
-    def set_password():
-        #implemetation of password hashing
-
-    def get_password():
-        #implement hashing of password
-        
-    def get_payment():
-        #implement payment dw
+    # def get_payment():
+    #     #implement payment dw
+    # def set_payment():
+    #     #implement
+    
