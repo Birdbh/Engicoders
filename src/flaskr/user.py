@@ -41,6 +41,7 @@ class SuperUser(User):
     def __init__(self, username="", userid="", password="", payment=""):
         super().__init__(username=username, userid=userid, password=password)
         self.upgrade()
+        #set_payment
     def upgrade(self):
         self.hash_password()
 
