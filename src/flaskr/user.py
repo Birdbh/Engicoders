@@ -9,9 +9,10 @@ class User(UserMixin):
     is_active = False
     is_anonymous = False
 
-    def __init__(self): 
+    def __init__(self, username="", userid=""): 
         self.database = db.get_db()
-        self.username = ""
+        self.set_username(username)
+        self.set_userid(userid)
         
         
 
@@ -29,8 +30,12 @@ class User(UserMixin):
         self.set_username(username)
         self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])
 
+
 class SuperUser(User): 
     premium_features = True
+
+    def __init__(self): 
+        
 
     def set_password():
         #implemetation of password hashing
