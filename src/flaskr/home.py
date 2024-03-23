@@ -1,17 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime
 import sys
 sys.path.append("src")
-from sensors.sensor import Sensor  # Adjust the import path as needed
+from sensors.sensor import Sensor 
 from DataGeneration import DataGeneration
-
 
 from flaskr import app
 
-
-app = Flask(__name__)  # Only if the Flask app instance is defined in this file
-
-@app.route('/home', methods=['GET', 'POST'])  # Adjust the route as needed
+@app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         # Extract form data
@@ -25,17 +21,11 @@ def home():
             data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
             date_series, value_series = data_gen.get_time_series()
         except Exception as e:
-            # Consider using Flask's flash messages to show errors on the web page
-            return f"Error while generating data: {e}", 400
+            flash(f"Error while generating data: {e}")  # Use flash for error messages
+            return redirect(url_for('home'))
 
-        # Assuming Sensor class can be initialized directly with the fetched data
+        # Initialize Sensor with fetched data and pass data to the template for rendering
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", data={'dates': date_series, 'values': value_series})
+        return render_template('main/home.html', labels=date_series, values=value_series)
 
-        # Pass data to the template for rendering
-        return render_template('home.html', labels=date_series, values=value_series)
-
-    # For GET requests, just render the template
-    return render_template('home.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)  # Consider removing debug=True for production
+    return render_template('main/home.html')
