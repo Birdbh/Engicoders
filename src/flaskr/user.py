@@ -9,9 +9,10 @@ class User(UserMixin):
     is_active = False
     is_anonymous = False
 
-    def __init__(self): 
+    def __init__(self, username="", userid=""): 
         self.database = db.get_db()
-        self.username = ""
+        self.set_username(username)
+        self.set_userid(userid)
         
         
 
