@@ -7,9 +7,7 @@ class User(UserMixin):
     username = ""
     userid = ""
     password = ""
-    is_authenticated = False
-    is_active = False
-    is_anonymous = False
+
 
     def __init__(self, username="", userid="", password=""): 
         self.database = db.get_db()
