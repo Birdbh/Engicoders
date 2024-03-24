@@ -29,8 +29,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         if form.register(form.username.data, form.password.data, form.password2.data):
-            if(LoginForm.login(LoginForm, form.username, form.password)):
-                return redirect('/')
+            return redirect('/')
         
     return render_template('auth/register.html', title='Register', form=form)
 

@@ -28,7 +28,3 @@ class User(UserMixin):
         self.username = username
     def set_userid(self, userid): 
         self.userid = userid
-
-    def register(self, username):
-        self.set_username(username)
-        self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])
