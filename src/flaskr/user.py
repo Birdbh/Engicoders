@@ -34,10 +34,9 @@ class User(UserMixin):
     def set_userid(self, userid): 
         self.userid = userid
 
-
-
 class SuperUser(User): 
     premium_features = True
+    payment = ""
     hasher = sha256()
 
     def __init__(self, username="", userid="", password="", payment=""):
@@ -57,8 +56,8 @@ class SuperUser(User):
     def get_password(self):
         return self.password
         
-    # def get_payment():
-    #     #implement payment dw
+    #def get_payment():
+        #implement payment dw
     # def set_payment():
     #     #implement
     

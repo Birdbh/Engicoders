@@ -7,6 +7,8 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from flask import Flask, render_template
 sys.path.append("src")
 import flaskr.register as register
+from flask_login import current_user, logout_user
+import flaskr.login as login
 
 import flaskr.db as dbClass
 import flaskr.user as UserClass
@@ -24,5 +26,15 @@ def test_hash_password(app):
         hasher = sha256()
         hasher.update(str.encode("Test"))
         assert user.get_password() == hasher.hexdigest()
+
+def test_logging_in(app):
+   with app.test_request_context():
+        user = UserClass.SuperUser(username="test2")
+        loginForm = login.LoginForm()
+        assert loginForm.login("test2", "test")
+        assert current_user.is_authenticated
+        logout_user()
+        assert not current_user.is_authenticated
+        assert current_user.is_anonymous
 
         
