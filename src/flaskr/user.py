@@ -11,7 +11,10 @@ class User(UserMixin):
         self.database = db.get_db()
         if(userid != ""):
             self.set_userid(userid)
-            self.set_username(self.database.execute("SELECT username from user where id = (?)", (userid,)).fetchone()['username'])
+            try:
+                self.set_username(self.database.execute("SELECT username from user where id = (?)", (userid,)).fetchone()['username'])
+            except:
+                self.set_username = ""
         elif(username != ""):
             self.set_username(username)
             self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])
