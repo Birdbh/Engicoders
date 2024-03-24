@@ -6,6 +6,7 @@ sys.path.append("src")
 from sensors.sensor import Sensor 
 from DataGeneration import DataGeneration
 
+from flaskr import app
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
