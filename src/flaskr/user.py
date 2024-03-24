@@ -48,7 +48,6 @@ class SuperUser(User):
 
     def hash_password(self):
         password = self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password']
-        print(password)
         self.hasher.update(str.encode(password))
         self.password = self.hasher.hexdigest()
         self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
