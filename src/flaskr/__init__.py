@@ -8,7 +8,7 @@ def create_app(test_config=None):
     # create and configure the app
     global app
     app = Flask(__name__, instance_relative_config=True)
-    from . import auth, db, routing
+    from . import auth, db, routing, home
 
     #configuration is pulled from Flask Documentation
     app.config.from_mapping(
