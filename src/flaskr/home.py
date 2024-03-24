@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime
+from flaskr import app
 import sys
 sys.path.append("src")
 from sensors.sensor import Sensor 
 from DataGeneration import DataGeneration
 
-from flaskr import app
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         # Extract form data
