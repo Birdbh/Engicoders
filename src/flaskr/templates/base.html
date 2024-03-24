@@ -12,10 +12,13 @@
         <h1>{% block header %}Manufacturing Line Capacity Prediction{% endblock %}</h1>
         <nav class="topnav">
 
-            <a href="/login">Log In</a>
             <a href="/">Home</a>
-            <a href="/register">Register</a>
-            </ul>
+            {% if current_user.is_anonymous %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% else %}
+                <a href="/logout">Logout</a>
+            {% endif %}
         </nav>
     </header>
     <main>

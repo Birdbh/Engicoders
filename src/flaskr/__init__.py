@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_login import LoginManager
-
+from flaskr.user import User
 
 
 
@@ -12,8 +12,8 @@ def create_app(test_config=None):
     from . import db, routing
     login = LoginManager(app)
     @login.user_loader
-    def load_user():
-        return 0
+    def load_user(id):
+        return User(userid=id)
     #configuration is pulled from Flask Documentation
     app.config.from_mapping(
         SECRET_KEY='test_change_later',
