@@ -5,14 +5,20 @@ class User(UserMixin):
     database = None
     username = ""
     userid = ""
-    is_authenticated = False
-    is_active = False
-    is_anonymous = False
+
 
     def __init__(self, username="", userid=""): 
         self.database = db.get_db()
-        self.set_username(username)
-        self.set_userid(userid)
+        if(userid != ""):
+            self.set_userid(userid)
+            try:
+                self.set_username(self.database.execute("SELECT username from user where id = (?)", (userid,)).fetchone()['username'])
+            except:
+                self.set_username = ""
+        elif(username != ""):
+            self.set_username(username)
+            self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])
+        
         
         
 
@@ -25,7 +31,3 @@ class User(UserMixin):
         self.username = username
     def set_userid(self, userid): 
         self.userid = userid
-
-    def register(self, username):
-        self.set_username(username)
-        self.set_userid(self.database.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id'])

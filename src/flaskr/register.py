@@ -4,12 +4,14 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from flask import Flask, render_template, flash
 from flaskr.db import get_db
+from flaskr.user import User
+from flask_login import login_user
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        'Repeat Password', validators=[DataRequired(), EqualTo('password', "This must be equal to password")])
     submit = SubmitField('Register')
 
     def validate_user(self, db, username):
@@ -30,6 +32,8 @@ class RegistrationForm(FlaskForm):
         if(self.validate_user(db, username) and (self.validate_pass(password, password2))):
             db.execute("INSERT INTO user (Username, Password) values (?,?)", (username, password))
             db.commit()
+            user = User(username=username)
+            login_user(user, True)
             return True
         return False
 
