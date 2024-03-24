@@ -23,6 +23,7 @@ def test_register(app):
         assert not (db.execute("SELECT password from user where username = 'TestUser'").fetchone()['password'] == "test")
         assert not (form.register("TestUser43", "Test", "test"))
         assert not (form.register("test", "Test", "Test"))
+        
 
 
 
