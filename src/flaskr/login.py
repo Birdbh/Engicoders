@@ -14,9 +14,12 @@ class LoginForm(FlaskForm):
     
     def login(self, username, password):
         db = get_db()
-        if(db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] == password):
-            user = User(username=username)
-            login_user(user, True)
-            return True
-        flash('Username or Password is incorrect')
+        try:
+            if(db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] == password):
+                user = User(username=username)
+                login_user(user, True)
+                return True
+            flash('Username or Password is incorrect')
+        except:
+            flash('Username does not exist!')
         return False
