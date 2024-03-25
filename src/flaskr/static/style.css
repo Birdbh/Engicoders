@@ -37,7 +37,6 @@
 .top-header {
     display: flex; /* Align items horizontally */
     align-items: center; /* Center items vertically */
-    text-align: left;
     justify-content: space-between; /* Space between header and nav */
     padding: 0 16px; /* Optional: Add some padding around the items */
     border-bottom: 1px solid grey;
@@ -45,3 +44,20 @@
     font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
+h1 {
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    font-family: Arial, sans-serif;
+}
+
+main {
+    font-family: Arial, sans-serif;
+}
