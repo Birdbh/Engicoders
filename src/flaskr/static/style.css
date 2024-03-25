@@ -37,7 +37,7 @@
 .top-header {
     display: flex; /* Align items horizontally */
     align-items: center; /* Center items vertically */
-    text-align: center;
+    text-align: left;
     justify-content: space-between; /* Space between header and nav */
     padding: 0 16px; /* Optional: Add some padding around the items */
     border-bottom: 1px solid grey;
