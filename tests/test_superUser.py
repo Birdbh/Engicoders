@@ -31,7 +31,7 @@ def test_logging_in(app):
    with app.test_request_context():
         user = UserClass.SuperUser(username="test2")
         loginForm = login.LoginForm()
-        assert loginForm.login("test2", "test")
+        assert loginForm.login("test2", 'test')
         assert current_user.is_authenticated
         logout_user()
         assert not current_user.is_authenticated

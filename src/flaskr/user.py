@@ -51,6 +51,7 @@ class SuperUser(User):
         self.hasher.update(str.encode(password))
         self.password = self.hasher.hexdigest()
         self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
+        self.database.commit()
     
     def get_password(self):
         return self.password
