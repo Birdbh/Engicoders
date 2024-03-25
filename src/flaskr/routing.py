@@ -3,6 +3,7 @@ from flask import render_template, redirect, flash
 from flaskr import app
 from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
+from flaskr.upgrade import upgrade
 from flask_login import logout_user, current_user
 
 @app.route('/')
@@ -32,6 +33,16 @@ def register():
             return redirect('/')
         
     return render_template('auth/register.html', title='Register', form=form)
+
+
+@app.route('upgrade', methods=['GET', 'POST'])
+def upgrade():
+    return render_template('main/upgrade.html', title='Upgrade')
+
+@app.route('upgrading', methods=['GET', 'POST'])
+def upgrading():
+    upgrade()
+    return redirect('/')
 
 
 
