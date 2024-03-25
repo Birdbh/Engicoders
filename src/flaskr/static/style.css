@@ -2,6 +2,7 @@
 .topnav {
     overflow: hidden;
     border: 1px solid #cccccc; /* Light grey border */
+    font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
 /* Style the links inside the navigation bar */
@@ -12,21 +13,25 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
     background-color: #ddd;
     color: black;
+    font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
 /* Footer styling */
 .footer {
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #000232;
     text-align: center;
     padding: 20px 10px;
     margin-top: 40px;
+    font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
+    color: #ffffff; /* Red color */
 }
 
 .top-header {
@@ -36,5 +41,23 @@
     padding: 0 16px; /* Optional: Add some padding around the items */
     border-bottom: 1px solid grey;
     margin-bottom: 40px;
+    font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
+h1 {
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    font-family: Arial, sans-serif;
+}
+
+main {
+    font-family: Arial, sans-serif;
+}

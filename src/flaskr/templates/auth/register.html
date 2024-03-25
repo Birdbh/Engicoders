@@ -7,7 +7,7 @@
 
         <table style="display: inline;">
         <tr>
-            {{ form.username.label }}
+            {{ form.username.label }}<br>
             {{ form.username(size=32) }}<br>
             {% for error in form.username.errors %}
             <span style="color: rgb(16, 26, 206);">[{{ error }}]</span>
@@ -40,5 +40,6 @@
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
+
 
 
