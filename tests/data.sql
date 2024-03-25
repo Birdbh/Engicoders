@@ -6,7 +6,7 @@ VALUES
 
 INSERT INTO PremiumUser (userid, Expires)
 VALUES
- ('2', '2018-01-01 00:00:00');
+ ('2', '2030-01-01 00:00:00');
 
 INSERT INTO post (title, body, authorid, created)
 VALUES

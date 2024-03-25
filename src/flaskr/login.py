@@ -20,7 +20,7 @@ class LoginForm(FlaskForm):
             try:
                 if(db.execute("SELECT userid from PremiumUser where userid = (?)", (userid,)).fetchone()['userid'] == userid):
                     hasher = sha256()
-                    hasher.update(str.encode(password))
+                    hasher.update(bytes(password, 'utf8'))
                     password = hasher.hexdigest()
                     pass2 = db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] 
                     if(db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] == password):
