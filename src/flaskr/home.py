@@ -44,6 +44,10 @@ def home():
             print(is_predict)
             sensor = Prediction.DataPrediction(sensor, datetime(2024, 3, 28))
 
+        labels, values = sensor.process_data()
+        sensor.set_date_range(labels)
+        sensor.set_value(values)
+        
         chart = Chart(sensor)
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=chart_type)
 
