@@ -23,9 +23,6 @@ def home():
             data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
             date_series, value_series = data_gen.get_time_series()
 
-            # Convert datetime objects in date_series to strings in ISO 8601 format
-            date_series_str = [date.isoformat() if isinstance(date, datetime) else date for date in date_series]
-
         except Exception as e:
             flash(f"Error while generating data: {e}")  # Use flash for error messages
             return redirect(url_for('home'))
