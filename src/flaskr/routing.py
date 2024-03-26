@@ -8,7 +8,7 @@ from flask_login import logout_user, current_user
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('base.html')
+    return render_template('main/home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
