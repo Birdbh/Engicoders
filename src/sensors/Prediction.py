@@ -73,5 +73,5 @@ class DataPrediction(SensorDataDecorator):
         self.predict()
         X_future = self.X_future
         Y_future = self.forcasted_values
-        return X, Y, X_future, Y_future
+        return X+X_future, Y+Y_future
 

@@ -16,31 +16,83 @@
     <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS">
     <label for="time_increment">Time Increment</label>
     <input name="time_increment" id="time_increment" required>
+
+    <label for="cleanse">Cleanse</label>
+    <input type="checkbox" name="cleanse" id="cleanse">
+    <label for="predict">Predict</label>
+    <input type="checkbox" name="predict" id="predict">
+
+    <label for="line_chart">Line Chart</label>
+    <input type="radio" name="chartType" id="line_chart" value="line_chart" required>
+    <label for="bar_chart">Bar Chart</label>
+    <input type="radio" name="chartType" id="bar_chart" value="bar_chart" required>
+    <label for="scatter_chart">Scatter Chart</label>
+    <input type="radio" name="chartType" id="scatter_chart" value="scatter_chart" required>
+
     <button type="submit">Get Data</button>
+
   </form>
 
-  <canvas id="lineChart" width="800" height="400"></canvas> <!-- Canvas element where the line chart will be drawn -->
+  <canvas id="Chart" width="800" height="400"></canvas> <!-- Canvas element where the line chart will be drawn -->
   <script>
     // Get the context of the canvas element we just defined
-    var ctx = document.getElementById('lineChart').getContext('2d');
+    var ctx = document.getElementById('Chart').getContext('2d');
+
+    if ("{{scatter_chart}}" == "scatter_chart") {
+      var scatterChart = new Chart(ctx, {
+        type: 'scatter', // Specifies that we want to create a scatter chart
+        data: {
+          labels: {{labels | safe}}, // Sets the labels for the x-axis from a template variable
+          datasets: [{ // Data for the bar chart including the dataset
+            label: 'Sensor', // Label for the dataset
+            data: {{values | safe}}, // The actual data points for the bar chart from a template variable
+            backgroundColor: 'rgba(255, 99, 132, 1)', // Color of the bars
+            borderWidth: 1 // Width of the bars
+          }]
+        },
+        options: {
+          responsive: true // Chart will not resize automatically when the container does
+        }
+      });
+    };
+
+    if ("{{chart_type}}" == "bar_chart") {
+      var barChart = new Chart(ctx, {
+        type: 'bar', // Specifies that we want to create a bar chart
+        data: {
+          labels: {{labels | safe}}, // Sets the labels for the x-axis from a template variable
+          datasets: [{ // Data for the bar chart including the dataset
+            label: 'Sensor', // Label for the dataset
+            data: {{values | safe}}, // The actual data points for the bar chart from a template variable
+            backgroundColor: 'rgba(255, 99, 132, 1)', // Color of the bars
+            borderWidth: 1 // Width of the bars
+          }]
+        },
+        options: {
+          responsive: true // Chart will not resize automatically when the container does
+        }
+      });
+    };
 
     // Creating a new Chart instance and passing the context
-    var lineChart = new Chart(ctx, {
-      type: 'line', // Specifies that we want to create a line chart
-      data: {
-        labels: {{labels | safe}}, // Sets the labels for the x-axis from a template variable
-        datasets: [{ // Data for the line chart including the dataset
-          label: 'Sensor', // Label for the dataset
-          data: {{values | safe}}, // The actual data points for the line chart from a template variable
-          borderColor: 'rgba(255, 99, 132, 1)', // Color of the line
-          fill: false, // Specifies that the area under the line should not be filled
-          borderWidth: 1 // Width of the line
-        }]
-      },
-      options: {
-        responsive: false // Chart will not resize automatically when the container does
-      }
-    });
+    if ("{{chart_type}}" == "line_chart") {
+      var lineChart = new Chart(ctx, {
+        type: 'line', // Specifies that we want to create a line chart
+        data: {
+          labels: {{labels | safe}}, // Sets the labels for the x-axis from a template variable
+          datasets: [{ // Data for the line chart including the dataset
+            label: 'Sensor', // Label for the dataset
+            data: {{values | safe}}, // The actual data points for the line chart from a template variable
+            borderColor: 'rgba(255, 99, 132, 1)', // Color of the line
+            fill: false, // Specifies that the area under the line should not be filled
+            borderWidth: 1 // Width of the line
+          }]
+        },
+        options: {
+          responsive: true // Chart will not resize automatically when the container does
+        }
+      });
+    };
   </script>
 
 {% endblock %}
