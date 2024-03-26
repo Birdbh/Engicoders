@@ -2,6 +2,8 @@
 .topnav {
     overflow: hidden;
     border: 1px solid #cccccc; /* Light grey border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
 }
 
@@ -29,7 +31,7 @@
     background-color: #000232;
     text-align: center;
     padding: 20px 10px;
-    margin-top: 40px;
+    margin-top: 40px auto;/* Push the footer to the bottom of the viewport */
     font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
     color: #ffffff; /* Red color */
 }
@@ -56,8 +58,10 @@ h2 {
 
 form {
     font-family: Arial, sans-serif;
+    min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
 }
 
 main {
     font-family: Arial, sans-serif;
+    min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
 }
