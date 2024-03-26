@@ -53,6 +53,16 @@ def home():
         try:
             data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
             date_series, value_series = data_gen.get_time_series()
+
+            # Convert datetime objects in date_series to strings
+            date_series_str = [date.isoformat() for date in date_series]
+            date_series_str = [date.isoformat() if isinstance(date, datetime) else date for date in date_series]
+
+        except Exception as e:
+            flash(f"Error while generating data: {e}")
+            return redirect(url_for('home'))
+
+
         except Exception as e:
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -61,7 +71,7 @@ def home():
 
         # Initialize Sensor with fetched data and pass data to the template for rendering
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
-        labels_json=json.dumps(date_series)
+        labels_json=json.dumps(date_series_str)
         values_json=json.dumps(value_series)
         return render_template('main/home.html', labels=date_series, values=value_series)
 
