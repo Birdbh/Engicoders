@@ -34,3 +34,4 @@ CREATE TABLE PremiumUser (
   Expires TIMESTAMP NOT NULL,
   FOREIGN KEY (UserId) REFERENCES User (Id)
 );
+

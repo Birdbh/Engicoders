@@ -13,6 +13,7 @@ def test_get_and_close_db(app):
    with pytest.raises(sqlite3.ProgrammingError) as e:
        db.execute("SELECT 1")
    assert "closed" in str(e.value)
+   db.close()
 
 
 #tests that get_db gets the right db

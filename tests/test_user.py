@@ -18,3 +18,4 @@ def test_register(app):
         user = Userclass.User("test")
         assert user.get_id() == 1
         assert user.get_username() == 'test'
+        
