@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import json
+from Chart import Chart
 from datetime import datetime
 import sys
 sys.path.append("src")
@@ -28,11 +29,10 @@ def home():
         except Exception as e:
             flash(f"Error while generating data: {e}")  # Use flash for error messages
             return redirect(url_for('home'))
-
-        # Convert date_series_str and value_series to JSON format for JavaScript
-        labels_json = json.dumps(date_series_str)
-        values_json = json.dumps(value_series)
-
-        return render_template('main/home.html', labels=labels_json, values=values_json)
+        
+        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+        chart = Chart(sensor)
+        
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values())
 
     return render_template('main/home.html')

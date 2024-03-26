@@ -5,7 +5,11 @@ class Chart():
         self.sensor = sensor
     
     def get_values(self):
-        return self.sensor.get_value()
+        values = self.sensor.get_value()
+        labels2 = []
+        for i in range(len(values)):
+            labels2.append(str(values[i]))
+        return labels2
     
     def get_labels(self):
         labels = self.sensor.get_date_range()
