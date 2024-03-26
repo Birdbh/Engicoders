@@ -57,6 +57,7 @@ def home():
             # Convert datetime objects in date_series to strings
             date_series_str = [date.isoformat() for date in date_series]
             date_series_str = [date.isoformat() if isinstance(date, datetime) else date for date in date_series]
+            
 
         except Exception as e:
             flash(f"Error while generating data: {e}")
@@ -74,6 +75,8 @@ def home():
         labels_json=json.dumps(date_series_str)
     
         values_json=json.dumps(value_series)
+
+       
         return render_template('main/home.html', labels=date_series, values=value_series)
 
     return render_template('main/home.html')
