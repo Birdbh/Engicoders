@@ -24,6 +24,7 @@ def home():
         time_increment = request.form.get('time_increment')
         is_cleanse = request.form.get('cleanse')
         is_predict = request.form.get('predict')
+        prediction_date = request.form.get('prediction_date')
         chart_type = request.form.get('chartType')  # Retrieve the selected chart type
 
         # Initialize DataGeneration with form data
@@ -42,12 +43,12 @@ def home():
 
         if is_predict == "on":
             print(is_predict)
-            sensor = Prediction.DataPrediction(sensor, datetime(2024, 3, 28))
+            sensor = Prediction.DataPrediction(sensor, prediction_date)
 
         labels, values = sensor.process_data()
         sensor.set_date_range(labels)
         sensor.set_value(values)
-        
+
         chart = Chart(sensor)
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=chart_type)
 

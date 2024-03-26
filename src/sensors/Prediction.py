@@ -3,6 +3,7 @@ from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pandas as pd
 from pmdarima import auto_arima
+import datetime as dt
 
 import sys 
 sys.path.append("src")
@@ -18,6 +19,16 @@ class DataPrediction(SensorDataDecorator):
     def __init__(self, sensor, prediction_end_date):
         
         super().__init__(sensor)
+
+        if isinstance(prediction_end_date, dt):
+            self.start_date = prediction_end_date
+        else:
+            # Try to parse the start_date string to datetime
+            try:
+                self.start_date = dt.strptime(prediction_end_date, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                raise ValueError("start_date must be a datetime object or a string in the format 'YYYY-MM-DD HH:MM:SS'")
+        
         self.X = sensor.get_date_range()
         self.prediction_intervals = self.X[-1] - self.X[-2]
         self.prediction_start_date = self.X[-1] + self.prediction_intervals
