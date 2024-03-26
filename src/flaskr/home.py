@@ -39,6 +39,7 @@ def home():
         # Initialize Sensor with fetched data and pass data to the template for rendering
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
         labels_json=json.dumps(date_series_str)
+    
         values_json=json.dumps(value_series)
         return render_template('main/home.html', labels=date_series, values=value_series)
 
