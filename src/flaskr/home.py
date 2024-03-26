@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, flash
 =======
 from flask import Flask, render_template, request, redirect, url_for
@@ -7,7 +8,11 @@ from flask import Flask, render_template, request, redirect, url_for
 =======
 from flask import Flask, render_template, request, redirect, url_for, flash
 >>>>>>> 41be2bc (home.html and home.py updated)
+=======
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+>>>>>>> 1d353de (modified for charts)
 from datetime import datetime
+import json
 from flaskr import app
 import sys
 sys.path.append("src")
@@ -56,6 +61,8 @@ def home():
 
         # Initialize Sensor with fetched data and pass data to the template for rendering
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+        labels_json=json.dumps(date_series)
+        values_json=json.dumps(value_series)
         return render_template('main/home.html', labels=date_series, values=value_series)
 
     return render_template('main/home.html')
