@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, flash
 =======
 from flask import Flask, render_template, request, redirect, url_for
@@ -11,11 +12,15 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 =======
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 >>>>>>> 1d353de (modified for charts)
+=======
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+>>>>>>> 57bcf62de54300cc721863226d30d769191d2f81
 from datetime import datetime
 import json
 from flaskr import app
 import sys
 sys.path.append("src")
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 from sensors.sensor import Sensor 
@@ -41,6 +46,14 @@ app = Flask(__name__)  # Only if the Flask app instance is defined in this file
 =======
 @app.route('/', methods=['GET', 'POST'])
 >>>>>>> 41be2bc (home.html and home.py updated)
+=======
+from sensors.sensor import Sensor 
+from DataGeneration import DataGeneration
+
+from flaskr import app
+
+@app.route('/home', methods=['GET', 'POST'])
+>>>>>>> 57bcf62de54300cc721863226d30d769191d2f81
 def home():
     if request.method == 'POST':
         # Extract form data
@@ -67,6 +80,9 @@ def home():
         except Exception as e:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 57bcf62de54300cc721863226d30d769191d2f81
             flash(f"Error while generating data: {e}")  # Use flash for error messages
             return redirect(url_for('home'))
 
@@ -79,6 +95,7 @@ def home():
        
         return render_template('main/home.html', labels=date_series, values=value_series)
 
+<<<<<<< HEAD
     return render_template('main/home.html')
 =======
             # Consider using Flask's flash messages to show errors on the web page
@@ -105,3 +122,6 @@ if __name__ == '__main__':
 =======
     return render_template('main/home.html')
 >>>>>>> 41be2bc (home.html and home.py updated)
+=======
+    return render_template('main/home.html')
+>>>>>>> 57bcf62de54300cc721863226d30d769191d2f81
