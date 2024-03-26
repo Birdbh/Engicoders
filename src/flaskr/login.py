@@ -13,14 +13,14 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
     
-    def login(self, username, password):
+    def login(self, username, password: str):
         db = get_db()
         try:
             userid = db.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id']
             try:
                 if(db.execute("SELECT userid from PremiumUser where userid = (?)", (userid,)).fetchone()['userid'] == userid):
                     hasher = sha256()
-                    hasher.update(bytes(password, 'utf8'))
+                    hasher.update(str.encode(str(password)))
                     password = hasher.hexdigest()
                     pass2 = db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] 
                     if(db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] == password):

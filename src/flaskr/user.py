@@ -41,14 +41,14 @@ class SuperUser(User):
 
     def __init__(self, username="", userid="", password="", payment=""):
         super().__init__(username=username, userid=userid, password=password)
-        self.upgrade()
+        
         #set_payment
     def upgrade(self):
         self.hash_password()
 
     def hash_password(self):
         password = str(self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password'])
-        self.hasher.update(bytes(password, 'utf8'))
+        self.hasher.update(password.encode())
         self.password = self.hasher.hexdigest()
         self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
         self.database.commit()

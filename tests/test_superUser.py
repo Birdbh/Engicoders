@@ -22,14 +22,16 @@ def test_hash_password(app):
         form.register("TestUser", "Test", "Test")
         db = dbClass.get_db()
         user = UserClass.SuperUser(username="TestUser", password="Test")
-        assert not user.get_password() == "test"
+        user.upgrade()
+        assert not user.get_password() == "Test"
         hasher = sha256()
         hasher.update(str.encode("Test"))
         assert user.get_password() == hasher.hexdigest()
 
 def test_logging_in(app):
    with app.test_request_context():
-        user = UserClass.SuperUser(username="test2")
+        user2 = UserClass.SuperUser(username="test2")
+        user2.upgrade()
         loginForm = login.LoginForm()
         assert loginForm.login("test2", 'test')
         assert current_user.is_authenticated
