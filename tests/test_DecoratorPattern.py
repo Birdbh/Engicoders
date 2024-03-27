@@ -19,4 +19,5 @@ def test_sensor_with_cleansing():
     assert sensor_with_cleansing.process_data() == ([datetime(2023, 1, 1, 0, 0), datetime(2023, 1, 2, 0, 0), datetime(2023, 1, 3, 0, 0), datetime(2023, 1, 4, 0, 0)], [22.0, 23.0, 23.0, 23.0])
 
 def test_sensor_with_cleansing_and_prediction():
-    assert sensor_with_cleansing_and_prediction.process_data() == ([datetime(2023, 1, 1, 0, 0), datetime(2023, 1, 2, 0, 0), datetime(2023, 1, 3, 0, 0), datetime(2023, 1, 4, 0, 0)], [22.0, 23.0, 23.0, 23.0], [datetime(2023, 1, 5, 0, 0), datetime(2023, 1, 6, 0, 0), datetime(2023, 1, 7, 0, 0)], [0.0, 0.0, 0.0])
+    assert sensor_with_cleansing_and_prediction.process_data() == ([datetime(2023, 1, 1,  0), datetime(2023, 1, 2, 0, 0), datetime(2023, 1, 3, 0, 0), datetime(2023, 1, 4, 0, 0), datetime(2023, 1, 5, 0, 0), datetime(2023, 1, 6, 0, 0), datetime(2023, 1, 7, 0, 0)], [22.0, 23.0, 23.0, 23.0, 0.0, 0.0, 0.0])
+
