@@ -26,7 +26,8 @@ def home():
         is_predict = request.form.get('predict')
         prediction_date = request.form.get('prediction_date')
         chart_type = request.form.get('chartType')  # Retrieve the selected chart type
-
+        stdDeviation = request.form.get('stdDeviation')
+        print(type(stdDeviation))
         # Initialize DataGeneration with form data
         try:
             data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
@@ -39,10 +40,10 @@ def home():
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
         if is_cleanse == "on":
-            sensor = Cleanser.cleanser(sensor, deviations=2)
+            stdDeviation = int(stdDeviation)
+            sensor = Cleanser.cleanser(sensor, deviations=stdDeviation)
 
         if is_predict == "on":
-            print(is_predict)
             sensor = Prediction.DataPrediction(sensor, prediction_date)
 
         labels, values = sensor.process_data()

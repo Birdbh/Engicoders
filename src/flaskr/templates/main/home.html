@@ -19,10 +19,21 @@
 
     <label for="cleanse">Cleanse</label>
     <input type="checkbox" name="cleanse" id="cleanse">
+    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label>
+    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required>
+    
     <label for="predict">Predict</label>
     <input type="checkbox" name="predict" id="predict">
     <label for="prediction_date">Prediction End Date</label>
-    <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS">
+    <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS">
+
+    <script>
+      // JavaScript to make prediction_date required if predict is checked
+      document.getElementById('predict').addEventListener('change', function() {
+          var predictionDateInput = document.getElementById('prediction_date');
+          predictionDateInput.required = this.checked; // Set required based on checkbox
+      });
+    </script>
 
     <label for="line">Line Chart</label>
     <input type="radio" name="chartType" id="line" value="line" required>
