@@ -37,7 +37,7 @@ class User(UserMixin):
 class SuperUser(User): 
     premium_features = True
     payment = ""
-    hasher = sha256()
+    
 
     def __init__(self, username="", userid="", password="", payment=""):
         super().__init__(username=username, userid=userid, password=password)
@@ -47,9 +47,14 @@ class SuperUser(User):
         self.hash_password()
 
     def hash_password(self):
+        hasher = sha256()
         password = str(self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password'])
-        self.hasher.update(password.encode())
-        self.password = self.hasher.hexdigest()
+        hexer = ""
+        for character in password:
+            print(character, character.encode('utf-8').hex())
+            hexer += character
+        hasher.update(hexer.encode())
+        self.password = hasher.hexdigest()
         self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
         self.database.commit()
     
