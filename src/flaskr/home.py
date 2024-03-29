@@ -17,16 +17,16 @@ from flaskr import app
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     form = HomeForm()
-    if form.validate_on_submit():
-        if form.file is not None:
-            date_series, value_series = form.get_time_series_data()
+    if form.is_submitted():
+        date_series, value_series = form.get_time_series_data()
+                
+        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
-            sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+        sensor = form.apply_data_modifiers(sensor)
 
-            sensor = form.apply_data_modifiers(sensor)
-
-            chart = Chart(sensor)
-            return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
+        chart = Chart(sensor)
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
+    return render_template('main/home.html')
 
     '''
     if request.method == 'POST':
