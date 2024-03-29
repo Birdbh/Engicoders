@@ -47,7 +47,7 @@ class SuperUser(User):
         self.hash_password()
 
     def hash_password(self):
-        hasher = sha512()
+        hasher = sha512() 
         password = str(self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password'])
         hasher.update(password.encode())
         self.password = hasher.hexdigest()
