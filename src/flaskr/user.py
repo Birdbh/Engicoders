@@ -49,11 +49,7 @@ class SuperUser(User):
     def hash_password(self):
         hasher = sha256()
         password = str(self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password'])
-        hexer = ""
-        for character in password:
-            print(character, character.encode('utf-8').hex())
-            hexer += character
-        hasher.update(hexer.encode())
+        hasher.update(password.encode())
         self.password = hasher.hexdigest()
         self.database.execute("UPDATE user set password = (?) where username = (?)", (self.password, self.username))
         self.database.commit()
