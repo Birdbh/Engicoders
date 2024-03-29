@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Home Page | Operations Optimization{% endblock %}</h1>
+  {% block title %}Home Page | Operations Optimization{% endblock %}
 {% endblock %}
 
 {% block content %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
   <form method="post">
-    <label for="channel_id">Channel ID</label>
-    <input name="channel_id" id="channel_id" required>
-    <label for="field_id">Field ID</label>
-    <input name="field_id" id="field_id" required>
-    <label for="start_date">Start Date</label>
-    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS">
-    <label for="time_increment">Time Increment</label>
-    <input name="time_increment" id="time_increment" required>
+    <label for="channel_id">Channel ID</label><br>
+    <input name="channel_id" id="channel_id" required><br>
+    <label for="field_id">Field ID</label><br>
+    <input name="field_id" id="field_id" required><br>
+    <label for="start_date">Start Date</label><br>
+    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
+    <label for="time_increment">Time Increment</label><br>
+    <input name="time_increment" id="time_increment" required><br>
 
-    <label for="cleanse">Cleanse</label>
-    <input type="checkbox" name="cleanse" id="cleanse">
-    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label>
-    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required>
+    <label for="cleanse">Cleanse</label><br>
+    <input type="checkbox" name="cleanse" id="cleanse"><br>
+    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
+    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required><br>
     
-    <label for="predict">Predict</label>
-    <input type="checkbox" name="predict" id="predict">
-    <label for="prediction_date">Prediction End Date</label>
-    <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS">
+    <label for="predict">Predict</label><br>
+    <input type="checkbox" name="predict" id="predict"><br>
+    <label for="prediction_date">Prediction End Date</label><br>
+    <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
 
     <script>
       // JavaScript to make prediction_date required if predict is checked
@@ -35,14 +35,14 @@
       });
     </script>
 
-    <label for="line">Line Chart</label>
-    <input type="radio" name="chartType" id="line" value="line" required>
-    <label for="bar">Bar Chart</label>
-    <input type="radio" name="chartType" id="bar" value="bar" required>
-    <label for="radar">Radar Chart</label>
-    <input type="radio" name="chartType" id="radar" value="radar" required>
+    <label for="line">Line Chart</label><br>
+    <input type="radio" name="chartType" id="line" value="line" required><br>
+    <label for="bar">Bar Chart</label><br>
+    <input type="radio" name="chartType" id="bar" value="bar" required><br>
+    <label for="radar">Radar Chart</label><br>
+    <input type="radio" name="chartType" id="radar" value="radar" required><br>
 
-    <button type="submit">Get Data</button>
+    <button type="submit">Get Data</button><br>
 
   </form>
 
