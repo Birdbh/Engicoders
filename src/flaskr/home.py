@@ -6,7 +6,9 @@ import sys
 sys.path.append("src")
 from sensors.sensor import Sensor
 from DataGeneration import DataGeneration
+from DataUpload import DataUpload
 import os
+from flaskr.home2 import HomeForm
 
 from sensors import sensor, Prediction, Cleanser
 
@@ -14,6 +16,19 @@ from flaskr import app
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    form = HomeForm()
+    if form.validate_on_submit():
+        if form.file is not None:
+            date_series, value_series = form.get_time_series_data()
+
+            sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+
+            sensor = form.apply_data_modifiers(sensor)
+
+            chart = Chart(sensor)
+            return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
+
+    '''
     if request.method == 'POST':
         # Extract form data
         channel_id = request.form.get('channel_id')
@@ -28,16 +43,23 @@ def home():
 
         file = request.files['file']
         if file.filename != '':
-            file.filename = 'data.xlsx'
-            file.save("UPLOADED_DATA/"+file.filename)
-        # Initialize DataGeneration with form data
-        try:
-            data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
-            date_series, value_series = data_gen.get_time_series()
+            try:
+                data_gen = DataUpload(file)
+                date_series, value_series = data_gen.get_time_series()
 
-        except Exception as e:
-            flash(f"Error while generating data: {e}")  # Use flash for error messages
-            return redirect(url_for('home'))
+            except Exception as e:
+                flash(f"Error while generating data: {e}")  # Use flash for error messages
+                return redirect(url_for('home'))
+        
+        else:
+            # Initialize DataGeneration with form data
+            try:
+                data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
+                date_series, value_series = data_gen.get_time_series()
+
+            except Exception as e:
+                flash(f"Error while generating data: {e}")  # Use flash for error messages
+                return redirect(url_for('home'))
         
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
@@ -56,3 +78,4 @@ def home():
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=chart_type)
 
     return render_template('main/home.html')
+    '''
