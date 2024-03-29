@@ -6,9 +6,7 @@ import sys
 sys.path.append("src")
 from sensors.sensor import Sensor
 from DataGeneration import DataGeneration
-
-import sys 
-sys.path.append("src")
+import os
 
 from sensors import sensor, Prediction, Cleanser
 
@@ -27,7 +25,11 @@ def home():
         prediction_date = request.form.get('prediction_date')
         chart_type = request.form.get('chartType')  # Retrieve the selected chart type
         stdDeviation = request.form.get('stdDeviation')
-        print(type(stdDeviation))
+
+        file = request.files['file']
+        if file.filename != '':
+            file.filename = 'data.xlsx'
+            file.save("UPLOADED_DATA/"+file.filename)
         # Initialize DataGeneration with form data
         try:
             data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
