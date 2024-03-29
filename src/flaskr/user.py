@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 import flaskr.db as db
-from hashlib import sha256
+from hashlib import sha512
 
 class User(UserMixin):
     database = None
@@ -47,7 +47,7 @@ class SuperUser(User):
         self.hash_password()
 
     def hash_password(self):
-        hasher = sha256()
+        hasher = sha512()
         password = str(self.database.execute("SELECT password from user where username = (?)", (self.username,)).fetchone()['password'])
         hasher.update(password.encode())
         self.password = hasher.hexdigest()

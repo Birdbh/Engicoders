@@ -6,7 +6,7 @@ from flask import Flask, render_template, flash
 from flaskr.db import get_db
 from flask_login import login_user
 from flaskr.user import User, SuperUser
-from hashlib import sha256
+from hashlib import sha512
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
             userid = db.execute("SELECT id from user where username = (?)", (username,)).fetchone()['id']
             try:
                 if(db.execute("SELECT userid from PremiumUser where userid = (?)", (userid,)).fetchone()['userid'] == userid):
-                    hasher = sha256()
+                    hasher = sha512()
                     hasher.update(password.encode())
                     password = hasher.hexdigest()
                     pass2 = db.execute("SELECT password from user where username = (?)", (username,)).fetchone()['password'] 

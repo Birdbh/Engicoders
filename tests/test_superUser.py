@@ -12,7 +12,7 @@ import flaskr.login as login
 
 import flaskr.db as dbClass
 import flaskr.user as UserClass
-from hashlib import sha256
+from hashlib import sha512
 
 
 
@@ -24,7 +24,7 @@ def test_hash_password(app):
         user = UserClass.SuperUser(username="TestUser", password="Test")
         user.upgrade()
         assert not user.get_password() == "Test"
-        hasher = sha256()
+        hasher = sha512()
         hasher.update(str.encode("Test"))
         assert user.get_password() == hasher.hexdigest()
 
