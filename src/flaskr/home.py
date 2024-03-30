@@ -26,7 +26,7 @@ class HomeForm(FlaskForm):
 
     def conflicting_input(self):
         api_query_is_provided = self.channel_id.data and self.field_id.data and self.start_date.data and self.time_increment.data
-        upload_data_is_provided = bool(self.file.data) #I know what I want but this wont work fuckkckckckkckckckc
+        upload_data_is_provided = bool(self.file.data)
 
         if (api_query_is_provided and upload_data_is_provided) or (not api_query_is_provided and not upload_data_is_provided):
             return True

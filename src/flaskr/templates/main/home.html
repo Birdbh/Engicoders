@@ -7,25 +7,6 @@
 {% block content %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <form method="post">
-    <label for="channel_id">Channel ID</label><br>
-    <input name="channel_id" id="channel_id" required><br>
-    <label for="field_id">Field ID</label><br>
-    <input name="field_id" id="field_id" required><br>
-    <label for="start_date">Start Date</label><br>
-    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
-    <label for="time_increment">Time Increment</label><br>
-    <input name="time_increment" id="time_increment" required><br>
-
-    <label for="cleanse">Cleanse</label><br>
-    <input type="checkbox" name="cleanse" id="cleanse"><br>
-    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
-    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required><br>
-=======
-=======
->>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -35,25 +16,21 @@
     </ul>
   {% endif %}
   {% endwith %}
-  
-  <form method="post" enctype="multipart/form-data">
-    <label for="channel_id">Channel ID</label>
-    <input name="channel_id" id="channel_id">
-    <label for="field_id">Field ID</label>
-    <input name="field_id" id="field_id">
-    <label for="start_date">Start Date</label>
-    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS">
-    <label for="time_increment">Time Increment</label>
-    <input name="time_increment" id="time_increment">
 
-    <label for="cleanse">Cleanse</label>
-    <input type="checkbox" name="cleanse" id="cleanse">
-    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label>
-    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only">
-<<<<<<< HEAD
->>>>>>> 95ccb14 (Changes to home.html with flash)
-=======
->>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
+  <form method="post" enctype="multipart/form-data">
+    <label for="channel_id">Channel ID</label><br>
+    <input name="channel_id" id="channel_id" ><br>
+    <label for="field_id">Field ID</label><br>
+    <input name="field_id" id="field_id" ><br>
+    <label for="start_date">Start Date</label><br>
+    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"  title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
+    <label for="time_increment">Time Increment</label><br>
+    <input name="time_increment" id="time_increment" ><br>
+
+    <label for="cleanse">Cleanse</label><br>
+    <input type="checkbox" name="cleanse" id="cleanse"><br>
+    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
+    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" ><br>
     
     <label for="predict">Predict</label><br>
     <input type="checkbox" name="predict" id="predict"><br>
@@ -66,23 +43,24 @@
           var predictionDateInput = document.getElementById('prediction_date');
           predictionDateInput.required = this.checked; // Set required based on checkbox
       });
+
+      document.getElementById('cleanse').addEventListener('change', function() {
+          var predictionDateInput = document.getElementById('stdDeviation');
+          predictionDateInput.required = this.checked; // Set required based on checkbox
+      });
     </script>
 
     <label for="line">Line Chart</label><br>
     <input type="radio" name="chartType" id="line" value="line" required><br>
-    <label for="bar">Bar Chart</label><br>
+    <label for="ar">Bar Chart</label><br>
     <input type="radio" name="chartType" id="bar" value="bar" required><br>
     <label for="radar">Radar Chart</label><br>
     <input type="radio" name="chartType" id="radar" value="radar" required><br>
 
-<<<<<<< HEAD
-    <button type="submit">Get Data</button><br>
-=======
     <label for="excelFile">Choose an Excel file:</label>
     <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 
-    <button type="submit">Get Data</button>
->>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
+    <button type="submit">Get Data</button><br>
 
   </form>
 

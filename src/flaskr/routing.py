@@ -45,7 +45,7 @@ def home():
     if form.is_submitted():
 
         if form.conflicting_input():
-            flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload May be Provided')
+            flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
             return render_template('main/home.html')
     
         date_series, value_series = form.get_time_series_data()
