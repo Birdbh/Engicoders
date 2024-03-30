@@ -2,19 +2,20 @@ import pytest
 from flask import Flask, request
 from flaskr import create_app  # Adjust this import based on your project structure
 
-@pytest.fixture
-def app():
-    app = create_app({
-        'TESTING': True,
-        # Additional configuration for testing as needed
-    })
-    yield app
+import pytest
+import sys
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
-def test_app_creation(app):
-    """Test that the Flask app is created successfully."""
-    assert app is not None
+from flask import Flask, render_template
+sys.path.append("src")
+import flaskr.home as home
 
-def test_with_request_context(app):
-    with app.test_request_context('/home?name=FlaskTest'):
-        # Accessing request.args within the request context
-        assert request.args.get('name') == 'FlaskTest'
+import flaskr.db as dbClass
+
+
+def test_home(app):
+    with app.test_request_context():
+        form = home.HomeForm()
+        assert form.conflicting_input()
