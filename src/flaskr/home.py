@@ -1,81 +1,70 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-import json
-from Chart import Chart
-from datetime import datetime
-import sys
-sys.path.append("src")
-from sensors.sensor import Sensor
-from DataGeneration import DataGeneration
-from DataUpload import DataUpload
-import os
-from flaskr.home2 import HomeForm
-
+from flask_wtf import FlaskForm
+from wtforms import BooleanField, SubmitField, FileField, IntegerField, DateField, SelectField, StringField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from sensors import sensor, Prediction, Cleanser
 
-from flaskr import app
+from DataGeneration import DataGeneration
+from DataUpload import DataUpload
 
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-    form = HomeForm()
-    if form.is_submitted():
-        date_series, value_series = form.get_time_series_data()
-                
-        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+from flask import Flask, render_template, flash
+from flaskr.db import get_db
+from flaskr.user import User
+from flask_login import login_user
 
-        sensor = form.apply_data_modifiers(sensor)
+class HomeForm(FlaskForm):
+    channel_id = IntegerField('Channel ID', validators=[DataRequired()])
+    field_id = IntegerField('Field ID', validators=[DataRequired()])
+    start_date = StringField('Start Date', validators=[DataRequired()])
+    time_increment = IntegerField('Time Increment', validators=[DataRequired()])  # Modify choices as needed
+    cleanse = BooleanField('Cleanse Data')
+    predict = BooleanField('Predict Data')
+    prediction_date = StringField('Prediction Date')
+    chartType = SelectField('Chart Type', choices=[('line', 'bar', 'radio')])  # Modify choices as needed
+    stdDeviation = IntegerField('Standard Deviation')
+    file = FileField('File Upload', validators=())
+    submit = SubmitField('Submit')
 
-        chart = Chart(sensor)
-        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
-    return render_template('main/home.html')
+    def conflicting_input(self):
+        api_query_is_provided = self.channel_id.data & self.field_id.data & self.start_date.data & self.time_increment.data
+        upload_data_is_provided = self.form.data #I know what I want but this wont work fuckkckckckkckckckc
 
-    '''
-    if request.method == 'POST':
-        # Extract form data
-        channel_id = request.form.get('channel_id')
-        field_id = request.form.get('field_id')
-        start_date = request.form.get('start_date')
-        time_increment = request.form.get('time_increment')
-        is_cleanse = request.form.get('cleanse')
-        is_predict = request.form.get('predict')
-        prediction_date = request.form.get('prediction_date')
-        chart_type = request.form.get('chartType')  # Retrieve the selected chart type
-        stdDeviation = request.form.get('stdDeviation')
+        if (api_query_is_provided and upload_data_is_provided) or (not api_query_is_provided and not upload_data_is_provided):
+            return True
+        
+        return False
 
-        file = request.files['file']
-        if file.filename != '':
+    def get_time_series_data(self):
+
+
+        if self.file.data.filename != '':
             try:
-                data_gen = DataUpload(file)
+                data_gen = DataUpload(self.file.data)
                 date_series, value_series = data_gen.get_time_series()
 
             except Exception as e:
-                flash(f"Error while generating data: {e}")  # Use flash for error messages
-                return redirect(url_for('home'))
+                flash(f"Error while generating data: {e}")
         
         else:
             # Initialize DataGeneration with form data
             try:
-                data_gen = DataGeneration(channel_id, time_increment, field_id, start_date)
+
+                data_gen = DataGeneration(self.channel_id.data, self.time_increment.data, self.field_id.data, self.start_date.data)
                 date_series, value_series = data_gen.get_time_series()
 
             except Exception as e:
                 flash(f"Error while generating data: {e}")  # Use flash for error messages
-                return redirect(url_for('home'))
-        
-        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
-        if is_cleanse == "on":
-            stdDeviation = int(stdDeviation)
-            sensor = Cleanser.cleanser(sensor, deviations=stdDeviation)
+        return date_series, value_series
 
-        if is_predict == "on":
-            sensor = Prediction.DataPrediction(sensor, prediction_date)
+    def apply_data_modifiers(self, sensor):
+        if self.cleanse.data:
+            sensor = Cleanser.cleanser(sensor, deviations=self.stdDeviation.data)
+
+        if self.predict.data:
+            sensor = Prediction.DataPrediction(sensor, self.prediction_date.data)
 
         labels, values = sensor.process_data()
         sensor.set_date_range(labels)
         sensor.set_value(values)
 
-        chart = Chart(sensor)
-        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=chart_type)
-
-    return render_template('main/home.html')
-    '''
+        return sensor

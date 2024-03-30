@@ -5,6 +5,10 @@ from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
 from flask_login import logout_user, current_user
 
+from sensors.sensor import Sensor
+from flaskr.home import HomeForm
+from Chart import Chart
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -34,5 +38,22 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    form = HomeForm()
 
+    if form.conflicting_input():
+        flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload May be Provided')
+        return render_template('main/home.html')
+    
+    if form.is_submitted():
+        date_series, value_series = form.get_time_series_data()
+                
+        sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
+
+        sensor = form.apply_data_modifiers(sensor)
+
+        chart = Chart(sensor)
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
+    return render_template('main/home.html')
 
