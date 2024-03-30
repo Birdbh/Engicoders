@@ -41,12 +41,13 @@ def register():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     form = HomeForm()
-    
-    if form.conflicting_input():
-        flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload May be Provided')
-        return render_template('main/home.html')
 
     if form.is_submitted():
+
+        if form.conflicting_input():
+            flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload May be Provided')
+            return render_template('main/home.html')
+    
         date_series, value_series = form.get_time_series_data()
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
@@ -54,6 +55,8 @@ def home():
         sensor = form.apply_data_modifiers(sensor)
 
         chart = Chart(sensor)
+
+
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
     return render_template('main/home.html')
 
