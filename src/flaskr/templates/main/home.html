@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   <form method="post">
     <label for="channel_id">Channel ID</label><br>
     <input name="channel_id" id="channel_id" required><br>
@@ -23,6 +24,8 @@
     <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
     <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required><br>
 =======
+=======
+>>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -47,7 +50,10 @@
     <input type="checkbox" name="cleanse" id="cleanse">
     <label for="stdDeviation">Enter Standard Deviations To Cleanse</label>
     <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only">
+<<<<<<< HEAD
 >>>>>>> 95ccb14 (Changes to home.html with flash)
+=======
+>>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
     
     <label for="predict">Predict</label><br>
     <input type="checkbox" name="predict" id="predict"><br>
@@ -69,7 +75,14 @@
     <label for="radar">Radar Chart</label><br>
     <input type="radio" name="chartType" id="radar" value="radar" required><br>
 
+<<<<<<< HEAD
     <button type="submit">Get Data</button><br>
+=======
+    <label for="excelFile">Choose an Excel file:</label>
+    <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+
+    <button type="submit">Get Data</button>
+>>>>>>> c3eb7911289840b237e50f97e6e2375e45e9a147
 
   </form>
 
