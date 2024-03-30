@@ -41,11 +41,11 @@ def register():
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     form = HomeForm()
-
+    
     if form.conflicting_input():
         flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload May be Provided')
         return render_template('main/home.html')
-    
+
     if form.is_submitted():
         date_series, value_series = form.get_time_series_data()
                 

@@ -12,21 +12,21 @@ from flaskr.user import User
 from flask_login import login_user
 
 class HomeForm(FlaskForm):
-    channel_id = IntegerField('Channel ID', validators=[DataRequired()])
-    field_id = IntegerField('Field ID', validators=[DataRequired()])
-    start_date = StringField('Start Date', validators=[DataRequired()])
-    time_increment = IntegerField('Time Increment', validators=[DataRequired()])  # Modify choices as needed
+    channel_id = IntegerField('Channel ID')
+    field_id = IntegerField('Field ID')
+    start_date = StringField('Start Date')
+    time_increment = IntegerField('Time Increment')  # Modify choices as needed
     cleanse = BooleanField('Cleanse Data')
     predict = BooleanField('Predict Data')
     prediction_date = StringField('Prediction Date')
     chartType = SelectField('Chart Type', choices=[('line', 'bar', 'radio')])  # Modify choices as needed
     stdDeviation = IntegerField('Standard Deviation')
-    file = FileField('File Upload', validators=())
+    file = FileField('File Upload')
     submit = SubmitField('Submit')
 
     def conflicting_input(self):
-        api_query_is_provided = self.channel_id.data & self.field_id.data & self.start_date.data & self.time_increment.data
-        upload_data_is_provided = self.form.data #I know what I want but this wont work fuckkckckckkckckckc
+        api_query_is_provided = self.channel_id.data and self.field_id.data and self.start_date.data and self.time_increment.data
+        upload_data_is_provided = bool(self.file.data) #I know what I want but this wont work fuckkckckckkckckckc
 
         if (api_query_is_provided and upload_data_is_provided) or (not api_query_is_provided and not upload_data_is_provided):
             return True
