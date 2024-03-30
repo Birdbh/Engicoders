@@ -2,6 +2,7 @@ import flask_login
 import flaskr.user as UserClass
 
 def upgrade():
+    print("WEEEE GET HERE")
     user = flask_login.current_user
     user.premium_features = True
     user.set_username('aaa')
