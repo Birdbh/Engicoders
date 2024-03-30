@@ -8,6 +8,7 @@ from flask_login import logout_user, current_user
 
 from sensors.sensor import Sensor
 from flaskr.home import HomeForm
+from flaskr.payment import PaymentForm
 from Chart import Chart
 
 @app.route('/')
@@ -42,14 +43,18 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
-# @app.route('/upgrade', methods=['GET', 'POST'])
-# def upgrade():
-#     return render_template('main/upgrade.html', title='Upgrade')
+@app.route('/upgrade', methods=['GET', 'POST'])
+def upgrade():
+    form = PaymentForm()
+    if form.validate_on_submit():
+    #     if form.register(form.username.data, form.password.data, form.password2.data):
+        return redirect('/upgrading')
+    return render_template('main/upgrade.html', title='Upgrade')
 
-# @app.route('/upgrading', methods=['GET', 'POST'])
-# def upgrading():
-#     upgrade()
-#     return redirect('/')
+@app.route('/upgrading')
+def upgrading():
+    upgrade()
+    return redirect('/')
 
 
 @app.route('/home', methods=['GET', 'POST'])
