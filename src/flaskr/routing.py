@@ -13,7 +13,10 @@ from Chart import Chart
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('main/home.html')
+    if current_user.is_authenticated:
+        return render_template('main/home.html')
+    else:
+        return render_template('main/welcome.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,14 +42,14 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
-@app.route('upgrade', methods=['GET', 'POST'])
-def upgrade():
-    return render_template('main/upgrade.html', title='Upgrade')
+# @app.route('upgrade', methods=['GET', 'POST'])
+# def upgrade():
+#     return render_template('main/upgrade.html', title='Upgrade')
 
-@app.route('upgrading', methods=['GET', 'POST'])
-def upgrading():
-    upgrade()
-    return redirect('/')
+# @app.route('upgrading', methods=['GET', 'POST'])
+# def upgrading():
+#     upgrade()
+#     return redirect('/')
 
 
 @app.route('/home', methods=['GET', 'POST'])

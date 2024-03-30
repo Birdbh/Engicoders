@@ -27,6 +27,9 @@ def test_login(app):
         assert not current_user.is_authenticated
         assert current_user.is_anonymous
 
+def test_loginpage(client, auth):
+    assert client.get('/login').status_code == 200
+
 
 
 
