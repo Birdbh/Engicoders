@@ -26,8 +26,10 @@ def app():
 
 
    with app.app_context():
+       get_db().cursor().close()
        init_db()
        get_db().executescript(_data_sql)
+       
    yield app
 
 
