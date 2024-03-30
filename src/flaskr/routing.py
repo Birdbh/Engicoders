@@ -3,7 +3,7 @@ from flask import render_template, redirect, flash
 from flaskr import app
 from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
-from flaskr.upgrade import upgrade
+from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
 
 from sensors.sensor import Sensor
@@ -15,7 +15,7 @@ from Chart import Chart
 @app.route('/index')
 def index():
     if current_user.is_authenticated:
-        return render_template('main/home.html')
+        return redirect('/home')
     else:
         return render_template('main/welcome.html')
 
@@ -53,12 +53,14 @@ def upgrade():
 
 @app.route('/upgrading')
 def upgrading():
-    upgrade()
+    upgradeF()
     return redirect('/')
 
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    if not current_user.is_authenticated:
+        return render_template('main/welcome.html')
     form = HomeForm()
 
     if form.is_submitted():

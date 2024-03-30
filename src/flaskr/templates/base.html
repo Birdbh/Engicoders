@@ -11,7 +11,7 @@
     <header class="top-header">
         <h1>{% block header %}Manufacturing Line Capacity Prediction{% endblock %}</h1>
 
-        <h2>{% block header2 %}{% if current_user.is_anonymous %}{% else %}Hello {{current_user.username}}{% endif %}{% endblock %}</h2>
+        <h2>{% block header2 %}{% if current_user.is_anonymous %}{% else %}Hello {{current_user.username}}  {{current_user.premium_features}} {{ current_user.__class__ }}{% endif %}{% endblock %}</h2>
 
         <nav class="topnav">
 
@@ -20,6 +20,9 @@
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             {% else %}
+                {% if not current_user.premium_features %}
+                    <a href="/upgrade">Upgrade</a>
+                {% endif %}   
                 <a href="/logout">Logout</a>
             {% endif %}
         </nav>

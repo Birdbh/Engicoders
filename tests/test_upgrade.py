@@ -24,6 +24,7 @@ def test_upgrade(app):
         form.register("TestUser2", "Test2", "Test2")
         user = flask_login.current_user
         upgrade.upgrade()
+        assert user.premium_features == True
         assert not user.get_password() == "Test2"
         hasher = sha512()
         hasher.update(str.encode("Test2"))
