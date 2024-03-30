@@ -9,7 +9,7 @@ def create_app(test_config=None):
     # create and configure the app
     global app
     app = Flask(__name__, instance_relative_config=True)
-    from . import db, routing
+    from . import db, routing, home
     login = LoginManager(app)
     @login.user_loader
     def load_user(id):
@@ -19,6 +19,7 @@ def create_app(test_config=None):
         SECRET_KEY='test_change_later',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+    app.config['UPLOAD_FOLDER'] = os.path.join(app.instance_path, 'uploads')
 
     #app.config.from_pyfile('config.py', silent=True)
     

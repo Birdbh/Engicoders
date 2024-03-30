@@ -20,11 +20,6 @@ def test_update_sensor():
     sensor.set_name("Humidity Sensor")
     sensor.set_description("Measures Humidity")
 
-    with pytest.raises(Exception) as e:
-        sensor.set_value([50])
-
-    assert str(e.value) == "The length of the new value must be equal to the length of the date range"
-
     assert sensor.name == "Humidity Sensor"
     assert sensor.description == "Measures Humidity"
     assert sensor.value == [1,2,3]

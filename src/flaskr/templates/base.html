@@ -15,7 +15,7 @@
 
         <nav class="topnav">
 
-            <a href="/">Home</a>
+            <a href="/home">Home</a>
             {% if current_user.is_anonymous %}
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
@@ -26,8 +26,8 @@
     </header>
     <main>
         {% block content %}
-        <p>This is a machine learning program.
-            The purpose of this web application is to use a machine learning algorithm to predict manufacturing line's capacity requirements.
+        <p>This is a machine learning program.<br>
+            The purpose of this web application is to use a machine learning algorithm to predict manufacturing line's capacity requirements.<br>
             This is based on using existing data sets for free members, and adding custom data sets for premium members.
         </p>
         {% endblock %}
