@@ -42,11 +42,11 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
-# @app.route('upgrade', methods=['GET', 'POST'])
+# @app.route('/upgrade', methods=['GET', 'POST'])
 # def upgrade():
 #     return render_template('main/upgrade.html', title='Upgrade')
 
-# @app.route('upgrading', methods=['GET', 'POST'])
+# @app.route('/upgrading', methods=['GET', 'POST'])
 # def upgrading():
 #     upgrade()
 #     return redirect('/')
