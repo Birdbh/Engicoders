@@ -7,20 +7,30 @@
 {% block content %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+  
   <form method="post" enctype="multipart/form-data">
     <label for="channel_id">Channel ID</label>
-    <input name="channel_id" id="channel_id" required>
+    <input name="channel_id" id="channel_id">
     <label for="field_id">Field ID</label>
-    <input name="field_id" id="field_id" required>
+    <input name="field_id" id="field_id">
     <label for="start_date">Start Date</label>
-    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" required title="Date format should be YYYY-MM-DD HH:MM:SS">
+    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS">
     <label for="time_increment">Time Increment</label>
-    <input name="time_increment" id="time_increment" required>
+    <input name="time_increment" id="time_increment">
 
     <label for="cleanse">Cleanse</label>
     <input type="checkbox" name="cleanse" id="cleanse">
     <label for="stdDeviation">Enter Standard Deviations To Cleanse</label>
-    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" required>
+    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only">
     
     <label for="predict">Predict</label>
     <input type="checkbox" name="predict" id="predict">
