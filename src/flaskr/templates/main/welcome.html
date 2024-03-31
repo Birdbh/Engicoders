@@ -1,3 +1,23 @@
 {% extends 'base.html' %}
 
-<a href="/register">Register</a>
+<main>
+    {% block content %}
+    <h2>Looking for your next steps in data analysis?</h2>
+    <p>
+        This program utalizes state of the art machine learning to analyze your datasets. <br>
+        As part of our satisfaction guarunteed trial period, you can use the software with any public ThingSpeak channel. <br>
+        Once you get an understanding of the many use cases, you can upgrade for a low monthly cost, gaining the ability to work with your data! <br>
+        Please register for a new account below! <br>
+    </p>
+
+    <a href="/register">
+        <button class="button-2" role="button">Register</button>
+    </a>
+    <p>
+        Returning user? Log in here! 
+    </p>
+    <a href="/login">
+        <button class="button-2" role="button">Log in</button>
+    </a>
+    {% endblock %}
+</main>
