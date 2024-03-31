@@ -16,11 +16,11 @@ class PaymentForm(FlaskForm):
     SecurityDigits = IntegerField('Credit Card Number', validators=[DataRequired()])
     submit = SubmitField('Upgrade!')
 
-    def validate_cardNumber(self, CreditCard):
+    def validate_CreditCard(self, CreditCard):
         
         return True
 
-    def validate_pass(self, password, password2):
+    def validate_ExpirationDate(self, password, password2):
         if(password == password2):
             self.password = password
             return True
