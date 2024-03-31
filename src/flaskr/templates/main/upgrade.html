@@ -1,13 +1,49 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Log In User:{% endblock %}</h1>
-{% endblock %}
-
 {% block content %}
-<h1>Upgrade</h1>
-<a href="/upgrading">
-    <button>Upgrade!</button>
- </a>
+    <h1>Upgrade</h1>
+    <form method="post">
+
+        <table style="display: inline;">
+        <tr>
+            {{ form.CreditCard.label }}<br>
+            {{ form.CreditCard(size=32) }}<br>
+            {% for error in form.CreditCard.errors %}
+            <span style="color: rgb(16, 26, 206);">[{{ error }}]</span>
+            {% endfor %}
+        </tr>
+        <tr>
+            {{ form.ExpirationDate.label }}<br>
+            {{ form.ExpirationDate(size=32) }}<br>
+            {% for error in form.ExpirationDate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </tr>
+        <tr>
+            {{ form.CardName.label }}<br>
+            {{ form.CardName(size=32) }}<br>
+            {% for error in form.CardName.errors %}
+            <span style="color: rgb(21, 194, 27);">[{{ error }}]</span>
+            {% endfor %}
+        </tr>
+        <tr>
+            {{ form.SecurityDigits.label }}<br>
+            {{ form.SecurityDigits(size=32) }}<br>
+            {% for error in form.SecurityDigits.errors %}
+            <span style="color: rgb(21, 194, 27);">[{{ error }}]</span>
+            {% endfor %}
+        </tr>
+    </table>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+        <p>{{ form.submit() }}</p>
+    </form>
 {% endblock %}
 

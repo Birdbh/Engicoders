@@ -47,9 +47,9 @@ def register():
 def upgrade():
     form = PaymentForm()
     if form.validate_on_submit():
-    #     if form.register(form.username.data, form.password.data, form.password2.data):
-        return redirect('/upgrading')
-    return render_template('main/upgrade.html', title='Upgrade')
+        if form.pay(form.username.data, form.password.data, form.password2.data):
+            return redirect('/upgrading')
+    return render_template('main/upgrade.html', title='Upgrade', form=form)
 
 @app.route('/upgrading')
 def upgrading():

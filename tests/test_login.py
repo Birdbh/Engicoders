@@ -12,8 +12,6 @@ import flaskr.login as login
 import flaskr.db as dbClass
 
 
-
-
 def test_login(app):
     with app.test_request_context():
         assert not current_user.is_authenticated
