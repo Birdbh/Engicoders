@@ -35,8 +35,8 @@ class HomeForm(FlaskForm):
 
     def get_time_series_data(self):
 
-        #TO-DO: This is smelly with the try-except block. Refactor to remove it
-        if self.file.data.filename != '':
+
+        if (self.file.data is not None) and (self.file.data.filename != ''):
             try:
                 data_gen = DataUpload(self.file.data)
                 date_series, value_series = data_gen.get_time_series()
