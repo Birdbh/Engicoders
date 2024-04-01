@@ -20,6 +20,9 @@
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
             {% else %}
+                {% if not current_user.premium_features %}
+                    <a href="/upgrade">Upgrade</a>
+                {% endif %}   
                 <a href="/logout">Logout</a>
             {% endif %}
         </nav>

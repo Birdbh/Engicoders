@@ -3,16 +3,21 @@ from flask import render_template, redirect, flash
 from flaskr import app
 from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
+from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
 
 from sensors.sensor import Sensor
 from flaskr.home import HomeForm
+from flaskr.payment import PaymentForm
 from Chart import Chart
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('main/home.html')
+    if current_user.is_authenticated:
+        return redirect('/home')
+    else:
+        return render_template('main/welcome.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -38,8 +43,26 @@ def register():
     return render_template('auth/register.html', title='Register', form=form)
 
 
+@app.route('/upgrade', methods=['GET', 'POST'])
+def upgrade():
+    
+    form = PaymentForm()  
+    
+    if form.validate_on_submit():
+        if form.pay(form.CreditCard.data, form.ExpirationDate.data, form.SecurityDigits.data):
+            return redirect('/upgrading')
+    return render_template('main/upgrade.html', title='Upgrade', form=form)
+
+@app.route('/upgrading')
+def upgrading():
+    upgradeF()
+    return redirect('/')
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    if not current_user.is_authenticated:
+        return render_template('main/welcome.html')
     form = HomeForm()
 
     if form.is_submitted():

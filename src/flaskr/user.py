@@ -7,9 +7,11 @@ class User(UserMixin):
     username = ""
     userid = ""
     password = ""
+    premium_features : bool
 
 
     def __init__(self, username="", userid="", password=""): 
+        self.premium_features = False
         self.database = db.get_db()
         if(userid != ""):
             self.set_userid(userid)
@@ -35,12 +37,12 @@ class User(UserMixin):
         self.userid = userid
 
 class SuperUser(User): 
-    premium_features = True
     payment = ""
     
 
     def __init__(self, username="", userid="", password="", payment=""):
         super().__init__(username=username, userid=userid, password=password)
+        self.premium_features = True
         
         #set_payment
     def upgrade(self):

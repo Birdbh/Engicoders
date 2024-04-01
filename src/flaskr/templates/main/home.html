@@ -56,10 +56,11 @@
     <input type="radio" name="chartType" id="bar" value="bar" required><br>
     <label for="radar">Radar Chart</label><br>
     <input type="radio" name="chartType" id="radar" value="radar" required><br>
-
-    <label for="excelFile">Choose an Excel file:</label>
-    <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-
+    
+    {% if current_user.premium_features %}
+      <label for="excelFile">Choose an Excel file:</label>
+      <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    {% endif %} 
     <button type="submit">Get Data</button><br>
 
   </form>
