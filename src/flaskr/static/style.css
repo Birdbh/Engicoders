@@ -128,7 +128,13 @@ main {
     top: 0; /* Start from the top of the viewport */
     align-items: center; /* Center items vertically */
     text-align: center; /* Center align the content */
-    color: #ffffff; /* Red color */
+    color: #ffffff;
+}
+
+.margin-with-space {
+    margin-top: 20px; /* Adjust margin as needed */
+    padding-top: 20px; /* Add padding to create space at the top of the margin */
+    background-color: #000232; /* Background color of the margin */
 }
 
 input {
@@ -137,5 +143,15 @@ input {
     padding: 8px 10px;
     font-size: 12px;
     margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.text-display-container {
+    margin-left: 10px; /* Adjust margin as needed */
+    margin-right: 10px; /* Adjust margin as needed */
+    margin-top: 20px; /* Adjust margin as needed */
+    padding: 20px; /* Add padding to create space within the box */
+    background-color: #000232; /* Background color of the text display box */
+    border: 1px solid #ccc; /* Border around the text display box */
     border-radius: 4px;
 }

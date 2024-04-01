@@ -22,62 +22,72 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
 
+  
+
   <div class="sidebar">
-    <label for="alarm_min">Alarm Minimum Trigger</label><br>
-    <input>
-    <label for="alarm_max">Alarm Maximum Trigger</label><br>
-    <input>
+      <div class="margin-with-space">
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        <label for="alarm_min">Alarm Minimum Trigger</label><br>
+        <input>
+        <label for="alarm_max">Alarm Maximum Trigger</label><br>
+        <input>
+        <button type="submit">Submit</button><br>
+        <div class="text-display-container">
+          <p>This is the text display box.</p>
+        </div>
   </div>
 
   <div class="container">
-  <form method="post" enctype="multipart/form-data">
-    <label for="channel_id">Channel ID</label><br>
-    <input name="channel_id" id="channel_id" ><br>
-    <label for="field_id">Field ID</label><br>
-    <input name="field_id" id="field_id" ><br>
-    <label for="start_date">Start Date</label><br>
-    <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"  title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
-    <label for="time_increment">Time Increment</label><br>
-    <input name="time_increment" id="time_increment" ><br>
+    <form method="post" enctype="multipart/form-data">
+      <label for="channel_id">Channel ID</label><br>
+      <input name="channel_id" id="channel_id" ><br>
+      <label for="field_id">Field ID</label><br>
+      <input name="field_id" id="field_id" ><br>
+      <label for="start_date">Start Date</label><br>
+      <input type="text" name="start_date" id="start_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"  title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
+      <label for="time_increment">Time Increment</label><br>
+      <input name="time_increment" id="time_increment" ><br>
 
-    <label for="cleanse">Cleanse</label><br>
-    <input type="checkbox" name="cleanse" id="cleanse"><br>
-    <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
-    <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" ><br>
-    
-    <label for="predict">Predict</label><br>
-    <input type="checkbox" name="predict" id="predict"><br>
-    <label for="prediction_date">Prediction End Date</label><br>
-    <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
-  </div>
+      <label for="cleanse">Cleanse</label><br>
+      <input type="checkbox" name="cleanse" id="cleanse"><br>
+      <label for="stdDeviation">Enter Standard Deviations To Cleanse</label><br>
+      <input type="number" name="stdDeviation" id="stdDeviation" min="1" step="1" placeholder="Positive integers only" ><br>
+      
+      <label for="predict">Predict</label><br>
+      <input type="checkbox" name="predict" id="predict"><br>
+      <label for="prediction_date">Prediction End Date</label><br>
+      <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
+      
 
-    <script>
-      // JavaScript to make prediction_date required if predict is checked
-      document.getElementById('predict').addEventListener('change', function() {
-          var predictionDateInput = document.getElementById('prediction_date');
-          predictionDateInput.required = this.checked; // Set required based on checkbox
-      });
+      <script>
+        // JavaScript to make prediction_date required if predict is checked
+        document.getElementById('predict').addEventListener('change', function() {
+            var predictionDateInput = document.getElementById('prediction_date');
+            predictionDateInput.required = this.checked; // Set required based on checkbox
+        });
 
-      document.getElementById('cleanse').addEventListener('change', function() {
-          var predictionDateInput = document.getElementById('stdDeviation');
-          predictionDateInput.required = this.checked; // Set required based on checkbox
-      });
-    </script>
+        document.getElementById('cleanse').addEventListener('change', function() {
+            var predictionDateInput = document.getElementById('stdDeviation');
+            predictionDateInput.required = this.checked; // Set required based on checkbox
+        });
+      </script>
 
-    <label for="line">Line Chart</label><br>
-    <input type="radio" name="chartType" id="line" value="line" required><br>
-    <label for="bar">Bar Chart</label><br>
-    <input type="radio" name="chartType" id="bar" value="bar" required><br>
-    <label for="radar">Radar Chart</label><br>
-    <input type="radio" name="chartType" id="radar" value="radar" required><br>
-    
-    {% if current_user.premium_features %}
-      <label for="excelFile">Choose an Excel file:</label>
-      <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-    {% endif %} 
-    <button type="submit">Get Data</button><br>
+      <label for="line">Line Chart</label><br>
+      <input type="radio" name="chartType" id="line" value="line" required><br>
+      <label for="bar">Bar Chart</label><br>
+      <input type="radio" name="chartType" id="bar" value="bar" required><br>
+      <label for="radar">Radar Chart</label><br>
+      <input type="radio" name="chartType" id="radar" value="radar" required><br>
+      
+      {% if current_user.premium_features %}
+        <label for="excelFile">Choose an Excel file:</label>
+        <input type="file" name="file" accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+      {% endif %} 
+      <button type="submit">Get Data</button><br>
 
-  </form>
+    </form>
+</div>
 
   <canvas id="Chart" width="800" height="400"></canvas> <!-- Canvas element where the line chart will be drawn -->
   <script>
@@ -103,6 +113,3 @@
   </script>
 
 {% endblock %}
-
-
-  
