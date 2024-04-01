@@ -57,8 +57,6 @@ form_data_file = {
             'file': file_storage,
         }
 
-print(type(form_data_file['file'].data))
-
 def test_home(app):
     with app.test_request_context():
         form = home.HomeForm()
@@ -68,7 +66,6 @@ def test_file_upload_and_validation():
 
         # Instantiate the form with the simulated file and data
         form = home.HomeForm(data=form_data_file)
-        print(type(form_data_file['file']))
 
         # Check for conflicting input where there should be none
         assert(form.conflicting_input() == False)
