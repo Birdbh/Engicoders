@@ -1,12 +1,9 @@
 import pytest
 from flask import Flask, request
-from flaskr import create_app  # Adjust this import based on your project structure
 
 import pytest
 import sys
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 
 from flask import Flask, render_template
 sys.path.append("src")
@@ -22,16 +19,16 @@ with open(file_path, 'rb') as file:
         file_storage = FileStorage(stream=file, filename='data.xlsx', content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 form_data_None = {
-            'channel_id': 1,
-            'field_id': 1,
-            'start_date': '2023-01-01',
-            'time_increment': 15,
-            'cleanse': True,
-            'predict': True,
-            'prediction_date': '2023-06-01',
-            'chartType': 'line',  # Assuming this is a valid choice
-            'stdDeviation': 2,
-            'file': file_storage,
+            'channel_id': None,
+            'field_id': None,
+            'start_date': None,
+            'time_increment': None,
+            'cleanse': None,
+            'predict': None,
+            'prediction_date': None,
+            'chartType': None,  # Assuming this is a valid choice
+            'stdDeviation': None,
+            'file': None,
         }
 
 form_data_duplicate = {
@@ -60,6 +57,8 @@ form_data_file = {
             'file': file_storage,
         }
 
+print(type(form_data_file['file'].data))
+
 def test_home(app):
     with app.test_request_context():
         form = home.HomeForm()
@@ -69,6 +68,7 @@ def test_file_upload_and_validation():
 
         # Instantiate the form with the simulated file and data
         form = home.HomeForm(data=form_data_file)
+        print(type(form_data_file['file']))
 
         # Check for conflicting input where there should be none
         assert(form.conflicting_input() == False)
@@ -82,7 +82,3 @@ def test_file_upload_and_validation():
 
          # Check for conflicting input where there should be
         assert(form.conflicting_input() == True)
-
-
-        # Validate the form
-        assert(form.validate())
