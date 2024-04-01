@@ -10,10 +10,10 @@ from flask_login import current_user
 import datetime
 
 class PaymentForm(FlaskForm):
-    CreditCard = IntegerField('Credit Card Number', validators=[DataRequired()])
+    CreditCard = IntegerField('16 Digit Credit Card Number', validators=[DataRequired()])
     ExpirationDate = DateField('Expiration Date')
     CardName = StringField('Name on Card', validators=[DataRequired()])
-    SecurityDigits = IntegerField('Credit Card Number', validators=[DataRequired()])
+    SecurityDigits = IntegerField('3 Digit Security Code', validators=[DataRequired()])
     submit = SubmitField('Upgrade!')
 
     def validate_CreditCardNumber(self, CreditCard):
