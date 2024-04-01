@@ -45,9 +45,11 @@ def register():
 
 @app.route('/upgrade', methods=['GET', 'POST'])
 def upgrade():
-    form = PaymentForm()
+    
+    form = PaymentForm()  
+    
     if form.validate_on_submit():
-        if form.pay(form.username.data, form.password.data, form.password2.data):
+        if form.pay(form.CreditCard.data, form.ExpirationDate.data, form.SecurityDigits.data):
             return redirect('/upgrading')
     return render_template('main/upgrade.html', title='Upgrade', form=form)
 

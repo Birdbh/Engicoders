@@ -2,8 +2,9 @@
 
 {% block content %}
     <h1>Upgrade</h1>
-    <form method="post">
 
+    <form action = "" method="post">
+        {{ form.hidden_tag() }}
         <table style="display: inline;">
         <tr>
             {{ form.CreditCard.label }}<br>
@@ -44,6 +45,11 @@
     {% endif %}
   {% endwith %}
         <p>{{ form.submit() }}</p>
+        <p>
+            By filling out the form above, you consent to having your card charged $99.99 every month, for a minimum 12 month period. <br>
+            A cancellation fee of $1000 will be applied if you cancel early.
+        </p>
     </form>
+    
 {% endblock %}
 
