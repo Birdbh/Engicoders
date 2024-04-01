@@ -4,6 +4,7 @@
   {% block title %}Home Page | Operations Optimization{% endblock %}
 {% endblock %}
 
+
 {% block content %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
@@ -17,6 +18,18 @@
   {% endif %}
   {% endwith %}
 
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <div class="sidebar">
+    <label for="alarm_min">Alarm Minimum Trigger</label><br>
+    <input>
+    <label for="alarm_max">Alarm Maximum Trigger</label><br>
+    <input>
+  </div>
+
+  <div class="container">
   <form method="post" enctype="multipart/form-data">
     <label for="channel_id">Channel ID</label><br>
     <input name="channel_id" id="channel_id" ><br>
@@ -36,6 +49,7 @@
     <input type="checkbox" name="predict" id="predict"><br>
     <label for="prediction_date">Prediction End Date</label><br>
     <input type="text" name="prediction_date" id="prediction_date" placeholder="YYYY-MM-DD HH:MM:SS" pattern="\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}" title="Date format should be YYYY-MM-DD HH:MM:SS"><br>
+  </div>
 
     <script>
       // JavaScript to make prediction_date required if predict is checked
