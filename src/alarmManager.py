@@ -21,7 +21,14 @@ class AlarmManager(AlarmObserver):
         except socketio.exceptions.ConnectionError:
             pass  # Consider logging this
 
-    def update(self, sensor):
+    def update(self, sensor, status, value):
+        # Prepare the message
+        if status == 'high':
+            message = f"High alarm triggered for {sensor.get_name()}: Current value ({value}) is above the high threshold."
+        elif status == 'low':
+            message = f"Low alarm triggered for {sensor.get_name()}: Current value ({value}) is below the low threshold."
+        
+        print(message)
         message = f"Alarm triggered for {sensor.get_name()} with current value: {sensor.get_value()}."
         self.sio.emit('alarm_triggered', {'message': message})
 

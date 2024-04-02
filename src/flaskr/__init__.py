@@ -4,12 +4,11 @@ from flask_login import LoginManager
 from flaskr.user import User, SuperUser
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
+from datetime import datetime
 
 scheduler = BackgroundScheduler()
 
 def check_alarms():
-    # Placeholder for the logic to check alarms
-    # This will need to be replaced with the actual logic
     print("Checking alarms...")
 
 def create_app(test_config=None):
