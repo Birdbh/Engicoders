@@ -1,7 +1,6 @@
 import flask_login
 import flaskr.user as UserClass
 from flaskr.db import get_db
-import time
 import datetime
 from dateutil.relativedelta import relativedelta
 

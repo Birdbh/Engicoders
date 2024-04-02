@@ -1,5 +1,3 @@
-import pytest
-
 import sys
 sys.path.append("src")
 from sensors.sensor import Sensor

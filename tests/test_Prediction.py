@@ -1,9 +1,6 @@
-import pytest
 import datetime as dt
-
 import sys
 sys.path.append("src")
-
 from sensors.Prediction import DataPrediction
 from sensors.sensor import Sensor
 

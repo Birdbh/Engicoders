@@ -2,7 +2,7 @@ import sqlite3
 import pytest
 import sys
 sys.path.append("src")
-from flaskr.db import get_db, init_db
+from flaskr.db import get_db
 from flaskr import db
 
 

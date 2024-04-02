@@ -3,7 +3,6 @@ from unittest.mock import MagicMock
 import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
-import time
 
 @pytest.fixture
 def mock_sensor():

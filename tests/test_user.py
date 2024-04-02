@@ -1,14 +1,6 @@
-import pytest
 import sys
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-
-from flask import Flask, render_template
 sys.path.append("src")
-import flaskr.register as register
 
-import flaskr.db as dbClass
 import flaskr.user as Userclass
 
 
