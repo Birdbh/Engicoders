@@ -2,8 +2,15 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flaskr.user import User, SuperUser
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
 
+scheduler = BackgroundScheduler()
 
+def check_alarms():
+    # Placeholder for the logic to check alarms
+    # This will need to be replaced with the actual logic
+    print("Checking alarms...")
 
 def create_app(test_config=None):
     # create and configure the app
@@ -19,17 +26,22 @@ def create_app(test_config=None):
     )
     app.config['UPLOAD_FOLDER'] = os.path.join(app.instance_path, 'uploads')
 
-
-    
     #ensure the instance folder exists (Based on Tutorial directions)
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
-    
     db.init_app(app)
     app.app_context().push()
+    
+    # Start the APScheduler
+    scheduler.add_job(func=check_alarms, trigger="interval", seconds=5)
+    scheduler.start()
+    
+    # Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
+    
     #part of app, this guides the login and user. 
     @login.user_loader
     def load_user(id):
@@ -41,11 +53,3 @@ def create_app(test_config=None):
             return User(userid=id)
         
     return app
-
-
-
-
-
-        
-
-    

@@ -10,6 +10,8 @@ from sensors.sensor import Sensor
 from flaskr.home import HomeForm
 from flaskr.payment import PaymentForm
 from Chart import Chart
+from sensors.alarm import Alarm
+from alarmManager import AlarmManager
 
 @app.route('/')
 @app.route('/index')
@@ -70,12 +72,17 @@ def home():
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
             return render_template('main/home.html')
-    
+        
         date_series, value_series = form.get_time_series_data()
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
         sensor = form.apply_data_modifiers(sensor)
+        if form.alarm_min.data is not None and form.alarm_max.data is not None:
+            # Initialize the Alarm with both the minimum and maximum thresholds
+            sensor_alarm = Alarm(sensor, form.alarm_min.data, deadband=(form.alarm_max.data - form.alarm_min.data))
+            sensor_alarm.register_observer(AlarmManager())
+            sensor_alarm.set_alarm()
 
         chart = Chart(sensor)
 

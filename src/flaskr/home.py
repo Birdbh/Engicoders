@@ -23,6 +23,8 @@ class HomeForm(FlaskForm):
     stdDeviation = IntegerField('Standard Deviation')
     file = FileField('File Upload')
     submit = SubmitField('Submit')
+    alarm_min = IntegerField('Alarm Minimum Trigger')
+    alarm_max = IntegerField('Alarm Maximum Trigger')
 
     def conflicting_input(self):
         api_query_is_provided = self.channel_id.data and self.field_id.data and self.start_date.data and self.time_increment.data
