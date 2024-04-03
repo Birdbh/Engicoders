@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import MagicMock, patch, create_autospec
+from unittest.mock import MagicMock, patch
 import sys
 sys.path.append("src")
 from sensors.alarm import Alarm

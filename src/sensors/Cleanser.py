@@ -1,6 +1,5 @@
 import sys 
 sys.path.append("src")
-
 from sensors.DecoratorPattern import SensorDataDecorator
 
 class cleanser(SensorDataDecorator):

@@ -1,5 +1,4 @@
 from werkzeug.datastructures import FileStorage
-import flaskr.home as home
 import pandas as pd
 
 import sys

@@ -1,15 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField, FileField, IntegerField, DateField, SelectField, StringField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from sensors import sensor, Prediction, Cleanser
+from wtforms import BooleanField, SubmitField, FileField, IntegerField, SelectField, StringField
+from sensors import Prediction, Cleanser
 
 from DataGeneration import DataGeneration
 from DataUpload import DataUpload
 
-from flask import Flask, render_template, flash
-from flaskr.db import get_db
-from flaskr.user import User
-from flask_login import login_user
+from flask import flash
 
 class HomeForm(FlaskForm):
     channel_id = IntegerField('Channel ID')

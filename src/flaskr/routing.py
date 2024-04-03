@@ -5,7 +5,6 @@ from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
 from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
-
 from sensors.sensor import Sensor
 from flaskr.home import HomeForm
 from flaskr.payment import PaymentForm

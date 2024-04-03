@@ -1,11 +1,10 @@
 from flaskr.db import get_db
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, DateField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms import StringField, SubmitField, IntegerField, DateField
+from wtforms.validators import DataRequired
 
-from flask import Flask, render_template, flash
+from flask import flash
 from flaskr.db import get_db
-from flaskr.user import User
 from flask_login import current_user
 import datetime
 
