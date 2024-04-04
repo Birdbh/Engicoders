@@ -28,6 +28,12 @@ class HomeForm(FlaskForm):
             return True
         
         return False
+    
+    def conflicting_modifers(self):
+        if not self.cleanse.data and self.predict.data:
+            return True
+
+        return False
 
     def get_time_series_data(self):
 
