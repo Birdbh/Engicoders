@@ -69,8 +69,17 @@ def home():
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
             return render_template('main/home.html')
+        
+        if form.conflicting_modifers():
+            flash('Data Prediction Requires Data Cleansing')
+            return render_template('main/home.html')
     
-        date_series, value_series = form.get_time_series_data()
+        try:
+            date_series, value_series = form.get_time_series_data()
+
+        except Exception as e:
+            flash("A Valid Public Channel and Field ID Must be Provided")
+            return render_template('main/home.html')
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
