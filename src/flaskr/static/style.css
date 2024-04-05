@@ -61,10 +61,6 @@ h2 {
 form {
     font-family: Arial, sans-serif;
     min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
-    border: 1px solid #ccc; /* Thin gray border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 20px; /* Adds space inside the form */
-    margin-bottom: 20px; /* Adds space outside the form, adjust as needed */
 }
 
 main {
@@ -178,3 +174,11 @@ input {
     display: flex;
     flex-direction: column;
   }
+
+/* Assuming you add a class named "custom-form" to your form */
+.custom-form {
+    border: 1px solid #ccc; /* Thin gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Optional: Adds space inside the form */
+    margin-bottom: 20px; /* Optional: Adds space outside the form */
+}
