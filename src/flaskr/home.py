@@ -1,15 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField, FileField, IntegerField, DateField, SelectField, StringField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from sensors import sensor, Prediction, Cleanser
+from wtforms import BooleanField, SubmitField, FileField, IntegerField, SelectField, StringField
+from sensors import Prediction, Cleanser
 
 from DataGeneration import DataGeneration
 from DataUpload import DataUpload
 
-from flask import Flask, render_template, flash
-from flaskr.db import get_db
-from flaskr.user import User
-from flask_login import login_user
+from flask import flash
 
 class HomeForm(FlaskForm):
     channel_id = IntegerField('Channel ID')
@@ -33,6 +29,12 @@ class HomeForm(FlaskForm):
         if (api_query_is_provided and upload_data_is_provided) or (not api_query_is_provided and not upload_data_is_provided):
             return True
         
+        return False
+    
+    def conflicting_modifers(self):
+        if not self.cleanse.data and self.predict.data:
+            return True
+
         return False
 
     def get_time_series_data(self):

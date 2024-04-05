@@ -1,5 +1,3 @@
-from sklearn import linear_model as lm
-from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 import pandas as pd
 from pmdarima import auto_arima

@@ -5,7 +5,6 @@ from flaskr.register import RegistrationForm
 from flaskr.login import LoginForm
 from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
-
 from sensors.sensor import Sensor
 from flaskr.home import HomeForm
 from flaskr.payment import PaymentForm
@@ -73,7 +72,16 @@ def home():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
             return render_template('main/home.html')
         
-        date_series, value_series = form.get_time_series_data()
+        if form.conflicting_modifers():
+            flash('Data Prediction Requires Data Cleansing')
+            return render_template('main/home.html')
+    
+        try:
+            date_series, value_series = form.get_time_series_data()
+
+        except Exception as e:
+            flash("A Valid Public Channel and Field ID Must be Provided")
+            return render_template('main/home.html')
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 

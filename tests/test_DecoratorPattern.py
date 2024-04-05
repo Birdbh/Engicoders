@@ -1,8 +1,6 @@
 import sys 
 sys.path.append("src")
-
 from sensors import sensor, Prediction, Cleanser
-
 from datetime import datetime
 
 mock_sensor = sensor.Sensor("Temperature Sensor", "Measures temperature", [datetime(2023, 1, 1), datetime(2023, 1, 2), datetime(2023, 1, 3), datetime(2023, 1, 4)], [22, 23, None, "23"])

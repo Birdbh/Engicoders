@@ -1,17 +1,7 @@
-import pytest
-from flask import Flask, request
-
-import pytest
+from flask import request
 import sys
-from flask_wtf import FlaskForm
-
-from flask import Flask, render_template
 sys.path.append("src")
-
 import flaskr.home as home
-
-import flaskr.db as dbClass
-
 from werkzeug.datastructures import FileStorage
 
 file_path = 'src/UPLOADED_DATA/data.xlsx'

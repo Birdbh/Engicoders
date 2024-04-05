@@ -1,7 +1,6 @@
 import sys
 sys.path.append("src")
 from sensors.sensor import Sensor
-from sensors.Cleanser import cleanser
 import datetime as dt 
 from Chart import Chart
 import pytest
