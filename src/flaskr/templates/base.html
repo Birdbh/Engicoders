@@ -9,7 +9,9 @@
 </head>
 <body>
     <header class="top-header">
-        <h1>{% block header %}Manufacturing Line Capacity Prediction{% endblock %}</h1>
+        <div class="container">
+            <h1>{% block header %}Manufacturing Line Capacity Prediction{% endblock %}</h1>
+        </div>
 
         <h2>{% block header2 %}{% if current_user.is_anonymous %}{% else %}Hello {{current_user.username}}{% endif %}{% endblock %}</h2>
 

@@ -30,7 +30,9 @@
     overflow: hidden;
     background-color: #000232;
     text-align: center;
-    padding: 20px 10px;
+    width: 100%; /* Cover the entire width of the viewport */
+    height: 100px; /* Set the height of the footer of the viewport height */
+    line-height: 60px; /* Vertically center content within the footer */
     margin-top: 40px auto;/* Push the footer to the bottom of the viewport */
     font-family: Arial, sans-serif; /* This will use Arial font if available, otherwise, it will fall back to a sans-serif font */
     color: #ffffff; /* Red color */
@@ -65,8 +67,6 @@ main {
     font-family: Arial, sans-serif;
     min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
 }
-
-
 
 .button-2 {
     align-items: center;
@@ -112,3 +112,46 @@ main {
     box-shadow: #D6D6E7 0 3px 7px inset;
     transform: translateY(2px);
   }
+
+  .container {
+    margin-left: 225px; /* Adjust the margin-left value to move content further to the right */
+    /* Alternatively, you can use padding-left to achieve a similar effect */
+    /* padding-left: 150px; */
+}
+
+  .sidebar {
+    background-color: #000232; /* Choose your desired color */
+    width: 10%; /* Adjust the width of the colored bar */
+    height: 100%; /* Cover the entire height of the viewport */
+    position: fixed; /* Fixed position so it stays on the screen */
+    left: 0; /* Position it at the left side of the viewport */
+    top: 0; /* Start from the top of the viewport */
+    align-items: center; /* Center items vertically */
+    text-align: center; /* Center align the content */
+    color: #ffffff;
+}
+
+.margin-with-space {
+    margin-top: 20px; /* Adjust margin as needed */
+    padding-top: 20px; /* Add padding to create space at the top of the margin */
+    background-color: #000232; /* Background color of the margin */
+}
+
+input {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.text-display-container {
+    margin-left: 10px; /* Adjust margin as needed */
+    margin-right: 10px; /* Adjust margin as needed */
+    margin-top: 20px; /* Adjust margin as needed */
+    padding: 20px; /* Add padding to create space within the box */
+    background-color: #000232; /* Background color of the text display box */
+    border: 1px solid #ccc; /* Border around the text display box */
+    border-radius: 4px;
+}
