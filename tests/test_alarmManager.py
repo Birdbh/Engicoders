@@ -17,7 +17,7 @@ def alarm_manager(mock_sio_client):
 
 @pytest.fixture
 def mock_alarm():
-    alarm = Alarm(sensor=MagicMock(), threshold=10, deadband=1, delay=0, on_trigger=None)
+    alarm = Alarm(sensor=MagicMock(), highThreshold=10, lowThreshold=0, deadband=1, delay=0, on_trigger=None)
     alarm.on_trigger = MagicMock()
     return alarm
 

@@ -4,6 +4,9 @@ import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
 import time
+from sensors.sensor import Sensor
+import datetime as dt
+
 
 @pytest.fixture
 def mock_sensor():
@@ -64,3 +67,18 @@ def test_updating_threshold_and_deadband(alarm, mock_sensor, mock_on_trigger):
     mock_sensor.get_value.return_value = 18
     alarm.check_sensor()
     mock_on_trigger.assert_called_once()  # Above the new threshold and outside deadband
+
+
+sensor1 = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3), dt.datetime(2020, 1, 4)], [1,2, 3, 10])
+
+highThreshold = 10
+lowThreshold = 3
+
+
+def test_create_Alarm_and_makes_a_list_of_high_and_low_thresholds():
+    alarmer = Alarm(sensor1, highThreshold, lowThreshold)
+    assert alarmer.sensor == sensor1
+    assert alarmer.highThreshold == 10
+    assert alarmer.lowThreshold == 3
+    assert alarmer.get_high_threshold_list() == [10,10,10,10]
+    assert alarmer.get_low_threshold_list() == [3,3,3,3]

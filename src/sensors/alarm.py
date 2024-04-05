@@ -1,9 +1,10 @@
 import time
 
 class Alarm:
-    def __init__(self, sensor, threshold, deadband=0, delay=0, on_trigger=None):
+    def __init__(self, sensor, highThreshold, lowThreshold, deadband=0, delay=0, on_trigger=None):
         self.sensor = sensor
-        self.threshold = threshold
+        self.highThreshold = highThreshold
+        self.lowThreshold = lowThreshold
         self.deadband = deadband
         self.delay = delay
         self.is_set = False
@@ -27,7 +28,7 @@ class Alarm:
     
         current_value = self.sensor.get_value()
     
-        if current_value > self.threshold + self.deadband:
+        if current_value > self.highThreshold + self.deadband:
             if not self.alarm_triggered:
                 # Start the delay timer if it's not started yet
                 if self.trigger_time is None:
@@ -47,3 +48,15 @@ class Alarm:
 
     def is_alarm_active(self):
         return self.alarm_triggered
+    
+    def get_high_threshold_list(self):
+        ht = []
+        for i in range(len(self.sensor.get_value())):
+            ht.append(self.highThreshold)
+        return ht
+    
+    def get_low_threshold_list(self):
+        lt = []
+        for i in range(len(self.sensor.get_value())):
+            lt.append(self.lowThreshold)
+        return lt
