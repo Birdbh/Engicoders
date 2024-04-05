@@ -181,4 +181,5 @@ input {
     border-radius: 8px; /* Rounded corners */
     padding: 20px; /* Optional: Adds space inside the form */
     margin-bottom: 20px; /* Optional: Adds space outside the form */
+    margin-right: 20px; /* Optional: Adds space to the right of the form */
 }
