@@ -11,16 +11,6 @@ class Alarm:
         self.trigger_time = None
         self.observers = []  # List of observers to be notified upon alarm
 
-    def register_observer(self, observer):
-        self.observers.append(observer)
-
-    def unregister_observer(self, observer):
-        self.observers.remove(observer)
-
-    def notify_observers(self):
-        for observer in self.observers:
-            observer.update(self.sensor)
-
     def set_alarm(self):
         self.is_set = True
         self.alarm_triggered = False
@@ -49,6 +39,20 @@ class Alarm:
     def trigger_alarm(self):
         self.alarm_triggered = True
         self.notify_observers()
+
+
+    def check(self, sensor, status, value):
+        # Prepare the message
+        if status == 'high':
+            message = f"High alarm triggered for {sensor.get_name()}: Current value ({value}) is above the high threshold."
+        elif status == 'low':
+            message = f"Low alarm triggered for {sensor.get_name()}: Current value ({value}) is below the low threshold."
+        
+        print(message)
+        message = f"Alarm triggered for {sensor.get_name()} with current value: {sensor.get_value()}."
+        self.sio.emit('alarm_triggered', {'message': message})
+
+
 
     #Table Attributes
     def getOccurances(self):

@@ -59,7 +59,7 @@ def upgrading():
     upgradeF()
     return redirect('/')
 
-alarms = [] #TODO Replace with alarms manager and a get function
+ #TODO Replace with alarms manager and a get function
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
@@ -73,34 +73,34 @@ def home():
             sensor_alarm = Alarm(form2.alarm_min.data, form2.alarm_max.data, form2.highlow.data)
             #sensor_alarm.register_observer(AlarmManager())
             #sensor_alarm.set_alarm()
-            alarms.append(sensor_alarm)
-            return render_template('main/home.html', form2=form2, alarms=alarms)
+            AlarmManager.addAlarm(sensor_alarm)
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
     if form.is_submitted():
 
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
-            return render_template('main/home.html', form2=form2, alarms=alarms)
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
         
         if form.conflicting_modifers():
             flash('Data Prediction Requires Data Cleansing')
-            return render_template('main/home.html', form2=form2, alarms=alarms)
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
     
         try:
             date_series, value_series = form.get_time_series_data()
 
         except Exception as e:
             flash("A Valid Public Channel and Field ID Must be Provided")
-            return render_template('main/home.html', form2=form2, alarms=alarms)
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
         sensor = form.apply_data_modifiers(sensor)
         
 
-        chart = Chart(sensor, alarms)
+        chart = Chart(sensor, AlarmManager.getAlarmList())
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=alarms)
    
-    return render_template('main/home.html', form2=form2, alarms=alarms)
+    return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
 
 
 

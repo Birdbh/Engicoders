@@ -6,10 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
 from datetime import datetime
 
-scheduler = BackgroundScheduler()
 
-def check_alarms():
-    print("Checking alarms...")
 
 def create_app(test_config=None):
     # create and configure the app
@@ -34,12 +31,6 @@ def create_app(test_config=None):
     db.init_app(app)
     app.app_context().push()
     
-    # Start the APScheduler
-    scheduler.add_job(func=check_alarms, trigger="interval", seconds=5)
-    scheduler.start()
-    
-    # Shut down the scheduler when exiting the app
-    atexit.register(lambda: scheduler.shutdown())
     
     #part of app, this guides the login and user. 
     @login.user_loader
