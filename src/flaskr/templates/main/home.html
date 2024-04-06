@@ -27,6 +27,12 @@
   
 
   <div class="sidebar">
+    <script>
+      function runPythonScript() {
+        var pythonScriptPath = "path/to/python/script.py";
+        subprocess.run(["python", pythonScriptPath]);
+      }
+    </script>
       <div class="margin-with-space">
       </div>
       <form method="POST">
@@ -46,7 +52,7 @@
               <th>Over/Under</th>
               <th>Triggered</th>
               <th>Occurances</th>
-              <th>Dismiss</th>
+              <!-- <th>Dismiss</th> -->
             </tr>
           </thead>
           <tbody>
@@ -55,7 +61,11 @@
               <td>{{alarm.getLevel()}}</td>
               <td>{{alarm.getHighLow()}}</td>
               <td>{{alarm.triggered()}}</td>
-              <td><button type="dismiss">Dismiss</button></td>
+              <td>{{alarm.getOccurances()}}</td>
+              <!-- <form method="POST" action="/dismiss">
+                  <td><button type="submit">Dismiss</button></td>
+              </form> -->
+              
             </tr>
             {% endfor %}
           </tbody>

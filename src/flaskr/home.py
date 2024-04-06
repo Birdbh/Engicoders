@@ -74,7 +74,7 @@ class HomeForm(FlaskForm):
     
 class AlarmForm(FlaskForm):
     alarm_min = IntegerField('Alarm Minimum Trigger')
-    alarm_max = IntegerField('Alarm Maximum Trigger')
+    alarm_max = IntegerField('Alarm Deadband')
     highlow = RadioField('Trigger Region', choices=[(1,'Higher'),(-1,'Lower')], default='1')
     submit = SubmitField('Submit')
     

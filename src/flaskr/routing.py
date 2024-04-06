@@ -59,7 +59,7 @@ def upgrading():
     upgradeF()
     return redirect('/')
 
-alarms = []
+alarms = [] #TODO Replace with alarms manager and a get function
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
@@ -70,7 +70,7 @@ def home():
     if form2.is_submitted():
         if form2.alarm_min.data is not None and form2.alarm_max.data is not None:
             # Initialize the Alarm with both the minimum and maximum thresholds
-            sensor_alarm = Alarm(form2.alarm_min.data, (form2.alarm_max.data - form2.alarm_min.data), form2.highlow.data)
+            sensor_alarm = Alarm(form2.alarm_min.data, form2.alarm_max.data, form2.highlow.data)
             #sensor_alarm.register_observer(AlarmManager())
             #sensor_alarm.set_alarm()
             alarms.append(sensor_alarm)
@@ -79,18 +79,18 @@ def home():
 
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
-            return render_template('main/home.html', form2=form2)
+            return render_template('main/home.html', form2=form2, alarms=alarms)
         
         if form.conflicting_modifers():
             flash('Data Prediction Requires Data Cleansing')
-            return render_template('main/home.html', form2=form2)
+            return render_template('main/home.html', form2=form2, alarms=alarms)
     
         try:
             date_series, value_series = form.get_time_series_data()
 
         except Exception as e:
             flash("A Valid Public Channel and Field ID Must be Provided")
-            return render_template('main/home.html', form2=form2)
+            return render_template('main/home.html', form2=form2, alarms=alarms)
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
@@ -98,7 +98,9 @@ def home():
         
 
         chart = Chart(sensor, alarms)
-        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2)
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=alarms)
    
-    return render_template('main/home.html', form2=form2)
+    return render_template('main/home.html', form2=form2, alarms=alarms)
+
+
 

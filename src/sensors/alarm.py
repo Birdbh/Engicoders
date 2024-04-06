@@ -1,9 +1,11 @@
 class Alarm:
     def __init__(self, threshold, deadband, HigherLower):
         self.threshold = threshold
-        self.deadband = deadband
         self.HigherLower = int(HigherLower)
+        self.deadband = deadband*self.HigherLower
+        
         self.delay = 0
+        self.Occurances = 0
         self.is_set = False
         self.alarm_triggered = False
         self.trigger_time = None
@@ -48,6 +50,9 @@ class Alarm:
         self.alarm_triggered = True
         self.notify_observers()
 
+    #Table Attributes
+    def getOccurances(self):
+        return self.Occurances
     def triggered(self):
         return self.alarm_triggered
     def getLevel(self):

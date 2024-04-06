@@ -1,6 +1,6 @@
 from sensors.alarm import Alarm
 import socketio
-
+#TODO have this store the global alarm list
 class AlarmObserver:
     def update(self, sensor):
         pass  # To be implemented
