@@ -191,7 +191,21 @@
           }]
         },
         options: {
-          responsive: true // Chart will not resize automatically when the container does
+          responsive: true, // Chart will not resize automatically when the container does
+          annotation: {
+            annotations: [{
+              type: 'line',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: 100,
+              borderColor: 'rgb(75, 192, 192)',
+              borderWidth: 10,
+              label: {
+                  enabled: true,
+                  content: 'Test label'
+                }
+              }]
+            }
         }
       });
     </script>
