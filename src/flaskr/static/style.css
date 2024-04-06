@@ -155,3 +155,31 @@ input {
     border: 1px solid #ccc; /* Border around the text display box */
     border-radius: 4px;
 }
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+  .form-row label,
+  .form-row input,
+  .form-row input[type="checkbox"],
+  .form-row input[type="radio"],
+  .form-row button {
+    margin: 0;
+  }
+  .form-row div {
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Assuming you add a class named "custom-form" to your form */
+.custom-form {
+    border: 1px solid #ccc; /* Thin gray border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Optional: Adds space inside the form */
+    margin-bottom: 20px; /* Optional: Adds space outside the form */
+    margin-right: 20px; /* Optional: Adds space to the right of the form */
+}
