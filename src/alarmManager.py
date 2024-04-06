@@ -1,5 +1,4 @@
 from sensors.alarm import Alarm
-#TODO have this store the global alarm list
 
 class AlarmManager():
     listofAlarms = []
@@ -13,7 +12,6 @@ class AlarmManager():
         AlarmManager.listofAlarms.remove(Alarm)
 
     def notifyAlarm(value):
-
         for alarm in AlarmManager.listofAlarms:
             alarm.check(value)
 
