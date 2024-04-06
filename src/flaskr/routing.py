@@ -6,7 +6,7 @@ from flaskr.login import LoginForm
 from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
 from sensors.sensor import Sensor
-from flaskr.home import HomeForm
+from flaskr.home import HomeForm, AlarmForm
 from flaskr.payment import PaymentForm
 from Chart import Chart
 from sensors.alarm import Alarm
@@ -59,13 +59,22 @@ def upgrading():
     upgradeF()
     return redirect('/')
 
-
+alarms = []
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
         return render_template('main/welcome.html')
     form = HomeForm()
-
+    form2 = AlarmForm()
+    
+    if form2.is_submitted():
+        if form2.alarm_min.data is not None and form2.alarm_max.data is not None:
+            # Initialize the Alarm with both the minimum and maximum thresholds
+            sensor_alarm = Alarm(form2.alarm_min.data, deadband=(form2.alarm_max.data - form2.alarm_min.data))
+            sensor_alarm.register_observer(AlarmManager())
+            sensor_alarm.set_alarm()
+            alarms.append(sensor_alarm)
+            return render_template('main/home.html', form2=form2)
     if form.is_submitted():
 
         if form.conflicting_input():
@@ -86,15 +95,10 @@ def home():
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
         sensor = form.apply_data_modifiers(sensor)
-        if form.alarm_min.data is not None and form.alarm_max.data is not None:
-            # Initialize the Alarm with both the minimum and maximum thresholds
-            sensor_alarm = Alarm(sensor, form.alarm_min.data, deadband=(form.alarm_max.data - form.alarm_min.data))
-            sensor_alarm.register_observer(AlarmManager())
-            sensor_alarm.set_alarm()
+        
 
-        chart = Chart(sensor)
-
-
-        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
-    return render_template('main/home.html')
+        chart = Chart(sensor, alarms)
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2)
+   
+    return render_template('main/home.html', form2=form2)
 

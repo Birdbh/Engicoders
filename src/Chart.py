@@ -1,7 +1,7 @@
 from sensors.sensor import Sensor
 
 class Chart():
-    def __init__(self, sensor: Sensor):
+    def __init__(self, sensor: Sensor, alarms):
         self.sensor = sensor
     
     def get_values(self):

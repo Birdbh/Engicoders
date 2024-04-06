@@ -29,15 +29,44 @@
   <div class="sidebar">
       <div class="margin-with-space">
       </div>
-      <form method="post" enctype="multipart/form-data">
-        <label for="alarm_min">Alarm Minimum Trigger</label><br>
-        <input><br>
-        <label for="alarm_max">Alarm Maximum Trigger</label><br>
-        <input><br>
-        <button type="submit">Submit</button><br>
+      <form method="POST">
+        {{ form2.hidden_tag() }}
+        {{ form2.alarm_min.label }}<br>
+        {{ form2.alarm_min(size=32) }}<br>
+        {{ form2.alarm_max.label }}<br>
+        {{ form2.alarm_max(size=32) }}<br>
+        {{ form2.highlow.label }}
+        {{ form2.highlow() }}
+        {{ form2.submit() }}
+      </form>
+      {% if alarms|length >= 1 %}
+        <table>
+          <thead>
+            <tr>
+              <th>Trigger Level</th>
+              <th>Over/Under</th>
+              <th>Triggered</th>
+              <th>Occurances</th>
+              <th>Dismiss</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alarm in alarms %}
+            <tr>
+              <td>{{alarm.getLevel()}}</td>
+              <td>{{alarm['HighLow']}}</td>
+              <td>{{alarm['Active']}}</td>
+              <td>{{alarm['Occurances']}}</td>
+              <td><button type="dismiss">Dismiss</button></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else -%}
         <div class="text-display-container">
-          <p>This is the text display box.</p>
+          <p>No Alarms set.</p>
         </div>
+        {% endif %}
   </div>
 
   <div class="container custom-form">

@@ -1,9 +1,8 @@
 class Alarm:
-    def __init__(self, sensor, threshold, deadband=0, delay=0):
-        self.sensor = sensor
+    def __init__(self, threshold, deadband, HigherLower):
         self.threshold = threshold
         self.deadband = deadband
-        self.delay = delay
+        self.delay = 0
         self.is_set = False
         self.alarm_triggered = False
         self.trigger_time = None
