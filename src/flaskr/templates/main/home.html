@@ -38,8 +38,7 @@
         {{ form2.highlow.label }}
         {{ form2.highlow() }}
         {{ form2.submit() }}
-      </form>
-      {% if alarms|length >= 1 %}
+        {% if alarms|length >= 1 %}
         <table>
           <thead>
             <tr>
@@ -54,9 +53,8 @@
             {% for alarm in alarms %}
             <tr>
               <td>{{alarm.getLevel()}}</td>
-              <td>{{alarm['HighLow']}}</td>
-              <td>{{alarm['Active']}}</td>
-              <td>{{alarm['Occurances']}}</td>
+              <td>{{alarm.getHighLow()}}</td>
+              <td>{{alarm.triggered()}}</td>
               <td><button type="dismiss">Dismiss</button></td>
             </tr>
             {% endfor %}
@@ -67,6 +65,8 @@
           <p>No Alarms set.</p>
         </div>
         {% endif %}
+      </form>
+      
   </div>
 
   <div class="container custom-form">

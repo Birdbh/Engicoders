@@ -1,8 +1,4 @@
-
-
-
 from sensors.alarm import Alarm
-
 import socketio
 
 class AlarmObserver:

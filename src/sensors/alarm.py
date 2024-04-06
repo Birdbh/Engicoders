@@ -2,6 +2,7 @@ class Alarm:
     def __init__(self, threshold, deadband, HigherLower):
         self.threshold = threshold
         self.deadband = deadband
+        self.HigherLower = int(HigherLower)
         self.delay = 0
         self.is_set = False
         self.alarm_triggered = False
@@ -47,5 +48,12 @@ class Alarm:
         self.alarm_triggered = True
         self.notify_observers()
 
-    def is_alarm_active(self):
+    def triggered(self):
         return self.alarm_triggered
+    def getLevel(self):
+        return self.threshold
+    def getHighLow(self):
+        if self.HigherLower > 0:
+            return "High"
+        else:
+            return "Low"
