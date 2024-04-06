@@ -13,6 +13,7 @@ class AlarmManager():
         AlarmManager.listofAlarms.remove(Alarm)
 
     def notifyAlarm(value):
+
         for alarm in AlarmManager.listofAlarms:
             alarm.check(value)
 

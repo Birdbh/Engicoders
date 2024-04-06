@@ -57,6 +57,8 @@ class Sensor(SensorDataProcessor):
     def process_data(self):
         X = self.get_date_range()
         Y = self.get_value()
+        for out in Y:
+            self.notify(float(out))
         return X, Y
 
     
