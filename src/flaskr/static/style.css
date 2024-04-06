@@ -60,8 +60,6 @@ h2 {
 
 form {
     font-family: Arial, sans-serif;
-    min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
-    height: 500px
 }
 
 main {
