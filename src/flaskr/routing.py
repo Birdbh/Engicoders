@@ -6,9 +6,12 @@ from flaskr.login import LoginForm
 from flaskr.upgrade import upgrade as upgradeF
 from flask_login import logout_user, current_user
 from sensors.sensor import Sensor
-from flaskr.home import HomeForm
+from flaskr.home import HomeForm, AlarmForm
 from flaskr.payment import PaymentForm
 from Chart import Chart
+from sensors.alarm import Alarm
+from alarmManager import AlarmManager
+import json
 
 @app.route('/')
 @app.route('/index')
@@ -57,37 +60,48 @@ def upgrading():
     upgradeF()
     return redirect('/')
 
-
+ #TODO Replace with alarms manager and a get function
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
         return render_template('main/welcome.html')
     form = HomeForm()
-
+    form2 = AlarmForm()
+    
+    if form2.is_submitted():
+        if form2.alarm_min.data is not None and form2.alarm_max.data is not None:
+            # Initialize the Alarm with both the minimum and maximum thresholds
+            sensor_alarm = Alarm(form2.alarm_min.data, form2.alarm_max.data, form2.highlow.data)
+            #sensor_alarm.register_observer(AlarmManager())
+            #sensor_alarm.set_alarm()
+            AlarmManager.addAlarm(sensor_alarm)
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
     if form.is_submitted():
-
+        AlarmManager.clearAlarms()
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
-            return render_template('main/home.html')
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
         
         if form.conflicting_modifers():
             flash('Data Prediction Requires Data Cleansing')
-            return render_template('main/home.html')
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
     
         try:
             date_series, value_series = form.get_time_series_data()
 
         except Exception as e:
             flash("A Valid Public Channel and Field ID Must be Provided")
-            return render_template('main/home.html')
+            return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
                 
         sensor = Sensor(name="Generated Sensor", description="Data from ThingSpeak", date_range=date_series, value=value_series)
 
         sensor = form.apply_data_modifiers(sensor)
+        
 
-        chart = Chart(sensor)
+        chart = Chart(sensor, AlarmManager.getAlarmList())
+        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=AlarmManager.getAlarmList(), alarm_Triggers=json.dumps(AlarmManager.getTriggers()))
+   
+    return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
 
 
-        return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data)
-    return render_template('main/home.html')
 

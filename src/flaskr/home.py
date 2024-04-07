@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, SubmitField, FileField, IntegerField, SelectField, StringField
+from wtforms import BooleanField, SubmitField, FileField, IntegerField, SelectField, StringField, RadioField
 from sensors import Prediction, Cleanser
 
 from DataGeneration import DataGeneration
@@ -18,7 +18,8 @@ class HomeForm(FlaskForm):
     chartType = SelectField('Chart Type', choices=[('line', 'bar', 'radio')])  # Modify choices as needed
     stdDeviation = IntegerField('Standard Deviation')
     file = FileField('File Upload')
-    submit = SubmitField('Submit')
+
+    
 
     def conflicting_input(self):
         api_query_is_provided = self.channel_id.data and self.field_id.data and self.start_date.data and self.time_increment.data
@@ -70,3 +71,11 @@ class HomeForm(FlaskForm):
         sensor.set_value(values)
 
         return sensor
+    
+class AlarmForm(FlaskForm):
+    alarm_min = IntegerField('Alarm Trigger Level')
+    alarm_max = IntegerField('Alarm Deadband')
+    highlow = RadioField('Trigger Region', choices=[(1,'Higher'),(-1,'Lower')], default='1')
+    submit = SubmitField('Submit')
+    
+    

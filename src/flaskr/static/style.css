@@ -60,7 +60,6 @@ h2 {
 
 form {
     font-family: Arial, sans-serif;
-    min-height: 100vh; /* Ensure that the body takes up at least the height of the viewport */
 }
 
 main {
@@ -182,4 +181,12 @@ input {
     padding: 20px; /* Optional: Adds space inside the form */
     margin-bottom: 20px; /* Optional: Adds space outside the form */
     margin-right: 20px; /* Optional: Adds space to the right of the form */
+}
+
+.input-style {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 5px 0;
+  padding: 10px;
+  width: 95%;
 }

@@ -1,36 +1,55 @@
 import pytest
-from unittest.mock import MagicMock, patch
 import sys
 sys.path.append("src")
 from sensors.alarm import Alarm
 from alarmManager import AlarmManager
 
+def test_AddRemoveAlarms():
+    alarm1 = Alarm(500, 50, 1)
+    alarm2 = Alarm(200, 100, -1)
+    AlarmManager.addAlarm(alarm1)
+    AlarmManager.addAlarm(alarm2)
+    assert len(AlarmManager.getAlarmList()) == 2
+    AlarmManager.removeAlarm(alarm1)
+    assert len(AlarmManager.getAlarmList()) == 1
 
-@pytest.fixture
-def mock_sio_client():
-    with patch('socketio.Client') as mock:
-        yield mock
 
-@pytest.fixture
-def alarm_manager(mock_sio_client):
-    return AlarmManager(server_address="http://127.0.0.1:5000/")
+def test_singleton():
+    alarm1 = Alarm(500, 50, 1)
+    alarm2 = Alarm(200, 100, -1)
+    AlarmManager.addAlarm(alarm1)
+    AlarmManager.addAlarm(alarm2)
+    alarmMan2 = AlarmManager()
+    assert AlarmManager.getAlarmList() == alarmMan2.listofAlarms
 
-@pytest.fixture
-def mock_alarm():
-    alarm = Alarm(sensor=MagicMock(), threshold=10, deadband=1, delay=0, on_trigger=None)
-    alarm.on_trigger = MagicMock()
-    return alarm
+def test_notify():
+    alarm1 = Alarm(500, 50, 1)
+    alarm2 = Alarm(200, 100, -1)
+    AlarmManager.addAlarm(alarm1)
+    AlarmManager.addAlarm(alarm2)
+    AlarmManager.notifyAlarm(300)
+    assert not alarm1.triggered() 
+    assert not alarm2.triggered()
+    AlarmManager.notifyAlarm(600) 
+    assert alarm1.triggered() 
+    assert not alarm2.triggered()
+    AlarmManager.notifyAlarm(100) 
+    assert alarm1.triggered() 
+    assert alarm2.triggered()
+    AlarmManager.clearAlarms()
+    assert not alarm1.triggered() 
+    assert not alarm2.triggered()
 
-def test_alarm_manager_connection(alarm_manager, mock_sio_client):
-    # Assuming connect is called within the constructor
-    mock_sio_client().connect.assert_called_once_with("http://127.0.0.1:5000/")
+def test_getTriggers():
+    AlarmManager.clearAll()
+    alarm1 = Alarm(500, 50, 1)
+    alarm2 = Alarm(200, 100, -1)
+    AlarmManager.addAlarm(alarm1)
+    AlarmManager.addAlarm(alarm2)
+    assert AlarmManager.getTriggers() == [500, 200]
 
-def test_adding_and_removing_alarms(alarm_manager, mock_alarm):
-    alarm_manager.add_alarm(mock_alarm)
-    assert mock_alarm in alarm_manager.alarms
 
-    alarm_manager.remove_alarm(mock_alarm)
-    assert mock_alarm not in alarm_manager.alarms
+
 
 
     

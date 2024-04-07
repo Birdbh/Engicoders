@@ -5,6 +5,7 @@ from flaskr.user import User, SuperUser
 
 
 
+
 def create_app(test_config=None):
     # create and configure the app
     global app
@@ -19,17 +20,16 @@ def create_app(test_config=None):
     )
     app.config['UPLOAD_FOLDER'] = os.path.join(app.instance_path, 'uploads')
 
-
-    
     #ensure the instance folder exists (Based on Tutorial directions)
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
-    
     db.init_app(app)
     app.app_context().push()
+    
+    
     #part of app, this guides the login and user. 
     @login.user_loader
     def load_user(id):
@@ -41,11 +41,3 @@ def create_app(test_config=None):
             return User(userid=id)
         
     return app
-
-
-
-
-
-        
-
-    

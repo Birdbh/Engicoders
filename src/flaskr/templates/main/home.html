@@ -6,7 +6,8 @@
 
 
 {% block content %}
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/node_modules\chartjs-plugin-annotation\dist\chartjs-plugin-annotation.min.js"></script>
 
   <div class="container">
     {% with messages = get_flashed_messages() %}
@@ -27,21 +28,29 @@
   
 
   <div class="sidebar">
+    <script>
+      function runPythonScript() {
+        var pythonScriptPath = "path/to/python/script.py";
+        subprocess.run(["python", pythonScriptPath]);
+      }
+    </script>
       <div class="margin-with-space">
       </div>
-      <form method="post" enctype="multipart/form-data">
-        <label for="alarm_min">Alarm Minimum Trigger</label><br>
-        <input><br>
-        <label for="alarm_max">Alarm Maximum Trigger</label><br>
-        <input><br>
-        <button type="submit">Submit</button><br>
-        <div class="text-display-container">
-          <p>This is the text display box.</p>
-        </div>
+      <form method="POST">
+        {{ form2.hidden_tag() }}
+        {{ form2.alarm_min.label }}<br>
+        {{ form2.alarm_min(size=32, class="input-style") }}<br>
+        {{ form2.alarm_max.label }}<br>
+        {{ form2.alarm_max(size=32, class="input-style") }}<br>
+        {{ form2.highlow.label }}
+        {{ form2.highlow() }}
+        {{ form2.submit() }}
+      </form>
+      
   </div>
 
   <div class="container custom-form">
-    <form method="post" enctype="multipart/form-data" class="custom-form">
+    <form method="post" enctype="multipart/form-data">
 
       <div class ="form-row">
         <div>
@@ -116,7 +125,36 @@
         {% endif %} 
         <button type="submit">Get Data</button><br>
       </div>
-
+      <h2>Alarms</h2>
+      {% if alarms|length >= 1 %}
+        <table style="max-width:10;">
+          <thead>
+            <tr>
+              <th>Threshold</th>
+              <th>High/Low</th>
+              <th>Triggered</th>
+              <th>Occurances</th>
+              <!-- <th>Dismiss</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for alarm in alarms %}
+            <tr>
+              <td>{{alarm.getLevel()}}</td>
+              <td>{{alarm.getHighLow()}}</td>
+              <td>{{alarm.triggered()}}</td>
+              <td>{{alarm.getOccurances()}}</td>
+              <!-- <form method="POST" action="/dismiss">
+                  <td><button type="submit">Dismiss</button></td>
+              </form> -->
+              
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p1>No Alarms set.</p1>
+        {% endif %}
     </form>
 </div>
 
@@ -135,7 +173,30 @@
 
 <div class="container">
     <canvas id="Chart" width="800" height="400"></canvas> <!-- Canvas element where the line chart will be drawn -->
+    
     <script>
+      var alarmTriggers =  JSON.parse('{{alarm_Triggers}}');//['500', '200'];
+      var annotations = alarmTriggers.map(function(dataValue, index) {
+        return {
+          type: 'line',
+          id: 'alarm' + index,
+          mode: 'horizontal',
+          scaleID: 'y',
+          value: dataValue,
+          borderColor: 'red',
+          borderWidth: 2,
+          label: {
+            backgroundColor: 'red',
+            content: 'Alarm ' + index + 1,
+            display: true
+          },
+          display: true
+        }
+      });
+
+
+
+
       // Get the context of the canvas element we just defined
       var ctx = document.getElementById('Chart').getContext('2d');
 
@@ -152,7 +213,31 @@
           }]
         },
         options: {
-          responsive: true // Chart will not resize automatically when the container does
+          responsive: true, // Chart will not resize automatically when the container does
+          title: {
+            display: true,
+            text: 'Test'
+          },
+          plugins: {
+            annotation: {
+              drawTime: 'afterDatasetsDraw',
+              annotations: annotations
+              // annotations: [{
+              //   type: 'line',
+              //   mode: 'horizontal',
+              //   scaleID: 'y',
+              //   value: '100',
+              //   borderColor: 'red',
+              //   borderWidth: 2,
+              //   label: {
+              //     backgroundColor: 'red',
+              //     content: 'Test Label',
+              //     display: true
+              //   },
+              //   display: true
+              //   }]
+              }
+          }
         }
       });
     </script>
