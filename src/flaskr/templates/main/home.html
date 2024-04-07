@@ -125,8 +125,8 @@
         {% endif %} 
         <button type="submit">Get Data</button><br>
       </div>
+      <h2>Alarms</h2>
       {% if alarms|length >= 1 %}
-        <h2>Alarms</h2>
         <table style="max-width:10;">
           <thead>
             <tr>
@@ -152,10 +152,8 @@
             {% endfor %}
           </tbody>
         </table>
-        {% else -%}
-        <div class="text-display-container">
-          <p>No Alarms set.</p>
-        </div>
+        {% else %}
+          <p1>No Alarms set.</p1>
         {% endif %}
     </form>
 </div>
