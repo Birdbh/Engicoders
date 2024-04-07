@@ -14,5 +14,10 @@ class AlarmManager():
     def notifyAlarm(value):
         for alarm in AlarmManager.listofAlarms:
             alarm.check(value)
+    def getTriggers():
+        Triggers = []
+        for alarm in AlarmManager.listofAlarms:
+            Triggers.append(alarm.getLevel())
+        return Triggers
 
 
