@@ -17,9 +17,8 @@ class Alarm:
         self.trigger_time = None
 
     def clear_alarm(self):
-        self.is_set = False
+        self.Occurances = 0
         self.alarm_triggered = False
-        self.trigger_time = None
 
 
     def trigger_alarm(self):

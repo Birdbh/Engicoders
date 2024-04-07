@@ -77,7 +77,7 @@ def home():
             AlarmManager.addAlarm(sensor_alarm)
             return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
     if form.is_submitted():
-
+        AlarmManager.clearAlarms()
         if form.conflicting_input():
             flash('Only Channel ID, Field ID, Start Date, Time Increment OR Data Upload Must be Provided')
             return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
