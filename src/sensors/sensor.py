@@ -58,7 +58,7 @@ class Sensor(SensorDataProcessor):
         X = self.get_date_range()
         Y = self.get_value()
         for out in Y:
-            self.notify(float(out))
+            self.notify(out)
         return X, Y
 
     

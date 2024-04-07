@@ -11,11 +11,6 @@ class Alarm:
         self.trigger_time = None
         self.observers = []  # List of observers to be notified upon alarm
 
-    def set_alarm(self):
-        self.is_set = True
-        self.alarm_triggered = False
-        self.trigger_time = None
-
     def clear_alarm(self):
         self.Occurances = 0
         self.alarm_triggered = False
@@ -34,8 +29,6 @@ class Alarm:
             self.Occurances = self.Occurances + 1
 
 
-
-
     #Table Attributes
     def getOccurances(self):
         return self.Occurances
@@ -45,6 +38,6 @@ class Alarm:
         return self.threshold
     def getHighLow(self):
         if self.HigherLower > 0:
-            return "High"
+            return 'High'
         else:
-            return "Low"
+            return 'Low'

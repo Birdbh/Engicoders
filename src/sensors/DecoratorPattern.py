@@ -9,9 +9,12 @@ from alarmManager import AlarmManager
 class SensorDataProcessor:
     def process_data(self):
         pass
-    
+
     def notify(self, value):
-       AlarmManager.notifyAlarm(value)
+       try:
+        AlarmManager.notifyAlarm(float(value))
+       except: 
+           pass #occurs when NoneType
 
 # Requires:
 # An instance of SensorDataProcessor that it decorates. This instance is expected to be a concrete component like Cleanser or Prediction.

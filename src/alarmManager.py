@@ -2,6 +2,8 @@ from sensors.alarm import Alarm
 
 class AlarmManager():
     listofAlarms = []
+    def __init__(self):
+        self = AlarmManager
 
     def getAlarmList():
         return AlarmManager.listofAlarms
@@ -22,6 +24,9 @@ class AlarmManager():
         for alarm in AlarmManager.listofAlarms:
             Triggers.append(alarm.getLevel())
         return Triggers
+    
+    def clearAll():
+        AlarmManager.listofAlarms = []
     
 
 
