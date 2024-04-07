@@ -39,9 +39,9 @@
       <form method="POST">
         {{ form2.hidden_tag() }}
         {{ form2.alarm_min.label }}<br>
-        {{ form2.alarm_min(size=32) }}<br>
+        {{ form2.alarm_min(size=32, class="input-style") }}<br>
         {{ form2.alarm_max.label }}<br>
-        {{ form2.alarm_max(size=32) }}<br>
+        {{ form2.alarm_max(size=32, class="input-style") }}<br>
         {{ form2.highlow.label }}
         {{ form2.highlow() }}
         {{ form2.submit() }}
