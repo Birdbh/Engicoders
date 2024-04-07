@@ -2,9 +2,7 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flaskr.user import User, SuperUser
-from apscheduler.schedulers.background import BackgroundScheduler
-import atexit
-from datetime import datetime
+
 
 
 
