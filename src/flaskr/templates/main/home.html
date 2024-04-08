@@ -218,6 +218,11 @@
             display: true,
             text: 'Test'
           },
+          animation: {
+            onComplete: function () {
+              console.log(myChart.toBase64Image());
+            },
+          },
           plugins: {
             annotation: {
               drawTime: 'afterDatasetsDraw',
@@ -240,6 +245,24 @@
           }
         }
       });
+
+
+    </script>
+    <button id="downloadButton">Download Data</button>
+    <script> 
+    
+    function downloadImage() {
+
+      var link = document.createElement('a');
+      link.href = chart.toBase64Image();
+      link.download = 'Data' + (new Date().toLocaleString()) +'.png'; 
+
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      }
+      document.getElementById('downloadButton').addEventListener('click', downloadImage);
     </script>
   </div>
 
