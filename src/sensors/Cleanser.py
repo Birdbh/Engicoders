@@ -10,6 +10,8 @@ class cleanser(SensorDataDecorator):
     def get_mean(self):
         data = self.sensor.get_value()
         length = len(data)
+        if length == 0:  # Check if the data array is empty
+            return 0
         tot = 0
         for i in range(len(data)):
             tot = tot + data[i]
