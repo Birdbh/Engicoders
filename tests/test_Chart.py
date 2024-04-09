@@ -7,7 +7,6 @@ import pytest
 
 sensor1 = Sensor("Temperature Sensor", "Measures Temperature", [dt.datetime(2020, 1, 1), dt.datetime(2020, 1, 2), dt.datetime(2020, 1, 3), dt.datetime(2020, 1, 4)], [1,2, 3, 10])
 
-@pytest.fixture
 def test_create_chart_instance():
     charter = Chart(sensor1)
     assert charter.sensor == sensor1
