@@ -102,9 +102,11 @@ def home():
 
         chart = Chart(sensor)
         TriggerList = []
+        AlarmNum = 0
         for alarm in AlarmManager.getAlarmList():
-            TriggerList.append(alarm.getLog())
-            np.savetxt('Alarm' + str(datetime.datetime.now()) + '.csv', TriggerList, delimiter =", ", fmt ='% s')
+            TriggerList = alarm.getLog()
+            np.savetxt("AlarmLog" + str(AlarmNum) + ".csv", TriggerList, delimiter =", ", fmt ='% s')
+            AlarmNum = AlarmNum + 1
             
             
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=AlarmManager.getAlarmList(), alarm_Triggers=json.dumps(AlarmManager.getTriggers()))
