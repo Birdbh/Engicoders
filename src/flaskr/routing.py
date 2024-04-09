@@ -98,7 +98,7 @@ def home():
         sensor = form.apply_data_modifiers(sensor)
         
 
-        chart = Chart(sensor, AlarmManager.getAlarmList())
+        chart = Chart(sensor)
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=AlarmManager.getAlarmList(), alarm_Triggers=json.dumps(AlarmManager.getTriggers()))
    
     return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
