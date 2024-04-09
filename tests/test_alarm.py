@@ -13,16 +13,17 @@ def test_create_alarm():
 
 def test_triggerAlarm():
     alarm = Alarm(500, 50, 1)
-    alarm.check(499)
+    alarm.check([499, 10])
     assert not alarm.triggered()
     assert not alarm.getOccurances() == 1
-    alarm.check(501)
+    alarm.check([501, 20])
     assert alarm.triggered()
     assert alarm.getOccurances() == 1
+    assert alarm.getLog() == [[501, 20]]
 
 def test_clearAlarm():
     alarm = Alarm(500, 50, 1)
-    alarm.check(501)
+    alarm.check([501, 20])
     assert alarm.triggered()
     assert alarm.getOccurances() == 1
     alarm.clear_alarm()
