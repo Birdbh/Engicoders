@@ -12,7 +12,7 @@ class SensorDataProcessor:
 
     def notify(self, value):
        try:
-        AlarmManager.notifyAlarm(float(value))
+        AlarmManager.notifyAlarm(value)
        except: 
            pass #occurs when NoneType
 

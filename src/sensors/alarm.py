@@ -3,7 +3,7 @@ class Alarm:
         self.threshold = threshold
         self.HigherLower = int(HigherLower)
         self.deadband = deadband*self.HigherLower
-        
+        self.TriggerLog = []
         self.delay = 0
         self.Occurances = 0
         self.is_set = False
@@ -21,13 +21,20 @@ class Alarm:
 
 
     def check(self, value):
-        if self.HigherLower > 0 and value > self.threshold:
+        if self.HigherLower > 0 and float(value[0]) > self.threshold:
             self.trigger_alarm()
             self.Occurances = self.Occurances + 1
-        elif self.HigherLower < 0 and value < self.threshold:
+            self.logOccurance(value)
+        elif self.HigherLower < 0 and float(value[0]) < self.threshold:
             self.trigger_alarm()
             self.Occurances = self.Occurances + 1
+            self.logOccurance(value)
 
+    def logOccurance(self, value):
+        self.TriggerLog.append(value)
+    
+    def getLog(self):
+        return self.TriggerLog
 
     #Table Attributes
     def getOccurances(self):

@@ -57,8 +57,9 @@ class Sensor(SensorDataProcessor):
     def process_data(self):
         X = self.get_date_range()
         Y = self.get_value()
-        for out in Y:
-            self.notify(out)
+        
+        for i in range(len(Y)):
+            self.notify([Y[i], X[i]])
         return X, Y
 
     
