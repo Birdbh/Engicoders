@@ -1,5 +1,6 @@
 import pytest
 from datetime import datetime
+from unittest.mock import patch
 
 import sys
 sys.path.append("src")
@@ -54,7 +55,14 @@ def test_parse_json():
     parsed_data = data_generation.parse_json(json_data)
     assert parsed_data == {datetime.strptime('2023-03-01 00:00:00', '%Y-%m-%d %H:%M:%S'): '1', datetime.strptime('2023-03-01 00:20:00', '%Y-%m-%d %H:%M:%S'): '2'}
 
-def get_time_series():
+
+def test_get_time_series():
     data_generation = DataGeneration(5, 20, 1, "2025-03-01 00:00:00")
-    time_series = data_generation.get_time_series()
-    assert time_series == {}
+
+    mock_response = {'feeds': []}
+
+    with patch.object(DataGeneration, 'fetch_thingspeak_data', return_value=mock_response):
+        time_series = data_generation.get_time_series()
+
+        # Update the assertion to expect a tuple of two empty lists
+        assert time_series == ([], [])
