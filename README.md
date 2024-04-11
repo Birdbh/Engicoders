@@ -7,9 +7,10 @@ IoT Web Application - COSC310
 To run the Flask application on your local machine, follow these steps:
 
 1. Open your terminal.
-3. Install the required libraries by using `pip install -r requirements.txt`
-2. Navigate to the project directory using `cd src`.
-4. Finally, start the Flask application with the command `flask --app flaskr run`.
+2. Install the required libraries by using `pip install -r requirements.txt`
+3. Initalize the database by running `pytest`
+4. Navigate to the project directory using `cd src`.
+5. Finally, start the Flask application with the command `flask --app flaskr run`.
 
 ## User Requirements
 
