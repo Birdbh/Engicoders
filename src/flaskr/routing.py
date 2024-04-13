@@ -12,6 +12,8 @@ from Chart import Chart
 from sensors.alarm import Alarm
 from alarmManager import AlarmManager
 import json
+import numpy as np
+import datetime
 
 @app.route('/')
 @app.route('/index')
@@ -99,6 +101,14 @@ def home():
         
 
         chart = Chart(sensor)
+        TriggerList = []
+        AlarmNum = 0
+        for alarm in AlarmManager.getAlarmList():
+            TriggerList = alarm.getLog()
+            np.savetxt("AlarmLog" + str(AlarmNum) + ".csv", TriggerList, delimiter =", ", fmt ='% s')
+            AlarmNum = AlarmNum + 1
+            
+            
         return render_template('main/home.html', labels=chart.get_labels(), values=chart.get_values(), chart_type=form.chartType.data, form2=form2, alarms=AlarmManager.getAlarmList(), alarm_Triggers=json.dumps(AlarmManager.getTriggers()))
    
     return render_template('main/home.html', form2=form2, alarms=AlarmManager.getAlarmList())
